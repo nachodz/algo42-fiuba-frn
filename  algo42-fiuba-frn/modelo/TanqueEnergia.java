@@ -11,7 +11,7 @@ public class TanqueEnergia extends ObjetoVivo{
 		posY = y;
 		radio = 2;
 		if (zona.comprobarSalidaZonaDe(this))
-				throw new ObjetoFueraDeZonaDeCombateException;
+				throw new ObjetoFueraDeZonaDeCombateException();
 		else
 			zonaDeCombate = zona;
 		velX = 0;
