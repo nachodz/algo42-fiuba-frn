@@ -1,4 +1,4 @@
-package nacho.dezan;
+package algo42Full.modelo;
 
 public class ProyectilCohete extends Proyectil {
 	private ZonaCombate zonaDeCombate;
