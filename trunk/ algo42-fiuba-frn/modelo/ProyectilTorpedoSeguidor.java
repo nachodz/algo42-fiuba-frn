@@ -1,4 +1,4 @@
-package nacho.dezan;
+package algo42Full.modelo;
 
 public class ProyectilTorpedoSeguidor extends ProyectilTorpedo {
     
@@ -15,8 +15,8 @@ public class ProyectilTorpedoSeguidor extends ProyectilTorpedo {
 	//persigue al algo42 sin descanso hasta hacerle un impacto
 	int tempY, x, y;
 
-	x = zonaDeCombate.getAlgo42PosX;
-	y = zonaDeCombate.getAlgo42PosY;
+	x = zonaDeCombate.getAlgo42PosX();
+	y = zonaDeCombate.getAlgo42PosY();
 	
 	if (x < posX) 
 		posX = posX - velX;

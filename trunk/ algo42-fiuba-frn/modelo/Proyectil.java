@@ -1,10 +1,10 @@
-package nacho.dezan;
+package algo42Full.modelo;
 
 public abstract class Proyectil extends ObjetoVivo
 {
-	private int danio;
-	private boolean enemigo;
-	ZonaCombate zonaDeCombate;
+	protected int danio;
+	protected boolean enemigo;
+	protected ZonaCombate zonaDeCombate;
 	
 	public Proyectil (ZonaCombate zona, boolean enemy, int x, int y)
 	{
@@ -30,7 +30,7 @@ public abstract class Proyectil extends ObjetoVivo
 				tempY = posY + velY;
 			else 
 				tempY = posY - velY;
-			if (zonaDeCombate.comprobarSalidaZonaDe(this)) 
+			if (zonaDeCombate.comprobarSalidaZona(this)) 
 				muerto = true; 
 			else
 				 posY = tempY ;
@@ -40,7 +40,7 @@ public abstract class Proyectil extends ObjetoVivo
     {
 	  Atacable objetivo;
 
-		if !(this.muerto)
+		if (!this.muerto)
 		    this.mover();
 		    if (this.enemigo) 
 			   objetivo = zonaDeCombate.comprobarColisionAlgo42(this); 
@@ -49,7 +49,7 @@ public abstract class Proyectil extends ObjetoVivo
 			if (objetivo == null)
 				 objetivo = zonaDeCombate.comprobarColisionFlotaAliada(this);
 			if (objetivo != null)
-				 objetivo.recibirDanio(this.hacerDanio);
+				 objetivo.recibirDanio(this.hacerDanio());
 				 this.muerto = true;
   }
 	

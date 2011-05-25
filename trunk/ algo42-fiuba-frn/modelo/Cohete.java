@@ -1,6 +1,8 @@
-package nacho.dezan;
+package algo42Full.modelo;
 
-public class Cohete {
+import algo42Full.modelo.excepciones.*;
+
+public class Cohete extends ObjetoVivo{
 	private ZonaCombate zonaDeCombate;
 	
 	public Cohete (ZonaCombate zona, int x, int y){
@@ -10,9 +12,9 @@ public class Cohete {
 		posY = y;
 		radio = 2;
 		if (zonaCombate.comprobarSalidaZonaDe(this))
-			throw new ObjetoFueraDeZonaDeCombateException;
+			throw new ObjetoFueraDeZonaDeCombateException();
 		else
-			zonaDeCombate = zonaCombate;
+			zonaDeCombate = zona;
 		
 		velX = 0;
 		velY = 2;
@@ -22,7 +24,7 @@ public class Cohete {
 	private void mover(){
 		if (!muerto) {
 			posY = posY + velY;
-			if (zonaDeCombate.comprobarSalidaZonaDe(this))
+			if (zonaDeCombate.comprobarSalidaZona(this))
 					muerto = true;
 		}
 	}
@@ -33,7 +35,7 @@ public class Cohete {
 	     	algo42 = zonaDeCombate.comprobarColisionAlgo42(this);
 			if (algo42 != null)
 				muerto = true;
-				algo42.cargarCohete;
+				algo42.cargarCohete(); //BOOM
 		    } 
    }
 }

@@ -1,4 +1,6 @@
-package nacho.dezan;
+package algo42Full.modelo;
+
+import algo42Full.modelo.excepciones.*;
 
 public class Torpedo extends ObjetoVivo {
 	
@@ -10,10 +12,10 @@ public class Torpedo extends ObjetoVivo {
 		posX = x;
 		posY = y;
 		radio = 2;
-		if (zonaCombate.comprobarSalidaZonaDe(this))
-			throw new ObjetoFueraDeZonaDeCombateException;
+		if (zonaDeCombate.comprobarSalidaZona(this))
+			throw new ObjetoFueraDeZonaDeCombateException();
 		else
-			zonaDeCombate = zonaCombate;
+			zonaDeCombate = zona;
 		
 		velX = 0;
 		velY = 2;
@@ -23,7 +25,7 @@ public class Torpedo extends ObjetoVivo {
 	  private void mover(){
 			if (!muerto) {
 				posY = posY + velY;
-				if (zonaDeCombate.comprobarSalidaZonaDe(this))
+				if (zonaDeCombate.comprobarSalidaZona(this))
 						muerto = true;
 			}
 	}
@@ -35,7 +37,7 @@ public class Torpedo extends ObjetoVivo {
 			algo42 = zonaDeCombate.comprobarColisionAlgo42(this);
 			if (algo42 != null)
 				muerto = true;
-				algo42.cargarTorpedo;
+				algo42.cargarTorpedo(); // problema, reveer!!!!
 		    }
 	}
 			
