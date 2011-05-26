@@ -23,7 +23,7 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	}	
 	
 	
-	public void disparar(){
+	protected void disparar(){
 		
 		ProyectilLaser proyectilLaser;
 		
@@ -32,7 +32,7 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	
-	public void mover(){        //implementacion cambiada
+	protected void mover(){        //implementacion cambiada
 		
 		if (!((this.zonaDeCombate).comprobarSalidaZona(this))){
 			this.y += this.velY;

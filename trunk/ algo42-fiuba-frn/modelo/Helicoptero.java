@@ -22,7 +22,7 @@ public class Helicoptero extends NaveViva{
 	}
 	
 	
-	public void mover(){
+	protected void mover(){
 		
 		int tempX;
 		int tempY;

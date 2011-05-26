@@ -22,7 +22,7 @@ public class AvionCivil extends NaveViva{
 	}
 	
 	
-	public void mover(){
+	protected void mover(){
 		
 		this.y = (this.y) + (this.velY);
 		if ((this.zonaDeCombate).comprobarSalidaZona(this)){

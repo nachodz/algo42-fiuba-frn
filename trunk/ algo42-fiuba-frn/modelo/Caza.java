@@ -23,21 +23,21 @@ public class Caza extends NaveVivaEnemiga implements Atacable{
 
 	}	
 	
-	public void disparar(){
+	protected void disparar(){
 		
 		ProyectilTorpedo proyectilTorpedo = new ProyectilTorpedo((this.zonaDeCombate), true, (this.x), (this.y + 1));
 		(this.zonaDeCombate).agregarProyectil(proyectilTorpedo);
 		
 	}
 	
-	public void morir(){
+	protected void morir(){
 		
 		this.muerto = true;
 		TanqueEnergia tanqueEnergia= new TanqueEnergia((this.zonaDeCombate), (this.x), (this.y));
 		(this.zonaDeCombate).agregarActualizacionAlgo42(tanqueEnergia);
 	}
 	
-	public void mover(){
+	protected void mover(){
 		
 		this.y = (this.y) + (this.velY);
 		if ((this.zonaDeCombate).comprobarSalidaZona(this)){
