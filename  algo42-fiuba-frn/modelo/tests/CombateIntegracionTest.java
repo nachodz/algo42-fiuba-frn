@@ -218,5 +218,42 @@ public class CombateIntegracionTest extends TestCase{
 		assertTrue(explorador.seEscapo());
 	}
 	
+	
+	public void testAlgo42recibeDanioDeCazaII(){
+		int cantEnergia, i;
+		NaveVivaEnemiga cazaII;
+		FlotaEnemiga flota;
+		
+		cazaII = new CazaII(this.zona,250,420);
+		flota = new FlotaEnemiga();
+		flota.agregarAvion(cazaII);
+		this.zona.agregarFlotaEnemiga(flota);
+		cantEnergia = this.algo42.getCantEnergia();
+		for (i=0;i<38;i++)
+			this.zona.combatir();
+		this.zona.quitarObjetosMuertos();
+		assertTrue(cazaII.estaVivo());
+		assertTrue(esMajor(cantEnergia,this.algo42.getCantEnergia()));
+		
+	}
+	
+	
+	public void testAlgo42recibeDanioDeTorpedoAdaptable(){
+		int cantEnergia, i;
+		Proyectil proyectilTorpedoAdaptable;
+				
+		proyectilTorpedoAdaptable = new ProyectilTorpedoAdaptable(this.zona, true, 250, 580);
+
+		this.zona.agregarProyectil(proyectilTorpedoAdaptable);
+		cantEnergia = this.algo42.getCantEnergia();
+		
+		for (i=0;i<5;i++)
+			this.zona.combatir();
+		this.zona.quitarObjetosMuertos();
+		
+		assertEquals((cantEnergia / 2), (this.algo42).getCantEnergia(), 0.2);
+		
+	}
+	
 
 }

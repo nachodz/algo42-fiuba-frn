@@ -19,7 +19,7 @@ public abstract class Proyectil extends ObjetoVivo
 		return danio;
 	}
 	
-	private void mover ()
+	protected void mover ()
 	{
 		  //se mueve en linea recta hacia adelante si es un proyectil enemigo o hacia atras si es un proyectil aliado.
 			int tempY;

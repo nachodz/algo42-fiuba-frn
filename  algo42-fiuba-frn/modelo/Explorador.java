@@ -22,7 +22,7 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	
-	public void mover(){
+	protected void mover(){
 		
 		int tempX;
 		int tempY;

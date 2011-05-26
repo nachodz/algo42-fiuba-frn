@@ -24,7 +24,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	}	
 	
 	
-	private void disparar(){
+	protected void disparar(){
 		
 		Proyectil proyectil;
 		int numero = 1 + (int)(Math.random()* 3); //genera un numero aleatorio del 1 al 3
@@ -52,7 +52,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	
-	private void morir(){
+	protected void morir(){
 		
 		this.muerto = true;
 		Cohete cohete = new Cohete(this.zonaDeCombate, this.x, this.y);
@@ -62,7 +62,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 		
 	}
 		
-	private void mover(){
+	protected void mover(){
 		this.cantMov++;
 		
 		if ((this.cantMov<31)&&(this.zonaDeCombate.comprobarSalidaZona(this))){

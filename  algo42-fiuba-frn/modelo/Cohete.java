@@ -13,7 +13,7 @@ public class Cohete extends ObjetoVivo{
 			zonaDeCombate = zona;
 	}
 	
-	private void mover(){
+	protected void mover(){
 		if (!muerto) {
 			this.y = this.y + velY;
 			if (zonaDeCombate.comprobarSalidaZona(this))
