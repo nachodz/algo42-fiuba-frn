@@ -84,5 +84,139 @@ public class CombateIntegracionTest extends TestCase{
 		
 	}
 	
+		public void testDestruirCazaObtenerEnergia(){
+		int cantEnergia, i;
+		NaveVivaEnemiga caza;
+		FlotaEnemiga flota;
+		
+		caza = new Caza(this.zona,250,420);
+		flota = new FlotaEnemiga();
+		flota.agregarAvion(caza);
+		this.zona.agregarFlotaEnemiga(flota);
+		cantEnergia = this.algo42.getCantEnergia();
+		this.algo42.cargarCohete();
+		this.algo42.dispararCohete();
+		for (i=0;i<99;i++)
+			this.zona.combatir();
+		this.zona.quitarObjetosMuertos();
+		assertFalse(caza.estaVivo());
+		assertEquals(cantEnergia+1,this.algo42.getCantEnergia());
+	}
+	
+	public void testGanarEnergia(){
+		TanqueEnergia tanque;
+		int cantEnergia, i;
+		
+		tanque = new TanqueEnergia(this.zona,250,570);
+		this.zona.agregarActualizacionAlgo42(tanque);
+		cantEnergia = this.algo42.getCantEnergia();
+		for (i=0;i<10;i++){
+			this.zona.combatir();
+			this.algo42.moverArriba();
+		}
+		this.zona.quitarObjetosMuertos();
+		
+		assertEquals(cantEnergia+1,this.algo42.getCantEnergia());
+	}
+	
+	public void testGanarUnCohete(){
+		
+			Cohete cohete;
+			int cantCohetes, i;
+			
+			cohete = new Cohete(this.zona,250,570);
+			this.zona.agregarActualizacionAlgo42(cohete);
+			cantCohetes = this.algo42.getCantCohetes();
+			for (i=0;i<10;i++){
+				this.zona.combatir();
+				this.algo42.moverArriba();
+			}
+			this.zona.quitarObjetosMuertos();
+			
+			assertEquals(cantCohetes+1,this.algo42.getCantCohetes());
+
+	}
+	
+	public void testGanarUnTorpedo(){
+		
+		Torpedo torpedo;
+		int cantTorpedos, i;
+		
+		torpedo = new Torpedo(this.zona,250,570);
+		this.zona.agregarActualizacionAlgo42(torpedo);
+		cantTorpedos = this.algo42.getCantTorpedos();
+		for (i=0;i<10;i++){
+			this.zona.combatir();
+			this.algo42.moverArriba();
+		}
+		this.zona.quitarObjetosMuertos();
+		
+		assertEquals(cantTorpedos+1,this.algo42.getCantTorpedos());
+
+	}
+	
+	public void testObtenerPuntosPositivos(){
+		NaveVivaEnemiga avioneta;
+		FlotaEnemiga flota;
+		int i;
+		
+		avioneta = new Avioneta(this.zona,250,530);
+		flota = new FlotaEnemiga();
+		flota.agregarAvion(avioneta);
+		this.zona.agregarFlotaEnemiga(flota);
+		this.algo42.dispararLaser();
+		for (i=0;i<10;i++)
+			this.zona.combatir();
+		this.zona.quitarObjetosMuertos();
+		
+		assertEquals(20,this.zona.reportarPuntosBajas());
+	}
+	
+	public void testPerderPuntosDestruirAliado(){
+		NaveViva avion;
+		Flota flota;
+		int i;
+		
+		avion = new AvionCivil(this.zona,250,530);
+		flota = new Flota();
+		flota.agregarAvion(avion);
+		this.zona.agregarFlotaAliada(flota);
+		this.algo42.dispararLaser();
+		for (i=0;i<10;i++)
+			this.zona.combatir();
+		this.zona.quitarObjetosMuertos();
+		
+		assertTrue(esMajor(0,this.zona.reportarPuntosBajas()));
+	}
+	
+	public void testAvionGuiaDestruidoFlotaEnemigaEscapa(){
+		NaveVivaEnemiga avioneta, avionGuia, bombardero, caza, explorador;
+		FlotaEnemiga flota;
+		int i;
+		
+		avionGuia = new Avioneta(this.zona,250,500);
+		avioneta = new Avioneta(this.zona,100,300);
+		bombardero = new Bombardero(this.zona,400,240);
+		caza = new Caza(this.zona,50,100);
+		explorador = new Explorador(this.zona,250,200);
+		flota = new FlotaEnemiga();
+		flota.agregarAvionGuia(avionGuia);
+		flota.agregarAvion(avioneta);
+		flota.agregarAvion(bombardero);
+		flota.agregarAvion(caza);
+		flota.agregarAvion(explorador);
+		this.zona.agregarFlotaEnemiga(flota);
+		
+		this.algo42.dispararLaser();
+		for(i=0;i<500;i++) // es 500 para darle tiempo a las navesEnemigas a escapar
+			this.zona.combatir();
+		
+		assertFalse(avionGuia.estaVivo());
+		assertTrue(avioneta.seEscapo());
+		assertTrue(bombardero.seEscapo());
+		assertTrue(caza.seEscapo());
+		assertTrue(explorador.seEscapo());
+	}
+	
 
 }
