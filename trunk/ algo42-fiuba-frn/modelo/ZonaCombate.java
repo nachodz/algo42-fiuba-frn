@@ -100,7 +100,7 @@ public class ZonaCombate {
 		return this.algo42.getPosy();
 	}
 	
-	public void QuitarObjetosMuertos(){
+	public void quitarObjetosMuertos(){
 		List<ObjetoVivo> tempLista;
 		List<Proyectil> tempProyectiles;
 		ObjetoVivo objeto;
