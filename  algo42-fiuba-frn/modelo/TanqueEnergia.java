@@ -26,10 +26,11 @@ public class TanqueEnergia extends ObjetoVivo{
 		if (!muerto) { 
 			this.mover();
 			algo42 = zonaDeCombate.comprobarColisionAlgo42(this);
-			if (algo42 != null)
+			if (algo42 != null){
 				muerto = true;
 				algo42.cargarTanqueEnergia();
 		     }
-	  }
+		}
+   }
   
 }

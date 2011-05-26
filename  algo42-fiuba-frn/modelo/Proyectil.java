@@ -23,32 +23,33 @@ public abstract class Proyectil extends ObjetoVivo
 	{
 		  //se mueve en linea recta hacia adelante si es un proyectil enemigo o hacia atras si es un proyectil aliado.
 			int tempY;
-
 			if (this.enemigo) 
 				tempY = this.y + this.velY;
 			else 
 				tempY = this.y - this.velY;
-			if (zonaDeCombate.comprobarSalidaZona(this)) 
-				muerto = true; 
+			if (this.zonaDeCombate.comprobarSalidaZona(this)) 
+				this.muerto = true; 
 			else
 				 this.y = tempY ;
 	  }
     
-    public void vivir ()
-    {
+    public void vivir (){
 	  Atacable objetivo;
 
-		if (!this.muerto)
+		if (!this.muerto){
 		    this.mover();
-		    if (this.enemigo) 
-			   objetivo = zonaDeCombate.comprobarColisionAlgo42(this); 
-		    else
+		    if (this.enemigo)
+			   objetivo = zonaDeCombate.comprobarColisionAlgo42(this);
+		    else{
 		    	objetivo = zonaDeCombate.comprobarColisionFlotaEnemiga(this);
-			if (objetivo == null)
-				 objetivo = zonaDeCombate.comprobarColisionFlotaAliada(this);
-			if (objetivo != null)
+		    	if (objetivo == null)
+		    		objetivo = zonaDeCombate.comprobarColisionFlotaAliada(this);
+		    }
+			if (objetivo != null){
 				 objetivo.recibirDanio(this.hacerDanio());
 				 this.muerto = true;
+			}
+		}
   }
 	
 	

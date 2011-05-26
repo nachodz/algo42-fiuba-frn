@@ -7,6 +7,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 
 	private int frecuenciaDisparo;
 	private int turnosDisparo;
+	private int cantMov;
 	
 	public Bombardero(ZonaCombate unaZonaDeCombate, int posX, int posY){
 		super(unaZonaDeCombate,posX,posY,15,1,1);
@@ -18,11 +19,12 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 		this.energia = 4;
 		this.puntos = 30;
 		this.frecuenciaDisparo = 30;
-		this.turnosDisparo = 0;		
+		this.turnosDisparo = 0;
+		this.cantMov = 0;
 	}	
 	
 	
-	public void disparar(){
+	private void disparar(){
 		
 		Proyectil proyectil;
 		int numero = 1 + (int)(Math.random()* 3); //genera un numero aleatorio del 1 al 3
@@ -50,28 +52,31 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	
-	public void morir(){
-		
-		ProyectilCohete cohete = new ProyectilCohete((this.zonaDeCombate), true, (this.x), (this.y));
-		
-		ProyectilTorpedo torpedo = new ProyectilTorpedoSeguidor((this.zonaDeCombate), true, (this.x), (this.y));
+	private void morir(){
 		
 		this.muerto = true;
-	  
-		(this.zonaDeCombate).agregarActualizacionAlgo42(torpedo);
-		(this.zonaDeCombate).agregarActualizacionAlgo42(cohete);
+		Cohete cohete = new Cohete(this.zonaDeCombate, this.x, this.y);
+		Torpedo torpedo = new Torpedo(this.zonaDeCombate, this.x,this.y);	
+		this.zonaDeCombate.agregarActualizacionAlgo42(torpedo);
+		this.zonaDeCombate.agregarActualizacionAlgo42(cohete);
+		
 	}
-	
-	public void mover(){        //implementacion cambiada
 		
-		if (!((this.zonaDeCombate).comprobarSalidaZona(this))){
+	private void mover(){
+		this.cantMov++;
+		
+		if ((this.cantMov<31)&&(this.zonaDeCombate.comprobarSalidaZona(this))){
 			this.y += this.velY;
+			this.x += this.velX;
 		}
-		
 		else{
-			
-			this.velY *= -1;
-		}		
+			if(this.zonaDeCombate.comprobarSalidaZona(this)){
+				this.x = this.posInicialX;
+				this.y = this.posInicialY;
+			}
+			this.cantMov = 0;
+			this.velX = this.velX * -1;
+		}
 	}
 	
 	

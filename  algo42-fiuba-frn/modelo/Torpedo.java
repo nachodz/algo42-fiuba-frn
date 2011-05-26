@@ -8,7 +8,7 @@ public class Torpedo extends ObjetoVivo {
   
 	public Torpedo (ZonaCombate zona, int x, int y){
 		super(x,y,2,0,2);
-		if (zonaDeCombate.comprobarSalidaZona(this))
+		if (zona.comprobarSalidaZona(this))
 			throw new ObjetoFueraDeZonaDeCombateException();
 		else
 			zonaDeCombate = zona;
@@ -27,10 +27,11 @@ public class Torpedo extends ObjetoVivo {
 	    if (!muerto) { 
 			this.mover();
 			algo42 = zonaDeCombate.comprobarColisionAlgo42(this);
-			if (algo42 != null)
+			if (algo42 != null){
 				muerto = true;
 				algo42.cargarTorpedo(); 
 		    }
+	    }
 	}
 			
 }

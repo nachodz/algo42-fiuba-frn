@@ -11,6 +11,8 @@ public abstract class ObjetoVivo extends ObjetoPosicionable{
 		super(x,y,radio);
 		this.posInicialX = x;
 		this.posInicialY = y;
+		this.velX = velX;
+		this.velY = velY;
 		this.muerto = false;
 	}
 	

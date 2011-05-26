@@ -36,7 +36,9 @@ public class FlotaEnemiga{
 			else this.puntosBajas += avion.obtenerPuntos();
 		}
 		this.listaAviones = tempLista;
-		if (!this.avionGuia.estaVivo()) this.puntosBajas += avionGuia.obtenerPuntos(); 
+		if (this.avionGuia != null)
+			if (!this.avionGuia.estaVivo())
+				this.puntosBajas += avionGuia.obtenerPuntos(); 
 	}
 	
 	public int reportarPuntosBajas(){
@@ -46,19 +48,26 @@ public class FlotaEnemiga{
 	public void vivir(){
 
 		Iterator<NaveVivaEnemiga> iterador = this.listaAviones.iterator();
-		while(iterador.hasNext()){
-			if (this.avionGuia.estaVivo()) 
+		if (this.avionGuia == null){
+			while(iterador.hasNext())
 				iterador.next().vivir();
-			else
-				iterador.next().huir();
-		}		
+		}
+		else{
+			while(iterador.hasNext()){
+				if (this.avionGuia.estaVivo()) 
+					iterador.next().vivir();
+				else
+					iterador.next().huir();
+			}
+		}
 	}
 	
 	public Atacable comprobarColision(ObjetoPosicionable objeto){
 		NaveVivaEnemiga avion;
 
 		Iterator<NaveVivaEnemiga> iterador = this.listaAviones.iterator();
-		if (this.avionGuia.huboColision(objeto)) return this.avionGuia;
+		if (this.avionGuia != null)
+			if (this.avionGuia.huboColision(objeto)) return this.avionGuia;
 		while(iterador.hasNext()){
 			avion = iterador.next();
 			if (avion.huboColision(objeto)) return avion;
