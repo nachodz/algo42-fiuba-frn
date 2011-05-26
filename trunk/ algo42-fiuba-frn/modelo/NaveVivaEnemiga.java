@@ -23,7 +23,7 @@ public abstract class NaveVivaEnemiga extends NaveViva{
 		if (!(this.escapo)){
 			if ((this.velY) > 0 ){
 				
-				(this.velY) -= 1; 
+				(this.velY) *= -1; 
 			}
 			
 			this.y -= this.velY;
