@@ -22,13 +22,11 @@ public class Flota {
 		NaveViva avion;
 
 		Iterator<NaveViva> iterador = this.listaAviones.iterator();
-		boolean hubo = false;
-		while((!hubo)&&(iterador.hasNext())){
+		while(iterador.hasNext()){
 			avion = iterador.next();
-			if (avion.huboColision(objeto)) hubo = true;
+			if (avion.huboColision(objeto)) return avion;
 		}
-		if (hubo) return avion;
-		else return null;
+		return null;
 	}
 	
 	public void quitarBajas(){
@@ -50,10 +48,7 @@ public class Flota {
 	}
 	
 	public void vivir(){
-		List<NaveViva> tempLista;
-		NaveViva avion;
 		
-		tempLista = new ArrayList<NaveViva>();
 		Iterator<NaveViva> iterador = this.listaAviones.iterator();
 		while(iterador.hasNext()){
 			iterador.next().vivir();

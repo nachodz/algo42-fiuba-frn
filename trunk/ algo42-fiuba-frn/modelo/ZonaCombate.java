@@ -21,7 +21,7 @@ public class ZonaCombate {
 		this.flotaAliada = null;
 		this.flotaEnemiga = null;
 		this.listaActualizaciones = new ArrayList<ObjetoVivo>();
-		this.listaProyectiles = new ArrayList<Proyectiles>();
+		this.listaProyectiles = new ArrayList<Proyectil>();
 		
 	}
 	
@@ -46,8 +46,8 @@ public class ZonaCombate {
 	}
 	
 	public void combatir(){
-		if(this.flotaAliada) this.flotaAliada.vivir();
-		if(this.flotaEnemiga) this.flotaEnemiga.vivir();
+		if(this.flotaAliada != null) this.flotaAliada.vivir();
+		if(this.flotaEnemiga != null) this.flotaEnemiga.vivir();
 		Iterator<Proyectil> iProyectil = this.listaProyectiles.iterator();
 		while(iProyectil.hasNext()){
 			iProyectil.next().vivir();
@@ -58,8 +58,9 @@ public class ZonaCombate {
 		}	
 	}
 	
-	public Atacable comprobarColisionAlgo42(ObjetoPosicionable objeto){
+	public Algo42 comprobarColisionAlgo42(ObjetoPosicionable objeto){
 		if(this.algo42.huboColision(objeto)) return this.algo42;
+		else return null;
 	}
 	
 	public Atacable comprobarColisionFlotaAliada(ObjetoPosicionable objeto){
@@ -116,21 +117,21 @@ public class ZonaCombate {
 		Iterator<Proyectil> iProyectiles = this.listaProyectiles.iterator();
 		while(iProyectiles.hasNext()){
 			proyectil = iProyectiles.next();
-			if (proyectil.estaVivo()) tempProyectiles.add(objeto);	
+			if (proyectil.estaVivo()) tempProyectiles.add(proyectil);	
 		}
 		this.listaProyectiles = tempProyectiles;
 		
-		if(this.flotaAliada) this.flotaAliada.quitarBajas();
-		if(this.flotaEnemiga) this.flotaEnemiga.quitarBajas();
+		if(this.flotaAliada != null) this.flotaAliada.quitarBajas();
+		if(this.flotaEnemiga != null) this.flotaEnemiga.quitarBajas();
 	}
 	
 	public int reportarPuntosBajas(){
 		int puntosEnemigos,puntosAliados;
 		
-		if(this.flotaAliada) puntosAliados = this.flotaAliada.reportarPuntosBajas();
+		if(this.flotaAliada != null) puntosAliados = this.flotaAliada.reportarPuntosBajas();
 		else puntosAliados = 0;
 		
-		if(this.flotaEnemiga) puntosEnemigos = this.flotaEnemiga.reportarPuntosBajas();
+		if(this.flotaEnemiga != null) puntosEnemigos = this.flotaEnemiga.reportarPuntosBajas();
 		else puntosEnemigos = 0;
 		
 		return puntosAliados+puntosEnemigos;	

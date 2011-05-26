@@ -44,10 +44,7 @@ public class FlotaEnemiga{
 	}
 	
 	public void vivir(){
-		List<NaveVivaEnemiga> tempLista;
-		NaveVivaEnemiga avion;
-		
-		tempLista = new ArrayList<NaveVivaEnemiga>();
+
 		Iterator<NaveVivaEnemiga> iterador = this.listaAviones.iterator();
 		while(iterador.hasNext()){
 			if (this.avionGuia.estaVivo()) 
@@ -61,14 +58,12 @@ public class FlotaEnemiga{
 		NaveVivaEnemiga avion;
 
 		Iterator<NaveVivaEnemiga> iterador = this.listaAviones.iterator();
-		boolean hubo = false;
 		if (this.avionGuia.huboColision(objeto)) return this.avionGuia;
-		while((!hubo)&&(iterador.hasNext())){
+		while(iterador.hasNext()){
 			avion = iterador.next();
-			if (avion.huboColision(objeto)) hubo = true;
+			if (avion.huboColision(objeto)) return avion;
 		}
-		if (hubo) return avion;
-		else return null;
+		return null;
 	}
 	
 	

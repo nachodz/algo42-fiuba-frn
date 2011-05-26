@@ -5,6 +5,12 @@ public abstract class NaveVivaEnemiga extends NaveViva{
 	protected boolean escapo;
 	protected boolean esGuia;
 	
+	public NaveVivaEnemiga(ZonaCombate zona,int x,int y,int radio,int velX,int velY){
+		super(zona,x,y,radio,velX,velY);
+		this.escapo = false;
+		this.esGuia = false;
+	}
+	
 		
 	public boolean seEscapo(){
 		
@@ -20,10 +26,14 @@ public abstract class NaveVivaEnemiga extends NaveViva{
 				(this.velY) -= 1; 
 			}
 			
-			this.posY -= this.velY;
-			this.escapo = (this.zonaDeCombate).comprobarSalidaZonaDe: this;
+			this.y -= this.velY;
+			this.escapo = (this.zonaDeCombate).comprobarSalidaZona(this);
 		}
 
+	}
+	
+	public void hacerGuia(){
+		this.esGuia = true;
 	}
 
 }
