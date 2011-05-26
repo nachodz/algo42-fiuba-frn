@@ -19,7 +19,8 @@ public class Algo42 extends ObjetoPosicionable implements Atacable{
 		this.energia = 10;
 		this.muerto = false;
 		this.velocidad = 4;
-		this.cantCohetes = this.cantTorpedos = 0;
+		this.cantCohetes = 0;
+		this.cantTorpedos = 0;
 	}
 	
 	public void cargarCohete(){
@@ -50,7 +51,7 @@ public class Algo42 extends ObjetoPosicionable implements Atacable{
 	public void dispararTorpedo(){
 		Proyectil pTorpedo;
 		
-		if (this.cantCohetes > 0){
+		if (this.cantTorpedos > 0){
 			pTorpedo = new ProyectilTorpedo(this.zonaDeCombate,false,this.getPosx(),this.getPosy());
 			this.zonaDeCombate.agregarProyectil(pTorpedo);
 			this.cantTorpedos--;
