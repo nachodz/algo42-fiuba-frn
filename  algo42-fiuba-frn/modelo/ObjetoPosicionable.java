@@ -32,7 +32,7 @@ public class ObjetoPosicionable {
 		tempX = objeto.getPosx();
 		tempRadio = objeto.getRadio();
 		
-		return((Math.sqrt(tempX-this.x)+(Math.sqrt(tempY-this.y)))<(this.radio+tempRadio));
+		return ( (Math.hypot((tempX-this.x), (tempY-this.y))) <(this.radio+tempRadio));
 				
 	}
 

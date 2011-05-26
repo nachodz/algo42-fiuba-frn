@@ -5,7 +5,7 @@ public class ProyectilTorpedoSeguidor extends ProyectilTorpedo {
 	public ProyectilTorpedoSeguidor(ZonaCombate zona, boolean enemigo, int x, int y){
 		super(zona,enemigo,x,y); 
 	}
-	private void mover(){
+	protected void mover(){
 	//persigue al algo42 sin descanso hasta hacerle un impacto
 	int x, y;
 
