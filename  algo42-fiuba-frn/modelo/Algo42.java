@@ -38,7 +38,7 @@ public class Algo42 extends ObjetoPosicionable implements Atacable{
 		Proyectil pCohete;
 		
 		if (this.cantCohetes > 0){
-			pCohete = new ProyectilCohete(this.zonaDeCombate,this.getPosx(),this.getPosy(),false);
+			pCohete = new ProyectilCohete(this.zonaDeCombate,false,this.getPosx(),this.getPosy());
 			this.zonaDeCombate.agregarProyectil(pCohete);
 			this.cantCohetes--;
 		}
@@ -51,7 +51,7 @@ public class Algo42 extends ObjetoPosicionable implements Atacable{
 		Proyectil pTorpedo;
 		
 		if (this.cantCohetes > 0){
-			pTorpedo = new ProyectilTorpedo(this.zonaDeCombate,this.getPosx(),this.getPosy(),false);
+			pTorpedo = new ProyectilTorpedo(this.zonaDeCombate,false,this.getPosx(),this.getPosy());
 			this.zonaDeCombate.agregarProyectil(pTorpedo);
 			this.cantTorpedos--;
 		}
@@ -63,7 +63,7 @@ public class Algo42 extends ObjetoPosicionable implements Atacable{
 	public void dispararLaser(){
 		Proyectil pLaser;
 		
-		pLaser = new ProyectilLaser(this.zonaDeCombate,this.getPosx(),this.getPosy(),false);
+		pLaser = new ProyectilLaser(this.zonaDeCombate,false,this.getPosx(),this.getPosy());
 		this.zonaDeCombate.agregarProyectil(pLaser);
 	}
 	

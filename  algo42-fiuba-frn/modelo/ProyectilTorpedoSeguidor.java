@@ -2,30 +2,24 @@ package algo42Full.modelo;
 
 public class ProyectilTorpedoSeguidor extends ProyectilTorpedo {
     
-	public ProyectilLaser(ZonaCombate zona, boolean enemy, int x, int y) 
-	{
-		super(zona,enemy,x,y);
-		this.setRadio: 3;
-		velX = 4;
-		velY = 4;
-		danio = 1;
+	public ProyectilTorpedoSeguidor(ZonaCombate zona, boolean enemigo, int x, int y){
+		super(zona,enemigo,x,y); 
 	}
-	private void mover ()
-	{
+	private void mover(){
 	//persigue al algo42 sin descanso hasta hacerle un impacto
-	int tempY, x, y;
+	int x, y;
 
 	x = zonaDeCombate.getAlgo42PosX();
 	y = zonaDeCombate.getAlgo42PosY();
 	
-	if (x < posX) 
-		posX = posX - velX;
+	if (x < this.x) 
+		this.x = this.x - this.velX;
 	else 
-		posX = posX + velX;
+		this.x = this.x + this.velX;
 	
-	if (y < posY) 
-		posY = posY - velY; 
+	if (y < this.y) 
+		this.y = this.y - this.velY; 
 	else 
-		posY = posY + velY;
+		this.y = this.y + this.velY;
 	}	
 }

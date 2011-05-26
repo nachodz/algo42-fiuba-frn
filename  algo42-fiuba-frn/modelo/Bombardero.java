@@ -1,31 +1,24 @@
 package algo42Full.modelo;
 
+import algo42Full.modelo.excepciones.*;
+
 public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	
-	private int cantMov;
+
 	private int frecuenciaDisparo;
 	private int turnosDisparo;
 	
 	public Bombardero(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		
-		this.posX = posX;
-		this.posY = posY;
-		this.radio = 15;
+		super(unaZonaDeCombate,posX,posY,15,1,1);
 		if (unaZonaDeCombate.comprobarSalidaZona(this)){
 			
 			throw new ObjetoFueraDeZonaDeCombateException();			
 		}
 		
-		this.zonaDeCombate = unaZonaDeCombate;
 		this.energia = 4;
-		this.velX = 1;
-		this.velY = 1;
-		this.muerto = false;
 		this.puntos = 30;
-		this.cantMov = 0;
 		this.frecuenciaDisparo = 30;
 		this.turnosDisparo = 0;		
-		this.escapo = false;
 	}	
 	
 	
@@ -35,18 +28,20 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 		int numero = 1 + (int)(Math.random()* 3); //genera un numero aleatorio del 1 al 3
 		
 		switch(numero){
-		case (numero = 1):
-			proyectil = ProyectilLaser((this.zonaDeCombate), true, (this.posX), (this.posY + 1));
+		case 1:
+			proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
 			break;
 		
-		case (numero = 2):
-			proyectil = ProyectilTorpedoSeguidor((this.zonaDeCombate), true, (this.posX), (this.posY + 1));
+		case 2:
+			proyectil = new ProyectilTorpedoSeguidor((this.zonaDeCombate), true, (this.x), (this.y + 1));
 			break;
 		
-		case (numero = 3):
-			proyectil = ProyectilCohete((this.zonaDeCombate), true, (this.posX), (this.posY + 1));
+		case 3:
+			proyectil = new ProyectilCohete((this.zonaDeCombate), true, (this.x), (this.y + 1));
 			break;
-		
+		default:
+			proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
+			break;
 		}
 		
 		(this.zonaDeCombate).agregarProyectil(proyectil);
@@ -57,9 +52,9 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	
 	public void morir(){
 		
-		ProyectilCohete cohete = ProyectilCohete((this.zonaDeCombate), true, (this.posX), (this.posY));
+		ProyectilCohete cohete = new ProyectilCohete((this.zonaDeCombate), true, (this.x), (this.y));
 		
-		ProyectilTorpedo torpedo = ProyectilTorpedoSeguidor((this.zonaDeCombate), true, (this.posX), (this.posY));
+		ProyectilTorpedo torpedo = new ProyectilTorpedoSeguidor((this.zonaDeCombate), true, (this.x), (this.y));
 		
 		this.muerto = true;
 	  
@@ -69,13 +64,13 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	
 	public void mover(){        //implementacion cambiada
 		
-		if (!((this.zonaDeCombate).comprobarSalidaZona(self))){
-			this.posY += this.velY;
+		if (!((this.zonaDeCombate).comprobarSalidaZona(this))){
+			this.y += this.velY;
 		}
 		
 		else{
 			
-			this.velY *= -1.
+			this.velY *= -1;
 		}		
 	}
 	
@@ -95,14 +90,14 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	
 	public void vivir(){
 		
-		Algo42 algo42;
+		Atacable algo42;
 		
 		if (!(this.muerto)){
 			
 			this.mover();
 			algo42 = (this.zonaDeCombate).comprobarColisionAlgo42(this);
 			
-			if (algo42 != void){
+			if (algo42 != null){
 				algo42.recibirDanio(20);
 				this.morir();
 			}

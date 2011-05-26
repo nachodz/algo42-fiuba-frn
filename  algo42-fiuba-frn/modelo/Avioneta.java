@@ -1,17 +1,15 @@
 package algo42Full.modelo;
 
+import algo42Full.modelo.excepciones.*;
+
 public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	
 	
-	private int cantMov;
 	private int frecuenciaDisparo;
 	private int turnosDisparo;
 	
 	public Avioneta(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		
-		this.posX = posX;
-		this.posY = posY;
-		this.radio = 7;
+		super(unaZonaDeCombate,posX,posY,7,0,4);
 		if (unaZonaDeCombate.comprobarSalidaZona(this)){
 			
 			throw new ObjetoFueraDeZonaDeCombateException();			
@@ -19,14 +17,9 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 		
 		this.zonaDeCombate = unaZonaDeCombate;
 		this.energia = 1;
-		this.velX = 0;
-		this.velY = 4;
-		this.muerto = false;
 		this.puntos = 20;
-		this.cantMov = 0;
 		this.frecuenciaDisparo = 40;
 		this.turnosDisparo = 0;		
-		this.escapo = false;
 	}	
 	
 	
@@ -34,32 +27,32 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 		
 		ProyectilLaser proyectilLaser;
 		
-		proyectilLaser(this.zonaDeCombate, true, this.posX, (this.posY) + 1);
+		proyectilLaser = new ProyectilLaser(this.zonaDeCombate, true, this.x, (this.y) + 1);
 		(this.zonaDeCombate).agregarProyectil(proyectilLaser);
 	}
 	
 	
 	public void mover(){        //implementacion cambiada
 		
-		if (!((this.zonaDeCombate).comprobarSalidaZona(self))){
-			this.posY += this.velY;
+		if (!((this.zonaDeCombate).comprobarSalidaZona(this))){
+			this.y += this.velY;
 		}
 		
 		else{
 			
-			this.velY *= -1.
+			this.velY *= -1;
 		}		
 	}
 	
 	public void vivir(){
 		
-		Algo42 algo42;
+		Atacable algo42;
 		
 		if (!(this.muerto)){
 			this.mover();
 			algo42 = (this.zonaDeCombate).comprobarColisionAlgo42(this);
 			
-			if (algo42 != void){
+			if (algo42 != null){
 				algo42.recibirDanio(5);
 				this.muerto = true;
 			}

@@ -2,9 +2,16 @@ package algo42Full.modelo;
 
 public abstract class NaveViva extends ObjetoVivo implements Atacable {
 	
-	protected int energia = 0;
-	protected int puntos = 0;
+	protected int energia;
+	protected int puntos;
 	protected ZonaCombate zonaDeCombate;
+	
+	public NaveViva(ZonaCombate zona,int x,int y,int radio,int velX,int velY){
+		super(x,y,radio,velX,velY);
+		this.energia = 0;
+		this.puntos = 0;
+		this.zonaDeCombate = zona;
+	}
 	
 	public int obtenerPuntos(){
 		

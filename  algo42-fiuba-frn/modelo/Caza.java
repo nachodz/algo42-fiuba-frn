@@ -1,36 +1,31 @@
 package algo42Full.modelo;
 
-public class Caza {
+import algo42Full.modelo.excepciones.*;
+
+public class Caza extends NaveVivaEnemiga implements Atacable{
 	
 	
 	private int frecuenciaDisparo;
 	private int turnosDisparo;
 	
 	public Caza(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		
-		this.posX = posX;
-		this.posY = posY;
-		this.radio = 10;
+		super(unaZonaDeCombate,posX,posY,10,0,3);
 		if (unaZonaDeCombate.comprobarSalidaZona(this)){
 			
 			throw new ObjetoFueraDeZonaDeCombateException();			
 		}
-		
-		this.zonaDeCombate = unaZonaDeCombate;
+
 		this.energia = 2;
-		this.velX = 0;
-		this.velY = 3;
-		this.muerto = false;
 		this.puntos = 30;
 	
 		this.frecuenciaDisparo = 20;
 		this.turnosDisparo = 0;		
-		this.escapo = false;
+
 	}	
 	
 	public void disparar(){
 		
-		ProyectilTorpedo proyectilTorpedo = ProyectilTorpedo((this.zonaDeCombate), true, (this.posX), (this.posY + 1));
+		ProyectilTorpedo proyectilTorpedo = new ProyectilTorpedo((this.zonaDeCombate), true, (this.x), (this.y + 1));
 		(this.zonaDeCombate).agregarProyectil(proyectilTorpedo);
 		
 	}
@@ -38,15 +33,15 @@ public class Caza {
 	public void morir(){
 		
 		this.muerto = true;
-		TanqueEnergia tanqueEnergia= TanqueEnergia((this.zonaDeCombate), (this.posX), (this.posY));
-		(this.zonaDeCombate).agregarActualilzacionAlgo42(tanqueEnergia);
+		TanqueEnergia tanqueEnergia= new TanqueEnergia((this.zonaDeCombate), (this.x), (this.y));
+		(this.zonaDeCombate).agregarActualizacionAlgo42(tanqueEnergia);
 	}
 	
 	public void mover(){
 		
-		this.posY = (this.posY) + (this.velY);
+		this.y = (this.y) + (this.velY);
 		if ((this.zonaDeCombate).comprobarSalidaZona(this)){
-			(this.posY) = (this.posInicialY);
+			(this.y) = (this.posInicialY);
 		}
 		
 	
@@ -70,12 +65,12 @@ public class Caza {
 	
 	public void vivir(){
 		
-		Algo42 algo42;
+		Atacable algo42;
 		
 		if (!(this.muerto)){
 			this.mover();
-			algo42 = (this.zonaDeCombate)comprobarColisionAlgo42(this);
-			if (algo42 != void){
+			algo42 = (this.zonaDeCombate).comprobarColisionAlgo42(this);
+			if (algo42 != null){
 				algo42.recibirDanio(5);
 				this.morir();
 			

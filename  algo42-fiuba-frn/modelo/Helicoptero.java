@@ -1,29 +1,24 @@
 package algo42Full.modelo;
 
+import algo42Full.modelo.excepciones.*;
+import java.lang.Math;
+
 public class Helicoptero extends NaveViva{
 	
 	private int radioMov;
 	private int angulo;
 	
 	public Helicoptero(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		
-		this.posX = posX;
-		this.posY = posY;
-		this.radio = 7;
+		super(unaZonaDeCombate,posX,posY,7,0,3);
 		if (unaZonaDeCombate.comprobarSalidaZona(this)){
 			
 			throw new ObjetoFueraDeZonaDeCombateException();			
 		}
 		
-		this.zonaDeCombate = unaZonaDeCombate;
 		this.energia = 1;
-		this.velX = 0;
-		this.velY = 3;
-		this.muerto = false;
 		this.puntos = -200;
 		this.radioMov = 150;
 		this.angulo = 90;
-	
 	}
 	
 	
@@ -39,29 +34,29 @@ public class Helicoptero extends NaveViva{
 		}
 		
 		else{
-			(this.angulo = 0);
+			this.angulo = 0;
 		}
 		
 
-		tempX  = ((double)(this.radioMov)) *(java.lang.Math.cos(this.angulo));
-		tempY = ((double)(this.radioMov)) *(java.lang.Math.sin(this.angulo));
-		centroX = this.posX;
-		centroY = (this.posY) + (this.radioMov);
-		this.posX = (int)(centroX + tempX);
-		this.posY = (int) (centroY - tempY);
+		tempX  = (int) (((double)(this.radioMov)) *(Math.cos(this.angulo)));
+		tempY = (int) (((double)(this.radioMov)) *(Math.sin(this.angulo)));
+		centroX = this.x;
+		centroY = (this.y) + (this.radioMov);
+		this.x = (int)(centroX + tempX);
+		this.y = (int) (centroY - tempY);
 
 	}
 	
 	public void vivir(){
 		
-		Algo42 algo42tmp;
+		Atacable algo42tmp;
 		
 		if (!(this.muerto)){
 			
 			this.mover();
-			algo42 = zonaDeCombate.comprobarColisionAlgo42Con(this);
-			if (algo42 != void){
-				algo42.recibirDanio(20);   //hacer q se muera
+			algo42tmp = zonaDeCombate.comprobarColisionAlgo42(this);
+			if (algo42tmp != null){
+				algo42tmp.recibirDanio(20);   //hacer q se muera
 				this.muerto = true;
 			}
 			
