@@ -6,14 +6,12 @@ public abstract class Proyectil extends ObjetoVivo
 	protected boolean enemigo;
 	protected ZonaCombate zonaDeCombate;
 	
-	public Proyectil (ZonaCombate zona, boolean enemy, int x, int y)
+	public Proyectil (ZonaCombate zona, boolean enemigo, int x, int y,int radio,int velX,int velY,int danio)
 	{
-		this.enemigo = enemy;
+		super(x,y,radio,velX,velY);
+		this.enemigo = enemigo;
 		this.zonaDeCombate = zona;
-		this.posInicialX = x;
-		this.posInicialY = y;
-		this.setPosicionXY(x,y);
-		muerto = false;
+		this.danio = danio;
 	}
 	
 	public int hacerDanio ()
@@ -27,13 +25,13 @@ public abstract class Proyectil extends ObjetoVivo
 			int tempY;
 
 			if (this.enemigo) 
-				tempY = posY + velY;
+				tempY = this.y + this.velY;
 			else 
-				tempY = posY - velY;
+				tempY = this.y - this.velY;
 			if (zonaDeCombate.comprobarSalidaZona(this)) 
 				muerto = true; 
 			else
-				 posY = tempY ;
+				 this.y = tempY ;
 	  }
     
     public void vivir ()
