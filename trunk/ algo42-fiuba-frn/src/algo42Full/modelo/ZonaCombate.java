@@ -2,8 +2,8 @@ package algo42Full.modelo;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import ar.uba.fi.algo3.titiritero.ObjetoVivo;
 
 public class ZonaCombate {
 	private int ancho;
@@ -12,7 +12,7 @@ public class ZonaCombate {
 	private FlotaEnemiga flotaEnemiga;
 	private Flota flotaAliada;
 	private List<Proyectil> listaProyectiles;
-	private List<ObjetoVivo> listaActualizaciones; //revisar esto!!
+	private List<ObjetoVivo> listaActualizaciones; 
 	
 	public ZonaCombate(int alto,int ancho){
 		this.alto = alto; // se podría chekear
@@ -45,43 +45,43 @@ public class ZonaCombate {
 		this.listaProyectiles.add(proyectil);
 	}
 	
+
 	public void combatir(){
+		
 		if(this.flotaAliada != null) this.flotaAliada.vivir();
 		if(this.flotaEnemiga != null) this.flotaEnemiga.vivir();
-		Iterator<Proyectil> iProyectil = this.listaProyectiles.iterator();
-		while(iProyectil.hasNext()){
-			iProyectil.next().vivir();
+		for (Proyectil proyect: this.listaProyectiles){
+			proyect.vivir();
 		}
-		Iterator<ObjetoVivo> iterador = this.listaActualizaciones.iterator();
-		while(iterador.hasNext()){
-			iterador.next().vivir();
-		}	
+		for (ObjetoVivo actualizacion: this.listaActualizaciones){
+			actualizacion.vivir();
+		}
 	}
 	
-	public Algo42 comprobarColisionAlgo42(ObjetoPosicionable objeto){
+	public Algo42 comprobarColisionAlgo42(ObjetoColisionable objeto){
 		if(this.algo42.huboColision(objeto)) return this.algo42;
 		else return null;
 	}
 	
-	public Atacable comprobarColisionFlotaAliada(ObjetoPosicionable objeto){
+	public Atacable comprobarColisionFlotaAliada(ObjetoColisionable objeto){
 		if(this.flotaAliada != null){
 			return this.flotaAliada.comprobarColision(objeto);
 		}
 		else return null;
 	}
 	
-	public Atacable comprobarColisionFlotaEnemiga(ObjetoPosicionable objeto){
+	public Atacable comprobarColisionFlotaEnemiga(ObjetoColisionable objeto){
 		if(this.flotaEnemiga != null ){
 			return this.flotaEnemiga.comprobarColision(objeto);
 		}
 		else return null;
 	}
 	
-	public boolean comprobarSalidaZona(ObjetoPosicionable objeto){
+	public boolean comprobarSalidaZona(ObjetoColisionable objeto){
 		int tempX,tempY,tempRadio, x,y,x2,y2;
 		
-		tempX = objeto.getPosx();
-		tempY = objeto.getPosy();
+		tempX = objeto.getX();
+		tempY = objeto.getY();
 		tempRadio = objeto.getRadio();
 		x = tempX+tempRadio;
 		y = tempY+tempRadio;
@@ -93,34 +93,27 @@ public class ZonaCombate {
 	}
 	
 	public int getAlgo42PosX(){
-		return this.algo42.getPosx();
+		return this.algo42.getX();
 	}
 	
 	public int getAlgo42PosY(){
-		return this.algo42.getPosy();
+		return this.algo42.getY();
 	}
 	
+	
 	public void quitarObjetosMuertos(){
-		List<ObjetoVivo> tempLista;
-		List<Proyectil> tempProyectiles;
-		ObjetoVivo objeto;
-		Proyectil proyectil;
 		
-		tempLista = new ArrayList<ObjetoVivo>();
-		Iterator<ObjetoVivo> iterador = this.listaActualizaciones.iterator();
-		while(iterador.hasNext()){
-			objeto = iterador.next();
-			if (objeto.estaVivo()) tempLista.add(objeto);	
+		List<ObjetoVivo> tempLista  = new ArrayList<ObjetoVivo>();
+		for (ObjetoVivo actualizacion : this.listaActualizaciones){
+			if (actualizacion.estaVivo()) tempLista.add(actualizacion);
 		}
 		this.listaActualizaciones = tempLista;
-		tempProyectiles = new ArrayList<Proyectil>();
-		Iterator<Proyectil> iProyectiles = this.listaProyectiles.iterator();
-		while(iProyectiles.hasNext()){
-			proyectil = iProyectiles.next();
-			if (proyectil.estaVivo()) tempProyectiles.add(proyectil);	
+		List<Proyectil> tempProyectiles = new ArrayList<Proyectil>();
+		for (Proyectil proyect : this.listaProyectiles){
+			if (proyect.estaVivo()) tempProyectiles.add(proyect);
 		}
 		this.listaProyectiles = tempProyectiles;
-		
+	
 		if(this.flotaAliada != null) this.flotaAliada.quitarBajas();
 		if(this.flotaEnemiga != null) this.flotaEnemiga.quitarBajas();
 	}

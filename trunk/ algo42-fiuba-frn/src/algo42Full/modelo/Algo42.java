@@ -2,7 +2,7 @@ package algo42Full.modelo;
 
 import algo42Full.modelo.excepciones.*;
 
-public class Algo42 extends ObjetoPosicionable implements Atacable{
+public class Algo42 extends ObjetoColisionable implements Atacable{
 	private int energia;
 	private ZonaCombate zonaDeCombate;
 	private int cantCohetes;
@@ -39,7 +39,7 @@ public class Algo42 extends ObjetoPosicionable implements Atacable{
 		Proyectil pCohete;
 		
 		if (this.cantCohetes > 0){
-			pCohete = new ProyectilCohete(this.zonaDeCombate,false,this.getPosx(),this.getPosy());
+			pCohete = new ProyectilCohete(this.zonaDeCombate,false,this.getX(),this.getY());
 			this.zonaDeCombate.agregarProyectil(pCohete);
 			this.cantCohetes--;
 		}
@@ -52,7 +52,7 @@ public class Algo42 extends ObjetoPosicionable implements Atacable{
 		Proyectil pTorpedo;
 		
 		if (this.cantTorpedos > 0){
-			pTorpedo = new ProyectilTorpedo(this.zonaDeCombate,false,this.getPosx(),this.getPosy());
+			pTorpedo = new ProyectilTorpedo(this.zonaDeCombate,false,this.getX(),this.getY());
 			this.zonaDeCombate.agregarProyectil(pTorpedo);
 			this.cantTorpedos--;
 		}
@@ -64,7 +64,7 @@ public class Algo42 extends ObjetoPosicionable implements Atacable{
 	public void dispararLaser(){
 		Proyectil pLaser;
 		
-		pLaser = new ProyectilLaser(this.zonaDeCombate,false,this.getPosx(),this.getPosy());
+		pLaser = new ProyectilLaser(this.zonaDeCombate,false,this.getX(),this.getY());
 		this.zonaDeCombate.agregarProyectil(pLaser);
 	}
 	

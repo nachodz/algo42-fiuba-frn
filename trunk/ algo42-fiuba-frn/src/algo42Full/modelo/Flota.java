@@ -1,7 +1,6 @@
 package algo42Full.modelo;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -18,25 +17,17 @@ public class Flota {
 		this.listaAviones.add(avion);
 	}
 	
-	public Atacable comprobarColision(ObjetoPosicionable objeto){
-		NaveViva avion;
-
-		Iterator<NaveViva> iterador = this.listaAviones.iterator();
-		while(iterador.hasNext()){
-			avion = iterador.next();
+	public Atacable comprobarColision(ObjetoColisionable objeto){
+		for( NaveViva avion : this.listaAviones){
 			if (avion.huboColision(objeto)) return avion;
 		}
 		return null;
 	}
 	
 	public void quitarBajas(){
-		List<NaveViva> tempLista;
-		NaveViva avion;
 		
-		tempLista = new ArrayList<NaveViva>();
-		Iterator<NaveViva> iterador = this.listaAviones.iterator();
-		while(iterador.hasNext()){
-			avion = iterador.next();
+		List<NaveViva> tempLista = new ArrayList<NaveViva>();
+		for (NaveViva avion : this.listaAviones){
 			if(avion.estaVivo()) tempLista.add(avion);
 			else this.puntosBajas += avion.obtenerPuntos();
 		}
@@ -48,10 +39,8 @@ public class Flota {
 	}
 	
 	public void vivir(){
-		
-		Iterator<NaveViva> iterador = this.listaAviones.iterator();
-		while(iterador.hasNext()){
-			iterador.next().vivir();
+		for (NaveViva nave : this.listaAviones ){
+			nave.vivir();
 		}
 	}
 	
