@@ -1,49 +1,20 @@
 package algo42Full.modelo;
 
-import algo42Full.modelo.excepciones.*;
-import ar.uba.fi.algo3.titiritero.ObjetoVivo;
 
-public class Torpedo extends ObjetoColisionable implements ObjetoVivo {
+public class Torpedo extends ActualizacionAlgo42{
 	
-	protected boolean muerto;
-	protected int velX;
-	protected int velY;
-	protected int posInicialX;
-	protected int posInicialY;
-	private ZonaCombate zonaDeCombate;
+
   
 	public Torpedo (ZonaCombate zona, int x, int y){
-		super(x,y,2);
-		this.posInicialX = x;
-		this.posInicialY = y;
-		this.velX = 0;
-		this.velY = 2;
-		this.muerto = false;
-		if (zona.comprobarSalidaZona(this))
-			throw new ObjetoFueraDeZonaDeCombateException();
-		else
-			zonaDeCombate = zona;
+		super(zona,x,y,2);
 	}
 	
-	
-	public boolean estaVivo(){
-		if (muerto) return false;
-		else return true;
-	}
-	
-	  private void mover(){
-			if (!muerto) {
-				this.y = this.y + velY;
-				if (zonaDeCombate.comprobarSalidaZona(this))
-						muerto = true;
-			}
-	}
-	  public void vivir (){
+	public void vivir (){
 	    Algo42 algo42;
 					
 	    if (!muerto) { 
 			this.mover();
-			algo42 = zonaDeCombate.comprobarColisionAlgo42(this);
+			algo42 = this.zonaDeCombate.comprobarColisionAlgo42(this);
 			if (algo42 != null){
 				muerto = true;
 				algo42.cargarTorpedo(); 
