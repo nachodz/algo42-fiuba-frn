@@ -42,14 +42,14 @@ public class Ventana extends Frame implements SuperficieDeDibujo{
     private Image imagen;
     
 	public void paint(Graphics g) {
-		g.drawImage(this.imagen, 8, 28, null);
+		g.drawImage(this.imagen, 0, 0, null);
 	}
 
 	public void limpiar() {
 		if(this.imagen == null)
 			this.imagen = this.createImage(getSize().width, getSize().height);
 		Graphics superficieParaDibujar =  this.imagen.getGraphics();
-		superficieParaDibujar.setColor(Color.WHITE);// 
+		superficieParaDibujar.setColor(Color.BLACK);// 
 		superficieParaDibujar.fillRect(0, 0, this.getSize().width, this.getSize().height);		
 	}
 	
@@ -66,6 +66,7 @@ public class Ventana extends Frame implements SuperficieDeDibujo{
 		setSize(ancho, alto);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension frameSize = getSize();
+		this.setResizable(false);
 		int x = (screenSize.width - frameSize.width) / 2;
 		int y = (screenSize.height - frameSize.height) / 2;
 		setLocation(x, y);

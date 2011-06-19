@@ -7,6 +7,7 @@ import java.util.List;
 
 import ar.uba.fi.algo3.titiritero.audio.Reproductor;
 
+
 /**
  * @author Nicolas
  * Esta clase es la encargada de manejar todo el gameloop. Básicamente tiene una lista
@@ -20,8 +21,9 @@ public class ControladorJuego implements Runnable {
 		this.mouseClickObservadores = new ArrayList<MouseClickObservador>();
 		this.keyPressedObservadores = new ArrayList<KeyPressedObservador>();
 		this.estaReproductorActivo = activarReproductor;
-		if(this.estaReproductorActivo)
-			this.reproductor = new Reproductor();		
+		if(this.estaReproductorActivo){
+			this.reproductor = new Reproductor();	
+		}
 	}
 	
 	public boolean estaEnEjecucion(){
@@ -77,16 +79,22 @@ public class ControladorJuego implements Runnable {
 	 */
 	public void detenerJuego(){
 		this.estaEnEjecucion = false;
-		if(reproductor!=null)
+		if(reproductor!=null){
 			this.reproductor.apagar();
+		}
 	}
 	
+
 	public void agregarObjetoVivo(ObjetoVivo objetoVivo){
 		objetosVivos.add(objetoVivo);
 	}
 	
 	public void removerObjetoVivo(ObjetoVivo objetoVivo){
 		objetosVivos.remove(objetoVivo);
+	}
+	
+	public void removerTodosObjetosVivos(){
+		this.objetosVivos.clear();
 	}
 
 	public void agregarDibujable(Dibujable unDibujable){
@@ -95,6 +103,10 @@ public class ControladorJuego implements Runnable {
 	
 	public void removerDibujable(Dibujable unDibujable){
 		dibujables.remove(unDibujable);
+	}
+	
+	public void removerTodosDibujables(){
+		dibujables.clear();
 	}
 	
 	public long getIntervaloSimulacion() {
@@ -155,6 +167,10 @@ public class ControladorJuego implements Runnable {
 		this.mouseClickObservadores.remove(unMouseClickObservador);
 	}
 	
+	public void removerTodosMouseClickObservador(){
+		this.mouseClickObservadores.clear();
+	}
+	
 	/**
 	 * Se encarga de derivar el manejo del evento keyPress al objeto vista correspondiente
 	 * @param KeyEvent evento
@@ -171,6 +187,10 @@ public class ControladorJuego implements Runnable {
 	
 	public void removerKeyPressObservador(KeyPressedObservador unMouseClickObservador){
 		this.keyPressedObservadores.remove(unMouseClickObservador);
+	}
+	
+	public void removerTodosKeyPressObservador(){
+		this.keyPressedObservadores.clear();
 	}
 	
 	private long intervaloSimulacion;

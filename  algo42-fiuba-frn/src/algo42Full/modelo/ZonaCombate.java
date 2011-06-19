@@ -106,7 +106,7 @@ public class ZonaCombate {
 		List<ObjetoVivo> tempLista  = new ArrayList<ObjetoVivo>();
 		for (ObjetoVivo actualizacion : this.listaActualizaciones){
 			if (actualizacion.estaVivo()) tempLista.add(actualizacion);
-		}
+		} 
 		this.listaActualizaciones = tempLista;
 		List<Proyectil> tempProyectiles = new ArrayList<Proyectil>();
 		for (Proyectil proyect : this.listaProyectiles){

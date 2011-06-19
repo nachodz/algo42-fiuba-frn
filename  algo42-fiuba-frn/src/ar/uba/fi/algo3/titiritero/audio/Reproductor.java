@@ -16,15 +16,15 @@ public class Reproductor implements Runnable {
 	@Override
 	public void run() {
 			while (encendido){
-				System.out.println(this.cola.size());
+				//System.out.println(this.cola.size());
 				Elemento elemento = this.cola.poll();
 				if(elemento != null){
-					System.out.print("ping");
+					//System.out.print("ping");
 					piano.reproducir(elemento.getNota(), elemento.getDuracion());
 				}
 				else{
 					try {
-						System.out.print("silencio");
+						//System.out.print("silencio");
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -40,7 +40,7 @@ public class Reproductor implements Runnable {
 	}
 	
 	public void reproducir(Elemento elemento){
-		System.out.println(this.cola.size());
+		//System.out.println(this.cola.size());
 		try {
 			this.cola.put(elemento);
 		} catch (InterruptedException e) {
