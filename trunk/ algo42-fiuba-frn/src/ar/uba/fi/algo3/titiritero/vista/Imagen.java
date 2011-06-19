@@ -23,6 +23,7 @@ public class Imagen implements Dibujable{
 	public void dibujar(SuperficieDeDibujo superficeDeDibujo) {
 		Graphics grafico = (Graphics)superficeDeDibujo.getBuffer();
 		grafico.drawImage(this.imagen, this.posicionable.getX(), this.posicionable.getY(), null);
+		//	
 	}
 	    
 	public String getNombreArchivoImagen() {
@@ -40,7 +41,7 @@ public class Imagen implements Dibujable{
 			this.imagen = ImageIO.read(u);
 		}catch(Exception ex){
 
-		}			
+		}
 	}
 	
 	public Posicionable getPosicionable() {
@@ -51,8 +52,17 @@ public class Imagen implements Dibujable{
 		this.posicionable = posicionable;
 	}
 	
+	
+	public int getAlto(){
+		return this.imagen.getHeight();
+	}
+	
+	public int getAncho(){
+		return this.imagen.getWidth();
+	}
+	
 	private String nombreArchivoImagen;
-    private BufferedImage imagen;
+    protected BufferedImage imagen;
     private Posicionable posicionable;
 
 }
