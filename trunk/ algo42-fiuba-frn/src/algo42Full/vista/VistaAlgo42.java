@@ -1,6 +1,5 @@
 package algo42Full.vista;
 
-import ar.uba.fi.algo3.titiritero.vista.Imagen;
 
 public class VistaAlgo42 extends VistaNave{
 	

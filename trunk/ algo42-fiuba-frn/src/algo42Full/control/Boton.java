@@ -41,5 +41,9 @@ public abstract class Boton implements MouseClickObservador, Posicionable{
 	public int getY() {
 		return this.y;
 	}
+	
+	public int getRadio(){
+		return 1;
+	}
 
 }

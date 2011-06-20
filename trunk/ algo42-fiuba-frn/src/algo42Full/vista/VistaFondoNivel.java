@@ -33,6 +33,6 @@ public class VistaFondoNivel extends Imagen{
 		grafico.drawImage(this.imagen, 0, 0, 800, 600,
 						  0, scrY1, 800, scrY2, null);	
 		
-		System.out.println(this.scrY1+ "   ");
+		//System.out.println(this.scrY1+ "   ");
 	}
 }
