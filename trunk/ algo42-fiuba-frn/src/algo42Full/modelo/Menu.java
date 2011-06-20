@@ -19,7 +19,7 @@ public class Menu{
 		this.accion = Accion.SALIR;
 		this.controlador = controlador;
 		
-		Coordenada coord = new Coordenada(0,0);
+		Coordenada coord = new Coordenada(0,0,1);
 		VistaMenuPrincipal vistaMenu = new VistaMenuPrincipal();
 		vistaMenu.setPosicionable(coord);
 		this.controlador.agregarDibujable(vistaMenu);

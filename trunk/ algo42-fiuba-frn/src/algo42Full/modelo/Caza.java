@@ -9,7 +9,7 @@ public class Caza extends NaveVivaEnemiga implements Atacable{
 	private int turnosDisparo;
 	
 	public Caza(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		super(unaZonaDeCombate,posX,posY,10,0,3);
+		super(unaZonaDeCombate,posX,posY,50,0,3);
 		if (unaZonaDeCombate.comprobarSalidaZona(this)){
 			
 			throw new ObjetoFueraDeZonaDeCombateException();			

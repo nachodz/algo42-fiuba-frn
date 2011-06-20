@@ -4,12 +4,14 @@ import ar.uba.fi.algo3.titiritero.*;
 
 public class Coordenada implements Posicionable {
 
-	int x;
-	int y;
+	private int x;
+	private int y;
+	private int radio;
 	
-	public Coordenada(int x,int y){
+	public Coordenada(int x,int y, int radio){
 		this.x = x;
 		this.y = y;
+		this.radio = radio;
 	}
 	
 	public int getX(){
@@ -27,5 +29,10 @@ public class Coordenada implements Posicionable {
 	public void setY(int y){
 		this.y = y;
 	}
+	
+	public int getRadio(){
+		return this.radio;
+	}
+	
 }
 

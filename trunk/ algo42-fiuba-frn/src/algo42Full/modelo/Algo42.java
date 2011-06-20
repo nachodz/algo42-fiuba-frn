@@ -11,7 +11,7 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 	private int velocidad;
 	
 	public Algo42(ZonaCombate zona,int x,int y){
-		super(x,y,8);
+		super(x,y,50);
 		if (zona.comprobarSalidaZona(this)){
 			throw  new ObjetoFueraDeZonaDeCombateException();
 		}

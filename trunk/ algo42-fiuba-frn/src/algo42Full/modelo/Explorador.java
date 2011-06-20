@@ -5,11 +5,18 @@ import java.lang.Math;
 
 public class Explorador extends NaveVivaEnemiga implements Atacable{
 	
-	private int angulo;
-	private int radioMov;
+	private int radioGiro;
+	private int centroGiroX;
+	private int centroGiroY;
+	private boolean regresando;
+	private boolean entroAlCirculo;
+	
+	
+
+	
 	
 	public Explorador(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		super(unaZonaDeCombate,posX,posY,8,0,3);
+		super(unaZonaDeCombate,posX,posY,50,0,3);
 		if (unaZonaDeCombate.comprobarSalidaZona(this)){
 			
 			throw new ObjetoFueraDeZonaDeCombateException();			
@@ -17,35 +24,91 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 		
 		this.energia = 1;
 		this.puntos = 50;
-		this.radioMov = 100;
-		this.angulo = 90;	
+		this.centroGiroX = 300;
+		this.centroGiroY = 300;
+		this.radioGiro = 120;
+		this.regresando = false;
+		this.entroAlCirculo = false;
 	}
 	
 	
 	protected void mover(){
-		
-		int tempX;
-		int tempY;
-		int centroX;
-		int centroY;
-		
-		if ((this.angulo) < 361){
-			(this.angulo) = (this.angulo) + (this.velY);
-		}
-		
-		else{
-			this.angulo = 0;
-		}
-		
+		//La aeronave se mueve de la posicion en la que se encuentra hacia el borde superior de la circunferencia sobre 
+		//la cual realizara su moviento. Una vez alli, comienza a moverse en circulos en sentdo contrario a las agujas del reloj. 
+		//Si al moverse la aeronave sobrepasa los limites del espacioAereo sale del mismo"
+			
+			int centroX;
+			int centroY;
+			int radioGiro1;
+			int coordX;
+			int incrementoY;
+			int diferenciaEnX;
+			
+			if(! this.entroAlCirculo){
+				dirigirHaciaPunto(this.centroGiroX, (this.centroGiroY - this.radioGiro));
+			}
+			
+			else{				
+				
+				centroX = this.centroGiroX;
+				centroY = this.centroGiroY;
+				incrementoY = 1;
+				radioGiro1 = this.radioGiro;
+				
+				if(this.x > centroX){					
+					this.regresando = true;
+				}
+				
+				if(this.regresando){        //chequea si el avion se sobrepasa de los limites verticales del circulo, si es el caso cambia la direccion
+					
+					if((this.y - incrementoY) < (centroY - radioGiro1)){
+						this.regresando = false;
+					}
+					else{}
+					
+				}
+				else{
+						if((this.y + incrementoY) > (centroY + radioGiro1)){
+							this.regresando = true;
+						}
+						
+						else{}
+				}
+				
+				
+				
+				if ((this.y <= (centroGiroY + (radioGiro - incrementoY))) || (this.y >= (centroGiroY - (radioGiro - incrementoY)))){
+					
+					if(this.regresando){
+						
+						//calcula la posicion de x de acuerdo al movimiento en y, 
+						//con la formula de una circunferencia plana
+						coordX = (int) (Math.sqrt( (Math.pow(radioGiro1, 2)) - (Math.pow(((this.y - 1) - centroY), 2))) ) + centroX ;
+						
+						
+						diferenciaEnX = coordX - centroX;
+						
+						this.x = coordX;
+						this.y -= incrementoY;
+					}
+					
+					else{
+						coordX = (int) (Math.sqrt( (Math.pow(radioGiro1, 2)) - (Math.pow(((this.y + 1) - centroY), 2))) ) + centroX ;
+						
+						
+						diferenciaEnX = coordX - centroX;
+						
+						this.x = centroX - diferenciaEnX;
+						this.y += incrementoY;
+					}
+				}
+				
+			}
+				
 
-		tempX  = (int) (((double)(this.radioMov)) *(Math.cos(this.angulo)));
-		tempY = (int) (((double)(this.radioMov)) *(Math.sin(this.angulo)));
-		centroX = this.y;
-		centroY = (this.y) + (this.radioMov);
-		this.x = (int)(centroX + tempX);
-		this.y = (int) (centroY - tempY);
+					
 
-	}
+		}
 	
 	
 	
@@ -54,8 +117,10 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 		Atacable algo42tmp;
 		
 		if (!(this.muerto)){
+			for(int i = 0; i <= this.velY; i++){
+				this.mover();
+			}
 			
-			this.mover();
 			algo42tmp = zonaDeCombate.comprobarColisionAlgo42(this);
 			if (algo42tmp != null){
 				algo42tmp.recibirDanio(20);   //hacer q se muera
@@ -64,6 +129,85 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 			
 
 		}
+	}
+	
+	
+	public void dirigirHaciaPunto(int x, int y){
+		
+		//"El metodo se encarga de dirigir la aeronave hacia un punto pasado como parametro que 
+		//"pertene al borde de la circunferencia en la cual debe moverse.
+		//Cuando el avion llega al punto indicado, marca el atributo entroAlCirculo como true."
+
+		int coordenadaXObjetivo;
+		int coordenadaYObjetivo;
+		int distanciaEnX;
+		int distanciaEnY;
+		int incrementoDesplazamiento = 1;
+		
+				
+							
+		coordenadaXObjetivo = x;	
+		distanciaEnX = coordenadaXObjetivo - this.x;
+						
+		coordenadaYObjetivo = y;	
+		distanciaEnY = coordenadaYObjetivo - this.y;
+		
+		if(distanciaEnX <= 0){
+			if (distanciaEnX == 0){
+				if(distanciaEnY < 0){
+					this.y -= incrementoDesplazamiento; 
+				}
+				else{
+					
+					this.y += incrementoDesplazamiento;
+				}
+			}
+			
+			else{
+				if(distanciaEnY <= 0){
+					if(distanciaEnY == 0){
+						this.x -= incrementoDesplazamiento;
+												
+					}
+					else{
+						this.x -= incrementoDesplazamiento;
+						this.y -= incrementoDesplazamiento;
+					}
+				}
+				else{
+					this.x -= incrementoDesplazamiento;
+					this.y += incrementoDesplazamiento;
+				}
+			}
+		}
+		
+		else{
+			if(distanciaEnY <= 0){
+				if(distanciaEnY == 0){
+					this.x +=incrementoDesplazamiento;
+				}
+				
+				else{
+					this.x +=incrementoDesplazamiento;
+					this.y -= incrementoDesplazamiento;
+				}
+			}
+			
+			else{
+				this.x +=incrementoDesplazamiento;
+				this.y += incrementoDesplazamiento;
+			}
+		}
+		
+		if((this.x >= x - incrementoDesplazamiento) && (this.x <= x + incrementoDesplazamiento) && 
+				(this.y >= y - incrementoDesplazamiento) && (this.y <= y + incrementoDesplazamiento)){
+			this.x = x;
+			this.y = y;
+			this.entroAlCirculo = true;
+			
+		}	
+		
+										
 	}
 	
 
