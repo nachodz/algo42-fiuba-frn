@@ -9,7 +9,7 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	private int turnosDisparo;
 	
 	public Avioneta(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		super(unaZonaDeCombate,posX,posY,7,0,4);
+		super(unaZonaDeCombate,posX,posY,50,0,4);
 		if (unaZonaDeCombate.comprobarSalidaZona(this)){
 			
 			throw new ObjetoFueraDeZonaDeCombateException();			
@@ -34,14 +34,9 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	
 	protected void mover(){        //implementacion cambiada
 		
-		if (!((this.zonaDeCombate).comprobarSalidaZona(this))){
-			this.y += this.velY;
-		}
-		
-		else{
-			
+		if (((this.zonaDeCombate).comprobarSalidaZona(this)))
 			this.velY *= -1;
-		}		
+		this.y += this.velY;
 	}
 	
 	public void vivir(){

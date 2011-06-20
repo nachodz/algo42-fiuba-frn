@@ -10,7 +10,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	private int cantMov;
 	
 	public Bombardero(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		super(unaZonaDeCombate,posX,posY,15,1,1);
+		super(unaZonaDeCombate,posX,posY,50,3,3);
 		if (unaZonaDeCombate.comprobarSalidaZona(this)){
 			
 			throw new ObjetoFueraDeZonaDeCombateException();			
@@ -65,7 +65,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	protected void mover(){
 		this.cantMov++;
 		
-		if ((this.cantMov<31)&&(this.zonaDeCombate.comprobarSalidaZona(this))){
+		if ((this.cantMov<30)&&(!this.zonaDeCombate.comprobarSalidaZona(this))){
 			this.y += this.velY;
 			this.x += this.velX;
 		}

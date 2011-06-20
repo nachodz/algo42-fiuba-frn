@@ -8,5 +8,6 @@ public interface Posicionable {
 	
 	public int getX();
 	public int getY();
+	public int getRadio();
 
 }
