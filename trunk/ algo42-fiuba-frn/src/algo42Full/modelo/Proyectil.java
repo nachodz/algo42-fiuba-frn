@@ -86,9 +86,8 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 			                          } else if (child.getNodeName().equals("Enemigo")) {
 			                        	  this.enemigo = Boolean.parseBoolean(child.getTextContent());
 			             			     }
-			if (zona != null) this.zonaDeCombate = zona;
 		}
-
+		if (zona != null) this.zonaDeCombate = zona;
 	}
 	
 	public boolean estaVivo(){
