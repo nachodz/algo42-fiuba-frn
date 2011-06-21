@@ -1,5 +1,8 @@
 package algo42Full.modelo;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 public class ProyectilTorpedoAdaptable extends Proyectil{
 	
 	public ProyectilTorpedoAdaptable(ZonaCombate zona, boolean enemigo, int x, int y) 
@@ -24,4 +27,13 @@ public class ProyectilTorpedoAdaptable extends Proyectil{
   		}
     }
 
+	public ProyectilTorpedoAdaptable (Element proyectil, ZonaCombate zona){
+		super (proyectil, zona);
+	}
+	
+	public Element serializar(Document doc) {
+		Element proyectil = doc.createElement("ProyectilTorpedoAdaptable");
+           this.grabar (proyectil,doc);
+           return proyectil;
+	} 
 }

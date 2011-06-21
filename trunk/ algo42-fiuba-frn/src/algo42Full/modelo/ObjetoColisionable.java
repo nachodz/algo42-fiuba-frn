@@ -7,6 +7,7 @@ public class ObjetoColisionable  implements Posicionable{
 	protected int y;
 	protected int radio;
 	
+	public ObjetoColisionable(){};
 	public ObjetoColisionable(int x,int y,int radio){
 		this.x = x;
 		this.y = y;

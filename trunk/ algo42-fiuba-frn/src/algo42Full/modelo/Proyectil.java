@@ -1,6 +1,13 @@
 package algo42Full.modelo;
 
+import javax.xml.soap.Node;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import ar.uba.fi.algo3.titiritero.ObjetoVivo;
+
 
 public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 {
@@ -13,6 +20,38 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 	protected int danio;
 	protected boolean enemigo;
 	protected ZonaCombate zonaDeCombate;
+	 
+	
+	public void grabar (Element proyectil, Document doc){
+		Element muerto = doc.createElement("Muerto");
+		proyectil.appendChild(muerto);
+		muerto.setTextContent(Boolean.toString(this.muerto));
+
+		Element velX = doc.createElement("VelocidadX");
+		proyectil.appendChild(velX);
+		velX.setTextContent(Integer.toString(this.velX));
+		
+		Element velY = doc.createElement("VelocidadY");
+		proyectil.appendChild(velY);
+		velX.setTextContent(Integer.toString(this.velY));
+		
+		Element posInicialX = doc.createElement("PosicionInicialX");
+		proyectil.appendChild(posInicialX);
+		posInicialX.setTextContent(Integer.toString(this.posInicialX));
+		
+		Element posInicialY = doc.createElement("PosicionInicialY");
+		proyectil.appendChild(posInicialY);
+		posInicialY.setTextContent(Integer.toString(this.posInicialY));
+        
+		Element danio = doc.createElement("Danio");
+		proyectil.appendChild(danio);
+		danio.setTextContent(Integer.toString(this.danio));
+        
+		Element enemigo = doc.createElement("Enemigo");
+		proyectil.appendChild(enemigo);
+		enemigo.setTextContent(Boolean.toString(this.enemigo));
+
+	}
 	
 	public Proyectil (ZonaCombate zona, boolean enemigo, int x, int y,int radio,int velX,int velY,int danio)
 	{
@@ -25,6 +64,31 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 		this.enemigo = enemigo;
 		this.zonaDeCombate = zona;
 		this.danio = danio;
+	}
+	
+	public Proyectil (Element proyectil, ZonaCombate zona){
+		NodeList childs = proyectil.getChildNodes();
+		
+		for (int i = 0; i < childs.getLength(); i++) {
+			Node child = (Node) childs.item(i);
+			if (child.getNodeName().equals("Muerto")) {
+				this.muerto = Boolean.parseBoolean(child.getTextContent());
+			 }else if (child.getNodeName().equals("VelocidadX")) {
+				 this.velX = Integer.parseInt(child.getTextContent());
+			    	}else if (child.getNodeName().equals("VelocidadY")) {
+			    		this.velY = Integer.parseInt(child.getTextContent());
+				         }else if (child.getNodeName().equals("PosicionInicialX")) {
+				        	 this.posInicialX = Integer.parseInt(child.getTextContent());   
+			                     }else if (child.getNodeName().equals("PosicionInicialY")) {
+			                    	 this.posInicialY = Integer.parseInt(child.getTextContent());
+			                       } else if (child.getNodeName().equals("Danio")) {
+			                    	   this.danio = Integer.parseInt(child.getTextContent());
+			                          } else if (child.getNodeName().equals("Enemigo")) {
+			                        	  this.enemigo = Boolean.parseBoolean(child.getTextContent());
+			             			     }
+			if (zona != null) this.zonaDeCombate = zona;
+		}
+
 	}
 	
 	public boolean estaVivo(){
@@ -69,7 +133,6 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 			}
 		}
   }
-	
 	
 
 }
