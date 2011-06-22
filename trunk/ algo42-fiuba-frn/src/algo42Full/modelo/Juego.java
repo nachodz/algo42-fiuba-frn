@@ -2,6 +2,7 @@ package algo42Full.modelo;
 
 import ar.uba.fi.algo3.titiritero.*;
 import ar.uba.fi.algo3.titiritero.vista.*;
+import algo42Full.control.ControladorMenu;
 import algo42Full.vista.*;
 
 public class Juego {
@@ -15,9 +16,9 @@ public class Juego {
 		
 		ventanaPrincipal.setVisible(true);
 		
-		controlador.setIntervaloSimulacion(50);
+		controlador.setIntervaloSimulacion(40);
 
-		Menu menu = new Menu(controlador);
+		ControladorMenu menu = new ControladorMenu(controlador);
 		menu.ejecutar();
 	}
 

@@ -4,6 +4,6 @@ import ar.uba.fi.algo3.titiritero.vista.Imagen;
 
 public class VistaTorpedoAdaptable extends Imagen {
 	public VistaTorpedoAdaptable (){
-		this.setNombreArchivoImagen("/Imagenes/proyectilAdaptable.jpg");
+		this.setNombreArchivoImagen("/media/pAdaptable.png");
 	}
 }

@@ -6,7 +6,7 @@ import org.w3c.dom.Element;
 public class ProyectilTorpedo extends Proyectil{
 	public ProyectilTorpedo(ZonaCombate zona, boolean enemigo, int x, int y) 
 	{
-		super(zona,enemigo,x,y,3,0,5,4);
+		super(zona,enemigo,x,y,7,5,5,4);
 	}
 	
 	public ProyectilTorpedo (Element proyectil, ZonaCombate zona){

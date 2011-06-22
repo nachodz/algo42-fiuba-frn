@@ -5,7 +5,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import algo42Full.modelo.excepciones.*;
 
 public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	
@@ -14,12 +13,7 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	private int turnosDisparo;
 	
 	public Avioneta(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		super(unaZonaDeCombate,posX,posY,50,0,4);
-		if (unaZonaDeCombate.comprobarSalidaZona(this)){
-			
-			throw new ObjetoFueraDeZonaDeCombateException();			
-		}
-		
+		super(unaZonaDeCombate,posX,posY,25,0,4);
 		this.zonaDeCombate = unaZonaDeCombate;
 		this.energia = 1;
 		this.puntos = 20;

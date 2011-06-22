@@ -5,12 +5,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import algo42Full.modelo.excepciones.*;
 
 public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	
 
 	private int frecuenciaDisparo;
+	private boolean dispararSeguidor; //TODO persistir
 	private int turnosDisparo;
 	private int cantMov;
 	
@@ -67,45 +67,48 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	
 	
 	public Bombardero(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		super(unaZonaDeCombate,posX,posY,50,3,3);
-		if (unaZonaDeCombate.comprobarSalidaZona(this)){
-			
-			throw new ObjetoFueraDeZonaDeCombateException();			
-		}
-		
+		super(unaZonaDeCombate,posX,posY,25,3,3);
 		this.energia = 4;
 		this.puntos = 30;
 		this.frecuenciaDisparo = 30;
+		this.dispararSeguidor = true;
 		this.turnosDisparo = 0;
 		this.cantMov = 0;
 	}	
 	
 	
-	protected void disparar(){
+	protected void disparar(boolean seguidor){
 		
 		Proyectil proyectil;
-		int numero = 1 + (int)(Math.random()* 3); //genera un numero aleatorio del 1 al 3
+		int numero;
 		
-		switch(numero){
-		case 1:
-			proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
-			break;
-		
-		case 2:
+		if (seguidor){
+			numero = 2;
+			this.dispararSeguidor = false;
 			proyectil = new ProyectilTorpedoSeguidor((this.zonaDeCombate), true, (this.x), (this.y + 1));
-			break;
-		
-		case 3:
-			proyectil = new ProyectilCohete((this.zonaDeCombate), true, (this.x), (this.y + 1));
-			break;
-		default:
-			proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
-			break;
+		}
+		else{
+			numero = 1 + (int)(Math.random()* 2); //genera un numero aleatorio del 1 al 3
+			
+			switch(numero){
+			case 1:
+				proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
+				this.dispararSeguidor = true;
+				break;
+					
+			case 2:
+				proyectil = new ProyectilCohete((this.zonaDeCombate), true, (this.x), (this.y + 1));
+				this.dispararSeguidor = true;
+				break;
+				
+			default:
+				proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
+				break;
+			}
 		}
 		
 		(this.zonaDeCombate).agregarProyectil(proyectil);
-		
-		
+			
 	}
 	
 	
@@ -167,7 +170,10 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 			else{
 				this.turnosDisparo += 1;
 				if ((this.turnosDisparo) == (this.frecuenciaDisparo)){
-					this.disparar();
+					if (this.dispararSeguidor)
+						this.disparar(true);
+					else
+						this.disparar(false);
 					this.turnosDisparo = 0;
 				}
 			}

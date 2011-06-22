@@ -9,21 +9,22 @@ public class ProyectilTorpedoSeguidor extends ProyectilTorpedo {
 		super(zona,enemigo,x,y); 
 	}
 	protected void mover(){
-	//persigue al algo42 sin descanso hasta hacerle un impacto
-	int x, y;
+		//persigue al algo42 sin descanso hasta hacerle un impacto
+		int algoX, algoY;
 
-	x = zonaDeCombate.getAlgo42PosX();
-	y = zonaDeCombate.getAlgo42PosY();
-	
-	if (x < this.x) 
-		this.x = this.x - this.velX;
-	else 
-		this.x = this.x + this.velX;
-	
-	if (y < this.y) 
-		this.y = this.y - this.velY; 
-	else 
-		this.y = this.y + this.velY;
+		
+		algoX = zonaDeCombate.getAlgo42PosX();
+		algoY = zonaDeCombate.getAlgo42PosY();
+		
+		if (algoX < this.x) 
+			this.x = this.x - this.velX;
+		else 
+			this.x = this.x + this.velX;
+		
+		if (algoY < this.y) 
+			this.y = this.y - this.velY; 
+		else 
+			this.y = this.y + this.velY;
 	}	
  
 	public ProyectilTorpedoSeguidor (Element proyectil, ZonaCombate zona){

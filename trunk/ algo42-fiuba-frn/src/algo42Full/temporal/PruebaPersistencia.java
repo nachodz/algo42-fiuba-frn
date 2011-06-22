@@ -1,5 +1,5 @@
 package algo42Full.temporal;
-import algo42Full.modelo.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

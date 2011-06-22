@@ -1,11 +1,10 @@
 package algo42Full.control;
 
-import algo42Full.modelo.Menu;
 
 public class BotonJuegoNuevo extends Boton{
-	private Menu menu;
+	private ControladorMenu menu;
 
-	public BotonJuegoNuevo(Menu menu, int x, int y, int ancho, int alto) {
+	public BotonJuegoNuevo(ControladorMenu menu, int x, int y, int ancho, int alto) {
 		super(x, y, ancho, alto);
 		this.menu = menu;
 	}

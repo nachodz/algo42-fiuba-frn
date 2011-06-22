@@ -41,29 +41,7 @@ public class Algo42Test extends TestCase {
 		assertTrue(this.esMajor(actY, iniY));
 	}
 	
-	public void testMoverAbajoDer(){
-		int iniX, iniY, actX, actY;
-		
-		iniX = this.algo42.getX();
-		iniY = this.algo42.getY();
-		this.algo42.moverAbajoDer();
-		actX = this.algo42.getX();
-		actY = this.algo42.getY();
-		assertTrue(this.esMajor(actX, iniX));
-		assertTrue(this.esMajor(actY, iniY));
-	}
-	
-	public void testMoverAbajoIzq(){
-		int iniX, iniY, actX, actY;
-		
-		iniX = this.algo42.getX();
-		iniY = this.algo42.getY();
-		this.algo42.moverAbajoIzq();
-		actX = this.algo42.getX();
-		actY = this.algo42.getY();
-		assertTrue(this.esMajor(iniX, actX));
-		assertTrue(this.esMajor(actY, iniY));
-	}
+
 	
 	public void testMoverArriba(){
 		int iniX, iniY, actX, actY;
@@ -77,29 +55,7 @@ public class Algo42Test extends TestCase {
 		assertTrue(this.esMajor(iniY, actY));
 	}
 	
-	public void testMoverArribaDer(){
-		int iniX, iniY, actX, actY;
-		
-		iniX = this.algo42.getX();
-		iniY = this.algo42.getY();
-		this.algo42.moverArribaDer();
-		actX = this.algo42.getX();
-		actY = this.algo42.getY();
-		assertTrue(this.esMajor(actX, iniX));
-		assertTrue(this.esMajor(iniY, actY));
-	}
-	
-	public void testMoverArribaIzq(){
-		int iniX, iniY, actX, actY;
-		
-		iniX = this.algo42.getX();
-		iniY = this.algo42.getY();
-		this.algo42.moverArribaIzq();
-		actX = this.algo42.getX();
-		actY = this.algo42.getY();
-		assertTrue(this.esMajor(iniX, actX));
-		assertTrue(this.esMajor(iniY, actY));
-	}
+
 	
 	public void testMoverDerecha(){
 		int iniX, iniY, actX, actY;

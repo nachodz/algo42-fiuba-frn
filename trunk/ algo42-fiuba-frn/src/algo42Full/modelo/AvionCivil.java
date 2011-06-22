@@ -5,9 +5,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 
-
-import algo42Full.modelo.excepciones.*;
-
 public class AvionCivil extends NaveViva{
 
 	public void vivir(){
@@ -30,7 +27,7 @@ public class AvionCivil extends NaveViva{
 	
 	protected void mover(){
 		
-		this.y = (this.y) + (this.velY);
+		this.y += (this.velY);
 		if ((this.zonaDeCombate).comprobarSalidaZona(this)){
 			(this.y) = (this.posInicialY);
 		}
@@ -39,12 +36,7 @@ public class AvionCivil extends NaveViva{
 	}
 	
 	public AvionCivil(ZonaCombate unaZonaDeCombate, int x, int y){
-		super(unaZonaDeCombate,x,y,7,0,2);
-		if (unaZonaDeCombate.comprobarSalidaZona(this)){
-			
-			throw new ObjetoFueraDeZonaDeCombateException();			
-		}
-		
+		super(unaZonaDeCombate,x,y,25,0,2);
 		this.energia = 1;
 		this.puntos = -300;
 	

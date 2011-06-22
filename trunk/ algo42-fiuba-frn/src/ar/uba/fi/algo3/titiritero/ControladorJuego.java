@@ -181,6 +181,12 @@ public class ControladorJuego implements Runnable {
 		}
 	}
 	
+	public void despacharKeyRelease(KeyEvent event) {
+		for (KeyPressedObservador observador : this.keyPressedObservadores){
+			observador.keyReleased(event);
+		}
+	}	
+	
 	public void agregarKeyPressObservador(KeyPressedObservador unMouseClickObservador){
 		this.keyPressedObservadores.add(unMouseClickObservador);
 	}
