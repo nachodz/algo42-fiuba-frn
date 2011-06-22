@@ -13,7 +13,7 @@ public class ProyectilCohete extends Proyectil {
 		super (proyectil, zona);
 	}
 	
-	public Element serializar(Document doc) {
+	public Element getElement(Document doc) {
 		Element proyectil = doc.createElement("ProyectilCohete");
            this.grabar (proyectil,doc);
            return proyectil;

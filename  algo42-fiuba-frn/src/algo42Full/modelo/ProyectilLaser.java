@@ -13,7 +13,7 @@ public class ProyectilLaser extends Proyectil {
 		super (proyectil, zona);
 	}
 	
-	public Element serializar(Document doc) {
+	public Element getElement(Document doc) {
 		Element proyectil = doc.createElement("ProyectilLaser");
            this.grabar (proyectil,doc);
            return proyectil;

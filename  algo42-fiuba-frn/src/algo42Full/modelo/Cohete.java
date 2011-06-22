@@ -14,7 +14,7 @@ public class Cohete extends ActualizacionAlgo42{
 		super (actualizacion, zona);
 	}
     
-	public Element serializar(Document doc) {
+	public Element getElement(Document doc) {
 		Element actualizacion = doc.createElement("Cohete");
            this.grabar (actualizacion,doc);
            return actualizacion;

@@ -13,7 +13,7 @@ public class ProyectilTorpedo extends Proyectil{
 		super (proyectil, zona);
 	}
 	
-	public Element serializar(Document doc) {
+	public Element getElement(Document doc) {
 		Element proyectil = doc.createElement("ProyectilTorpedo");
            this.grabar (proyectil,doc);
            return proyectil;

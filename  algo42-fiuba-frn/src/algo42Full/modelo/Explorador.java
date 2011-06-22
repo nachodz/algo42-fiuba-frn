@@ -3,6 +3,11 @@ package algo42Full.modelo;
 import algo42Full.modelo.excepciones.*;
 import java.lang.Math;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 public class Explorador extends NaveVivaEnemiga implements Atacable{
 	
 	private int radioGiro;
@@ -208,6 +213,70 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 		}	
 		
 										
+	}
+	
+
+	
+	
+	public Element getElement(Document doc) {
+		Element explorador = doc.createElement("Explorador");
+		
+		Element atributos = doc.createElement("Atributos");
+		explorador.appendChild(atributos);
+		
+		super.writeElement(atributos, doc);
+		
+			
+		Element radioGiro = doc.createElement("RadioGiro");
+		atributos.appendChild(radioGiro);
+		radioGiro.setTextContent(String.valueOf(this.radioGiro));
+		
+		Element centroGiroX = doc.createElement("CentroGiroX");
+		atributos.appendChild(centroGiroX);
+		centroGiroX.setTextContent(String.valueOf(this.centroGiroX));
+		
+		Element centroGiroY = doc.createElement("CentroGiroY");
+		atributos.appendChild(centroGiroY);
+		centroGiroY.setTextContent(String.valueOf(this.centroGiroY));
+		
+		Element regresando = doc.createElement("Regresando");
+		atributos.appendChild(regresando);
+		regresando.setTextContent(String.valueOf(this.regresando));
+		
+		Element entroAlCirculo = doc.createElement("EntroAlCirculo");
+		atributos.appendChild(entroAlCirculo);
+		entroAlCirculo.setTextContent(String.valueOf(this.entroAlCirculo));
+
+
+		return explorador;
+	}
+
+	public static Explorador fromElement(Element element, ZonaCombate zona) {
+		Explorador explorador = new Explorador(zona, 0, 0);
+		
+		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables
+		
+		
+		
+		writeNaveVivaEnemiga((Element)variables, explorador);
+
+		NodeList childs = variables.getChildNodes();
+		for (int i = 0; i < childs.getLength(); i++) {
+			Node child = childs.item(i);
+			if (child.getNodeName().equals("RadioGiro")) {
+				explorador.radioGiro = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("CentroGiroX")) {
+				explorador.centroGiroX = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("CentroGiroY")) {
+				explorador.centroGiroY = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("Regresando")) {
+				explorador.regresando = Boolean.parseBoolean(child.getTextContent());
+			} else if (child.getNodeName().equals("EntroAlCirculo")) {
+				explorador.entroAlCirculo = Boolean.parseBoolean(child.getTextContent());
+		}
+	}
+		
+		return explorador;
 	}
 	
 

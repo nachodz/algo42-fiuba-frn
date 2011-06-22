@@ -9,7 +9,7 @@ import org.w3c.dom.NodeList;
 import algo42Full.modelo.excepciones.ObjetoFueraDeZonaDeCombateException;
 import ar.uba.fi.algo3.titiritero.ObjetoVivo;
 
-public abstract class ActualizacionAlgo42 extends ObjetoColisionable implements ObjetoVivo {
+public abstract class ActualizacionAlgo42 extends ObjetoColisionable implements ObjetoVivo, ConvertibleAElement {
 	protected boolean muerto;
 	protected int velX;
 	protected int velY;
@@ -50,6 +50,12 @@ public abstract class ActualizacionAlgo42 extends ObjetoColisionable implements 
 			throw new ObjetoFueraDeZonaDeCombateException();
 		else
 			zonaDeCombate = zona;
+	}
+	
+	public Element getElement(Document doc){
+		Element naveViva= doc.createElement("Element");
+		
+		return naveViva;
 	}
 	
 	public ActualizacionAlgo42 (Element actualizacion, ZonaCombate zona){
