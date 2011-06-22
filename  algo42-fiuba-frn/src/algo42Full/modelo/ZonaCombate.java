@@ -11,7 +11,7 @@ import org.w3c.dom.NodeList;
 
 import ar.uba.fi.algo3.titiritero.ObjetoVivo;
 
-public class ZonaCombate {
+public class ZonaCombate implements ObjetoVivo{
 	private int ancho;
 	private int alto;
 	private Algo42 algo42;
@@ -83,20 +83,47 @@ public class ZonaCombate {
 		else return null;
 	}
 	
-	public boolean comprobarSalidaZona(ObjetoColisionable objeto){
-		int tempX,tempY,tempRadio, x,y,x2,y2;
+	public boolean comprobarSalidaZonaEx(ObjetoColisionable objeto){
+		int x, y, radio;
 		
-		tempX = objeto.getX();
-		tempY = objeto.getY();
-		tempRadio = objeto.getRadio();
-		x = tempX+tempRadio;
-		y = tempY+tempRadio;
-		x2 = tempX-tempRadio;
-		y2 = tempY-tempRadio;
+		x = objeto.getX();
+		y = objeto.getY();
+		radio = objeto.getRadio();
 		
-		if ((x>-1)&&(x2 <= this.ancho)&&(y>-1)&&(y2<=this.alto)) return false;
-		else return true;
-	}
+		if (((x+radio)<=this.ancho) && (x-radio>=0) && (y+radio<=this.alto) && (y-radio>=0))
+			return false;
+		return true;
+		
+		}
+		
+		public boolean comprobarSalidaZona(ObjetoColisionable objeto){
+			int derO, izqO, arribaO, abajoO;
+			int derZ, izqZ, arribaZ, abajoZ;
+			int x, y, radio;
+			
+			x = objeto.getX();
+			y = objeto.getY();
+			radio = objeto.getRadio();
+			
+			derO = x+radio;
+			izqO = x-radio;
+			arribaO = y-radio;
+			abajoO = y+radio;
+			derZ = this.ancho;
+			izqZ = 0;
+			arribaZ = 0;
+			abajoZ = this.alto;
+			
+			if (abajoO < arribaZ)
+				return true;
+			if (arribaO > abajoZ)
+				return true;
+			if (derO < izqZ)
+				return true;
+			if (izqO > derZ)
+				return true;
+			return false;
+		}
 	
 	public int getAlgo42PosX(){
 		return this.algo42.getX();
@@ -283,6 +310,16 @@ public class ZonaCombate {
 	}
 	
 	
+	@Override
+	public void vivir() {
+		this.combatir();
+		
+	}
+
+	@Override
+	public boolean estaVivo() {
+		return true;
+	}
 	
 	
 

@@ -7,7 +7,7 @@ public class Cohete extends ActualizacionAlgo42{
 
 	
 	public Cohete (ZonaCombate zona, int x, int y){
-		super(zona,x,y,2);
+		super(zona,x,y,7);
 	}
 	
 	public Cohete (Element actualizacion, ZonaCombate zona){

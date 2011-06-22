@@ -1,6 +1,5 @@
 package algo42Full.modelo;
 
-import algo42Full.modelo.excepciones.*;
 import java.lang.Math;
 
 import org.w3c.dom.Document;
@@ -21,12 +20,8 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 	
 	
 	public Explorador(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		super(unaZonaDeCombate,posX,posY,50,0,3);
-		if (unaZonaDeCombate.comprobarSalidaZona(this)){
-			
-			throw new ObjetoFueraDeZonaDeCombateException();			
-		}
-		
+		super(unaZonaDeCombate,posX,posY,25,0,3);
+
 		this.energia = 1;
 		this.puntos = 50;
 		this.centroGiroX = 300;

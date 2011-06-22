@@ -19,7 +19,7 @@ public class KeyPressedController extends KeyAdapter implements KeyListener {
 	}
 
 	public void keyReleased(KeyEvent e) {
-		this.controlador.despacharKeyPress(e);
+		this.controlador.despacharKeyRelease(e);
 	}
 
 }

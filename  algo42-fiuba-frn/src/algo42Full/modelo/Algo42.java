@@ -14,8 +14,21 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 	private int cantTorpedos;
 	private boolean muerto;
 	private int velocidad;
+	private int velX; //TODO persistir
+	private int velY; //TODO persisir
 	
 	
+	public Algo42(ZonaCombate zona,int x,int y){
+		super(x,y,25);
+		this.zonaDeCombate = zona;
+		this.energia = 10;
+		this.muerto = false;
+		this.velocidad = 4;
+		this.cantCohetes = 0;
+		this.cantTorpedos = 0;
+		this.velX = 0;
+		this.velY = 0;
+	}
 
 	public Element getElement(Document doc) {
 		Element algo42 = doc.createElement("Algo42");
@@ -103,20 +116,7 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 		
 		return algo42;
 	}
-	
-	public Algo42(ZonaCombate zona,int x,int y){
-		super(x,y,50);
-		if (zona.comprobarSalidaZona(this)){
-			throw  new ObjetoFueraDeZonaDeCombateException();
-		}
-		this.zonaDeCombate = zona;
-		this.energia = 10;
-		this.muerto = false;
-		this.velocidad = 4;
-		this.cantCohetes = 0;
-		this.cantTorpedos = 0;
-	}
-	
+		
 	public void cargarCohete(){
 		this.cantCohetes++;
 	}
@@ -191,92 +191,56 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 	}
 	
 	public void moverAbajo(){
-		int contador;
-		boolean noSalir;
-		
-		contador = 1;
-		noSalir = true;
-		
-		if((contador<(this.velocidad+1))&&(noSalir)){
-			this.y++;
-			if (this.zonaDeCombate.comprobarSalidaZona(this)){
-				this.y--;
-				noSalir = false;
-			}
-			contador++;
-		}
+		this.velY = velocidad;
+		this.mover();
 	}
 	
 	public void moverArriba(){
-		int contador;
-		boolean noSalir;
-		
-		contador = 1;
-		noSalir = true;
-		
-		if((contador<(this.velocidad+1))&&(noSalir)){
-			this.y--;
-			if (this.zonaDeCombate.comprobarSalidaZona(this)){
-				this.y++;
-				noSalir = false;
-			}
-			contador++;
-		}
+		this.velY = velocidad*-1;
+		this.mover();
 	}
 	
 	public void moverDerecha(){
-		int contador;
-		boolean noSalir;
-		
-		contador = 1;
-		noSalir = true;
-		
-		if((contador<(this.velocidad+1))&&(noSalir)){
-			this.x++;
-			if (this.zonaDeCombate.comprobarSalidaZona(this)){
-				this.x--;
-				noSalir = false;
-			}
-			contador++;
-		}
+		this.velX = velocidad;
+		this.mover();
 	}
 	
 	public void moverIzquierda(){
-		int contador;
-		boolean noSalir;
+		this.velX = velocidad*-1;
+		this.mover();
+	}
+	
+	public void detenerEjeX(){
+		this.velX = 0;
+	}
+	
+	public void detenerEjeY(){
+		this.velY = 0;
+	}
+	
+	
+	private void mover() {
+		if (this.velX!=0){
+			this.x += this.velX;
+			while(this.zonaDeCombate.comprobarSalidaZonaEx(this)){
+				if (this.velX >0)
+					this.x--;
+				else
+					this.x++;
+			}	
+		}
 		
-		contador = 1;
-		noSalir = true;
-		
-		if((contador<(this.velocidad+1))&&(noSalir)){
-			this.x--;
-			if (this.zonaDeCombate.comprobarSalidaZona(this)){
-				this.x++;
-				noSalir = false;
+		if (this.velY !=0){
+			this.y += this.velY;
+			while(this.zonaDeCombate.comprobarSalidaZonaEx(this)){
+				if (this.velY >0)
+					this.y--;
+				else
+					this.y++;
 			}
-			contador++;
 		}
 	}
 	
-	public void moverAbajoDer(){
-		this.moverAbajo();
-		this.moverDerecha();
-	}
-	
-	public void moverAbajoIzq(){
-		this.moverAbajo();
-		this.moverIzquierda();
-	}
-	
-	public void moverArribaDer(){
-		this.moverArriba();
-		this.moverDerecha();
-	}
-	
-	public void moverArribaIzq(){
-		this.moverArriba();
-		this.moverIzquierda();
-	}
 	
 	
 	

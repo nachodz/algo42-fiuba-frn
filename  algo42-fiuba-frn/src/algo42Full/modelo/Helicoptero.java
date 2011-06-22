@@ -18,7 +18,7 @@ public class Helicoptero extends NaveViva{
 
 	
 	public Helicoptero(ZonaCombate unaZonaDeCombate, int posX, int posY){
-		super(unaZonaDeCombate,posX,posY,7,0,3);
+		super(unaZonaDeCombate,posX,posY,25,0,3);
 		if (unaZonaDeCombate.comprobarSalidaZona(this)){
 			
 			throw new ObjetoFueraDeZonaDeCombateException();			
