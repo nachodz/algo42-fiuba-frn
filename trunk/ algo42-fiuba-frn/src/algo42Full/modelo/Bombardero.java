@@ -31,12 +31,14 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 		Element turnosDisparo = doc.createElement("TurnosDisparo");
 		atributos.appendChild(turnosDisparo);
 		turnosDisparo.setTextContent(String.valueOf(this.turnosDisparo));
-		
-
-		
+	
 		Element cantMov = doc.createElement("CantMov");
 		atributos.appendChild(cantMov);
 		cantMov.setTextContent(String.valueOf(this.cantMov));
+		
+		Element dispararSeguidor = doc.createElement("DispararSeguidor"); //nuevo agregado
+		atributos.appendChild(dispararSeguidor);
+		dispararSeguidor.setTextContent(String.valueOf(this.dispararSeguidor));
 
 
 		return bombardero;
@@ -49,7 +51,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 		
 		writeNaveVivaEnemiga((Element)variables, bombardero);
 		
-		NodeList childs = variables.getChildNodes();
+		NodeList childs = variables.getChildNodes();  //lista con las variables
 		
 		for (int i = 0; i < childs.getLength(); i++) {
 			Node child = childs.item(i);
@@ -59,6 +61,8 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 				bombardero.turnosDisparo = Integer.parseInt(child.getTextContent());
 			} else if (child.getNodeName().equals("CantMov")) {
 				bombardero.cantMov = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("DispararSeguidor")) {     //nuevo agregado
+				bombardero.dispararSeguidor = Boolean.parseBoolean(child.getTextContent());
 		}
 	}
 		

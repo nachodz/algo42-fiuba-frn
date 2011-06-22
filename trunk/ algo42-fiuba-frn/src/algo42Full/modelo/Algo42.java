@@ -77,6 +77,14 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 		Element velocidad = doc.createElement("Velocidad");
 		atributos.appendChild(velocidad);
 		velocidad.setTextContent(String.valueOf(this.velocidad));
+		
+		Element velX = doc.createElement("VelX");     //nuevo agregado
+		atributos.appendChild(velX);
+		velX.setTextContent(String.valueOf(this.velX));
+		
+		Element velY = doc.createElement("VelY");      //nuevo agregado
+		atributos.appendChild(velY);
+		velY.setTextContent(String.valueOf(this.velY));
 
 
 		return algo42;
@@ -112,6 +120,13 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 			} else if (child.getNodeName().equals("Velocidad")) {
 				algo42.velocidad = Integer.parseInt(child.getTextContent());
 			}
+			else if (child.getNodeName().equals("VelX")) {        //nuevo agregado
+				algo42.velX = Integer.parseInt(child.getTextContent());
+			}
+			else if (child.getNodeName().equals("VelY")) {     //nuevo agregado
+				algo42.velY = Integer.parseInt(child.getTextContent());
+			}
+		
 		}
 		
 		return algo42;
