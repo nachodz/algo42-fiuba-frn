@@ -3,6 +3,12 @@ package algo42Full.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import ar.uba.fi.algo3.titiritero.ObjetoVivo;
 
 public class ZonaCombate {
@@ -12,7 +18,7 @@ public class ZonaCombate {
 	private FlotaEnemiga flotaEnemiga;
 	private Flota flotaAliada;
 	private List<Proyectil> listaProyectiles;
-	private List<ObjetoVivo> listaActualizaciones; 
+	private List<ActualizacionAlgo42> listaActualizaciones; //////////////se cambio el tipo de la lista: Objeto Vivo por ActualizacionAlgo42
 	
 	public ZonaCombate(int alto,int ancho){
 		this.alto = alto; // se podría chekear
@@ -20,12 +26,12 @@ public class ZonaCombate {
 		this.algo42 = null;
 		this.flotaAliada = null;
 		this.flotaEnemiga = null;
-		this.listaActualizaciones = new ArrayList<ObjetoVivo>();
+		this.listaActualizaciones = new ArrayList<ActualizacionAlgo42>();  /////////////////se cambio el tipo
 		this.listaProyectiles = new ArrayList<Proyectil>();
 		
 	}
 	
-	public void agregarActualizacionAlgo42(ObjetoVivo actualizacion){
+	public void agregarActualizacionAlgo42(ActualizacionAlgo42 actualizacion){          ///se cambio el tipo
 		this.listaActualizaciones.add(actualizacion);
 	}
 	
@@ -103,8 +109,8 @@ public class ZonaCombate {
 	
 	public void quitarObjetosMuertos(){
 		
-		List<ObjetoVivo> tempLista  = new ArrayList<ObjetoVivo>();
-		for (ObjetoVivo actualizacion : this.listaActualizaciones){
+		List<ActualizacionAlgo42> tempLista  = new ArrayList<ActualizacionAlgo42>();         //se cambio el tipo de la lista
+		for (ActualizacionAlgo42 actualizacion : this.listaActualizaciones){         //se cambio el tipo de la lista
 			if (actualizacion.estaVivo()) tempLista.add(actualizacion);
 		} 
 		this.listaActualizaciones = tempLista;
@@ -128,6 +134,152 @@ public class ZonaCombate {
 		else puntosEnemigos = 0;
 		
 		return puntosAliados+puntosEnemigos;	
+	}
+	
+
+
+	
+	public Element getElement(Document doc) {
+		Element zonaCombate = doc.createElement("ZonaCombate");
+		
+		Element atributos = doc.createElement("Atributos");
+		zonaCombate.appendChild(atributos);
+		
+		Element ancho = doc.createElement("Ancho");
+		atributos.appendChild(ancho);
+		ancho.setTextContent(String.valueOf(this.ancho));
+		
+		Element alto = doc.createElement("Alto");
+		atributos.appendChild(alto);
+		alto.setTextContent(String.valueOf(this.alto));
+		
+		@SuppressWarnings("unused")
+		Element algo42 = doc.createElement("Algo42");
+		zonaCombate.appendChild(this.algo42.getElement(doc));
+		
+		@SuppressWarnings("unused")
+		Element flotaEnemiga = doc.createElement("FlotEnemiga");
+		zonaCombate.appendChild(this.flotaEnemiga.getElement(doc));
+		
+		@SuppressWarnings("unused")
+		Element flotaAliada = doc.createElement("FlotaAliada");
+		zonaCombate.appendChild(this.flotaAliada.getElement(doc));
+		
+		Element listaProyectiles = doc.createElement("ListaProyectiles");
+		zonaCombate.appendChild(listaProyectiles);
+		
+		if(this.listaProyectiles != null){
+			for (Proyectil proyectil : this.listaProyectiles){
+				listaProyectiles.appendChild(proyectil.getElement(doc));
+			}
+		}
+
+				
+		Element listaActualizaciones = doc.createElement("ListaActualizaciones");
+		zonaCombate.appendChild(listaActualizaciones);
+		
+		if(this.listaActualizaciones != null){
+			for (ActualizacionAlgo42 actualizacion : this.listaActualizaciones){   //se utilizo el tipo ActualizacionAlgo42 cambiada al comienzo
+				listaActualizaciones.appendChild(actualizacion.getElement(doc)); ////////////
+			}
+				
+		}
+	
+				
+
+		return zonaCombate;
+	}
+
+	public static ZonaCombate fromElement(Element element) {
+		ZonaCombate zonaCombate = new ZonaCombate(1, 1);
+		
+		NodeList childs = element.getChildNodes(); //contiene atributos y lista de NavesVivas
+		for (int i = 0; i < childs.getLength(); i++) {
+			Node child = childs.item(i);
+			if (child.getNodeName().equals("Atributos")) {
+				NodeList childsLevel2 = child.getChildNodes();  //lista de atributos
+				for (int h = 0; h < childsLevel2.getLength(); h++) { //itera entre los atributos
+					Node childLevel3 = childsLevel2.item(h);
+					if (childLevel3.getNodeName().equals("Ancho")) {
+						zonaCombate.ancho = Integer.parseInt(childLevel3.getTextContent());
+					}
+					
+					else if (childLevel3.getNodeName().equals("Alto")) {
+						zonaCombate.alto = Integer.parseInt(childLevel3.getTextContent());
+					}
+				}//fin for
+			}
+			
+			else if (child.getNodeName().equals("Algo42")) {
+				zonaCombate.algo42 = Algo42.fromElement((Element)child, zonaCombate);
+			}
+			
+			else if (child.getNodeName().equals("FlotaEnemiga")) {
+				zonaCombate.flotaEnemiga = FlotaEnemiga.fromElement((Element)child, zonaCombate);
+			}
+			
+			else if (child.getNodeName().equals("FlotaAliada")) {
+				zonaCombate.flotaAliada = Flota.fromElement((Element)child, zonaCombate);
+			}
+			
+			else if (child.getNodeName().equals("ListaProyectiles")) {
+				NodeList childsLevel2 = child.getChildNodes();  //lista de proyectiles
+				for (int h = 0; h < childsLevel2.getLength(); h++) { //itera entre los proyectiles
+					Node childLevel3 = childsLevel2.item(h); //nodo que representa un proyectil de la lista
+					if (childLevel3.getNodeName().equals("ProyectilCohete")) {
+						(zonaCombate.listaProyectiles).add(new ProyectilCohete(((Element)childLevel3) , zonaCombate) );
+					}
+					
+					else if (childLevel3.getNodeName().equals("ProyectilLaser")){
+						(zonaCombate.listaProyectiles).add(new ProyectilLaser(((Element)childLevel3) , zonaCombate) );
+						
+					}
+					
+					else if (childLevel3.getNodeName().equals("ProyectilTorpedo")){
+						(zonaCombate.listaProyectiles).add(new ProyectilTorpedo(((Element)childLevel3) , zonaCombate) );
+						
+					}
+					
+					else if (childLevel3.getNodeName().equals("ProyectilTorpedoAdaptable")){
+						(zonaCombate.listaProyectiles).add(new ProyectilTorpedoAdaptable(((Element)childLevel3) , zonaCombate) );
+						
+					}
+					
+					else if (childLevel3.getNodeName().equals("ProyectilTorpedoSeguidor")){
+						(zonaCombate.listaProyectiles).add(new ProyectilTorpedoSeguidor(((Element)childLevel3) , zonaCombate) );
+						
+					}					
+										
+				}
+			} 
+			
+			else if (child.getNodeName().equals("ListaActualizaciones")) {
+				NodeList childsLevel2 = child.getChildNodes();  //lista de actualizaciones
+				for (int h = 0; h < childsLevel2.getLength(); h++) { //itera entre las actualizaciones
+					Node childLevel3 = childsLevel2.item(h); //nodo que representa una actualizacion de la lista
+					if (childLevel3.getNodeName().equals("Cohete")) {
+						(zonaCombate.listaActualizaciones).add(new Cohete(((Element)childLevel3) , zonaCombate) );
+					}
+					
+					else if (childLevel3.getNodeName().equals("TanqueEnergia")){
+						(zonaCombate.listaActualizaciones).add(new TanqueEnergia(((Element)childLevel3) , zonaCombate) );
+						
+					}
+					
+					else if (childLevel3.getNodeName().equals("Torpedo")){
+						(zonaCombate.listaActualizaciones).add(new Torpedo(((Element)childLevel3) , zonaCombate) );
+						
+					}
+					
+					
+										
+				}
+			} 
+		} 
+				
+
+
+		return zonaCombate;
 	}
 	
 	

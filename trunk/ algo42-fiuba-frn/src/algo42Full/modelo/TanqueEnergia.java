@@ -14,7 +14,7 @@ public class TanqueEnergia extends ActualizacionAlgo42{
 		super (actualizacion, zona);
 	}
     
-	public Element serializar(Document doc) {
+	public Element getElement(Document doc) {
 		Element actualizacion = doc.createElement("TanqueEnergia");
            this.grabar (actualizacion,doc);
            return actualizacion;

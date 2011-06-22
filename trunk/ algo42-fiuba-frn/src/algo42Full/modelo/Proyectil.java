@@ -6,10 +6,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import algo42Full.modelo.excepciones.ObjetoFueraDeZonaDeCombateException;
 import ar.uba.fi.algo3.titiritero.ObjetoVivo;
 
 
-public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
+public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo, ConvertibleAElement
 {
 	
 	protected boolean muerto;
@@ -51,6 +52,12 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 		proyectil.appendChild(enemigo);
 		enemigo.setTextContent(Boolean.toString(this.enemigo));
 
+	}
+	
+	public Element getElement(Document doc){
+		Element naveViva= doc.createElement("AvionCivil");
+		
+		return naveViva;
 	}
 	
 	public Proyectil (ZonaCombate zona, boolean enemigo, int x, int y,int radio,int velX,int velY,int danio)

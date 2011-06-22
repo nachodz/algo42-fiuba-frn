@@ -1,5 +1,10 @@
 package algo42Full.modelo;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import algo42Full.modelo.excepciones.*;
 
 public class Bombardero extends NaveVivaEnemiga implements Atacable{
@@ -8,6 +13,58 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	private int frecuenciaDisparo;
 	private int turnosDisparo;
 	private int cantMov;
+	
+	
+	public Element getElement(Document doc) {
+		Element bombardero = doc.createElement("Bombardero");
+		
+		Element atributos = doc.createElement("Atributos");
+		bombardero.appendChild(atributos);
+		
+		super.writeElement(atributos, doc);
+		
+			
+		Element frecuenciaDisparo = doc.createElement("FrecuenciaDisparo");
+		atributos.appendChild(frecuenciaDisparo);
+		frecuenciaDisparo.setTextContent(String.valueOf(this.frecuenciaDisparo));
+		
+		Element turnosDisparo = doc.createElement("TurnosDisparo");
+		atributos.appendChild(turnosDisparo);
+		turnosDisparo.setTextContent(String.valueOf(this.turnosDisparo));
+		
+
+		
+		Element cantMov = doc.createElement("CantMov");
+		atributos.appendChild(cantMov);
+		cantMov.setTextContent(String.valueOf(this.cantMov));
+
+
+		return bombardero;
+	}
+
+	public static Bombardero fromElement(Element element, ZonaCombate zona) {
+		Bombardero bombardero = new Bombardero(zona, 0, 0);
+		
+		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables
+		
+		writeNaveVivaEnemiga((Element)variables, bombardero);
+		
+		NodeList childs = variables.getChildNodes();
+		
+		for (int i = 0; i < childs.getLength(); i++) {
+			Node child = childs.item(i);
+			if (child.getNodeName().equals("FrecuenciaDisparo")) {
+				bombardero.frecuenciaDisparo = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("TurnosDisparo")) {
+				bombardero.turnosDisparo = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("CantMov")) {
+				bombardero.cantMov = Integer.parseInt(child.getTextContent());
+		}
+	}
+		
+		return bombardero;
+	}	
+	
 	
 	public Bombardero(ZonaCombate unaZonaDeCombate, int posX, int posY){
 		super(unaZonaDeCombate,posX,posY,50,3,3);
