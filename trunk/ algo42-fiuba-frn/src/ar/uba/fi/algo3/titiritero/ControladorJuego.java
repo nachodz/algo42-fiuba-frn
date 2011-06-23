@@ -20,6 +20,7 @@ public class ControladorJuego implements Runnable {
 		this.dibujables = new ArrayList<Dibujable>();
 		this.mouseClickObservadores = new ArrayList<MouseClickObservador>();
 		this.keyPressedObservadores = new ArrayList<KeyPressedObservador>();
+		this.acciones = new ArrayList<Accion>();
 		this.estaReproductorActivo = activarReproductor;
 		if(this.estaReproductorActivo){
 			this.reproductor = new Reproductor();	
@@ -35,6 +36,7 @@ public class ControladorJuego implements Runnable {
 		try{
 			while(estaEnEjecucion){
 				simular();
+				ejecutarAcciones();
 				dibujar();
 				Thread.sleep(intervaloSimulacion);
 			}
@@ -117,7 +119,7 @@ public class ControladorJuego implements Runnable {
 		this.intervaloSimulacion = intervaloSimulacion;
 	}
  
-	private void dibujar() {
+	protected void dibujar() {
 		Iterator<Dibujable> iterador = dibujables.iterator();
 		while(iterador.hasNext()){
 			Dibujable dibujable = iterador.next();
@@ -129,7 +131,7 @@ public class ControladorJuego implements Runnable {
 	/**
 	 * Ejecuta la simulacion recorriendo la coleccion de objetivos vivos.
 	 */
-	private void simular() {
+	protected void simular() {
 		this.superficieDeDibujo.limpiar();
 		Iterator<ObjetoVivo> iterador = objetosVivos.iterator();
 		while(iterador.hasNext()){
@@ -199,12 +201,27 @@ public class ControladorJuego implements Runnable {
 		this.keyPressedObservadores.clear();
 	}
 	
-	private long intervaloSimulacion;
-	private boolean estaEnEjecucion;
+	public void agregarAccion(Accion accionNueva){
+		this.acciones.add(accionNueva);
+	}
+	
+	public void removerAccion(Accion accion){
+		this.acciones.remove(accion);
+	}
+	
+	private void ejecutarAcciones(){
+		for (Accion accion: this.acciones){
+			accion.ejecutarAccion();
+		}
+	}
+	
+	protected long intervaloSimulacion;
+	protected boolean estaEnEjecucion;
 	private List<ObjetoVivo> objetosVivos;
 	private List<Dibujable> dibujables;
 	private List<MouseClickObservador> mouseClickObservadores;
 	private List<KeyPressedObservador> keyPressedObservadores;
+	private List<Accion> acciones;
 	private SuperficieDeDibujo superficieDeDibujo;
 	private Reproductor reproductor;
 	private Thread hiloAudio;

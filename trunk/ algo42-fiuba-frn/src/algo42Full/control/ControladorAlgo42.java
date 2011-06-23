@@ -3,6 +3,8 @@ package algo42Full.control;
 import java.awt.event.KeyEvent;
 
 import algo42Full.modelo.Algo42;
+import algo42Full.modelo.excepciones.NoTieneCohetesException;
+import algo42Full.modelo.excepciones.NoTieneTorpedosException;
 import ar.uba.fi.algo3.titiritero.KeyPressedObservador;
 
 public class ControladorAlgo42 implements KeyPressedObservador {
@@ -32,10 +34,6 @@ public class ControladorAlgo42 implements KeyPressedObservador {
 			algo42.moverDerecha();
 			return;
 		}
-		if (tecla==KeyEvent.VK_C){
-			algo42.dispararLaser();
-			return;
-		}
 		
 	}
 
@@ -48,6 +46,28 @@ public class ControladorAlgo42 implements KeyPressedObservador {
 		}
 		if ((mov == KeyEvent.VK_UP) || (mov == KeyEvent.VK_DOWN)){
 			algo42.detenerEjeY();
+			return;
+		}
+		if (mov==KeyEvent.VK_C){
+			algo42.dispararLaser();
+			return;
+		}
+		if (mov==KeyEvent.VK_X){
+			try{
+				algo42.dispararCohete();
+			}
+			catch (NoTieneCohetesException e){
+				//No dispara nada
+			}
+			return;
+		}
+		if (mov==KeyEvent.VK_Z){
+			try{
+				algo42.dispararTorpedo();
+			}
+			catch (NoTieneTorpedosException e){
+				//No dispara nada
+			}
 			return;
 		}
 		

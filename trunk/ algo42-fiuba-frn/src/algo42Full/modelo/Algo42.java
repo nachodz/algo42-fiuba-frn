@@ -6,8 +6,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import algo42Full.modelo.excepciones.*;
+import ar.uba.fi.algo3.titiritero.ObjetoVivo;
 
-public class Algo42 extends ObjetoColisionable implements Atacable{
+public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 	private int energia;
 	private ZonaCombate zonaDeCombate;
 	private int cantCohetes;
@@ -16,6 +17,7 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 	private int velocidad;
 	private int velX; //TODO persistir
 	private int velY; //TODO persisir
+
 	
 	
 	public Algo42(ZonaCombate zona,int x,int y){
@@ -23,7 +25,7 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 		this.zonaDeCombate = zona;
 		this.energia = 10;
 		this.muerto = false;
-		this.velocidad = 4;
+		this.velocidad = 10;
 		this.cantCohetes = 0;
 		this.cantTorpedos = 0;
 		this.velX = 0;
@@ -173,8 +175,8 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 	public void dispararLaser(){
 		Proyectil pLaser;
 		
-		pLaser = new ProyectilLaser(this.zonaDeCombate,false,this.getX(),this.getY());
-		this.zonaDeCombate.agregarProyectil(pLaser);
+			pLaser = new ProyectilLaser(this.zonaDeCombate,false,this.getX(),this.getY());
+			this.zonaDeCombate.agregarProyectil(pLaser);
 	}
 	
 	public boolean estaVivo(){
@@ -207,22 +209,22 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 	
 	public void moverAbajo(){
 		this.velY = velocidad;
-		this.mover();
+		//this.mover();
 	}
 	
 	public void moverArriba(){
 		this.velY = velocidad*-1;
-		this.mover();
+		//this.mover();
 	}
 	
 	public void moverDerecha(){
 		this.velX = velocidad;
-		this.mover();
+		//this.mover();
 	}
 	
 	public void moverIzquierda(){
 		this.velX = velocidad*-1;
-		this.mover();
+		//this.mover();
 	}
 	
 	public void detenerEjeX(){
@@ -254,6 +256,11 @@ public class Algo42 extends ObjetoColisionable implements Atacable{
 					this.y++;
 			}
 		}
+	}
+
+	@Override
+	public void vivir() {
+		this.mover();
 	}
 	
 	

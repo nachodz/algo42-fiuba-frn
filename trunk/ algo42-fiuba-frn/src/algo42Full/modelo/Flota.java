@@ -40,7 +40,9 @@ public class Flota {
 	}
 	
 	public int reportarPuntosBajas(){
-		return this.puntosBajas;
+		int puntos = this.puntosBajas;
+		this.puntosBajas = 0;
+		return puntos;
 	}
 	
 	public void vivir(){

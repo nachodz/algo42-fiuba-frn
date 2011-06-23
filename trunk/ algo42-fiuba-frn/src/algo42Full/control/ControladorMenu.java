@@ -1,7 +1,8 @@
 package algo42Full.control;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import algo42Full.modelo.Coordenada;
 import algo42Full.vista.VistaBoton;
@@ -11,61 +12,108 @@ import ar.uba.fi.algo3.titiritero.ControladorJuego;
 public class ControladorMenu {
 	
 	private ControladorJuego controlador;
-	private List<Boton> botones;
+	private Map<Boton,VistaBoton> mapBotones;
 	private enum Accion{JUEGONUEVO,CONTINUARJUEGO,SALIR};
 	private Accion accion;	
+	private ObservadorSalir observadorSalir;
 	
 	public ControladorMenu(ControladorJuego controlador){
+		
 		this.accion = Accion.SALIR;
 		this.controlador = controlador;
+		mapBotones = new HashMap<Boton,VistaBoton>();
+		observadorSalir = new ObservadorSalir(this.controlador);
+		
+		VistaBoton vistaBotonNuevo = new VistaBoton("/media/botonJuegoNuevo.png");
+		BotonJuegoNuevo botonNuevo = new BotonJuegoNuevo( this, 270, 350, vistaBotonNuevo.getAncho(), vistaBotonNuevo.getAlto());
+		vistaBotonNuevo.setPosicionable(botonNuevo);
+		mapBotones.put(botonNuevo, vistaBotonNuevo);
+		
+		VistaBoton vistaBotonContinuar = new VistaBoton("/media/botonContinuar.png");
+		BotonContinuarJuego botonContinuar = new BotonContinuarJuego( this, 270, 460, vistaBotonContinuar.getAncho(), vistaBotonContinuar.getAlto());
+		vistaBotonContinuar.setPosicionable(botonContinuar);
+		mapBotones.put(botonContinuar, vistaBotonContinuar);
+		
+		this.cargarMenu();
+	}
+	
+	public void cargarMenu(){
 		
 		Coordenada coord = new Coordenada(0,0,1);
 		VistaMenuPrincipal vistaMenu = new VistaMenuPrincipal();
 		vistaMenu.setPosicionable(coord);
 		this.controlador.agregarDibujable(vistaMenu);
-			
-		botones = new ArrayList<Boton>();	
+		controlador.agregarKeyPressObservador(observadorSalir);
 		
-		VistaBoton vistaBotonNuevo = new VistaBoton("/media/botonJuegoNuevo.png");
-		BotonJuegoNuevo botonNuevo = new BotonJuegoNuevo( this, 270, 350, vistaBotonNuevo.getAncho(), vistaBotonNuevo.getAlto());
-		vistaBotonNuevo.setPosicionable(botonNuevo);
-		botones.add(botonNuevo);
-		controlador.agregarMouseClickObservador(botonNuevo);
-		controlador.agregarDibujable(vistaBotonNuevo);
-		
-		
-		VistaBoton vistaBotonContinuar = new VistaBoton("/media/botonContinuar.png");
-		BotonContinuarJuego botonContinuar = new BotonContinuarJuego( this, 270, 460, vistaBotonContinuar.getAncho(), vistaBotonContinuar.getAlto());
-		vistaBotonContinuar.setPosicionable(botonContinuar);
-		botones.add(botonContinuar);
-		controlador.agregarMouseClickObservador(botonContinuar);
-		controlador.agregarDibujable(vistaBotonContinuar);
-		
+		Set<Boton> setBotones = mapBotones.keySet();
+		for (Boton boton : setBotones){
+			VistaBoton vista = mapBotones.get(boton);
+			controlador.agregarMouseClickObservador(boton);
+			controlador.agregarDibujable(vista);
+		}
+
 	}
 	
-	//llama al loop principal del juego
-	public void ejecutar(){
-		this.controlador.comenzarJuego();
+	public void descargarMenu(){
 		
 		this.controlador.removerTodosDibujables();
 		this.controlador.removerTodosObjetosVivos();
-		for (Boton boton : this.botones){
+		Set<Boton> setBotones = mapBotones.keySet();
+		for (Boton boton : setBotones){
 			this.controlador.removerMouseClickObservador(boton);
-		}
-		switch (this.accion){
-			case JUEGONUEVO:	@SuppressWarnings("unused")
-								ControladorNivel nivel = new ControladorNivel(this.controlador);
-								this.controlador.comenzarJuego();
-								break;
-			
-			case CONTINUARJUEGO: //cuando se le hace click a continuar juego termina, aca,
-								//como no hay nada que hacer, no pasa nada.
-								break;
-			
-			default: break;
 		}
 		
 	}
+	
+	
+	//llama al loop principal del juego
+//	public void ejecutar(){
+//		this.controlador.comenzarJuego();
+//		this.descargarMenu();
+//		switch (this.accion){
+//			case JUEGONUEVO:	@SuppressWarnings("unused")
+//								ControladorNivel nivel = new ControladorNivel(controlador);
+//								controlador.comenzarJuego();
+//								nivel.descargar();
+//								this.cargarMenu();
+//								break;
+//			
+//			case CONTINUARJUEGO: //cuando se le hace click a continuar juego termina, aca,
+//								//como no hay nada que hacer, no pasa nada.
+//								break;
+//			
+//			default: break;
+//		}
+//		
+//	}
+	
+	public void ejecutar(){
+		boolean salir = false;
+		int puntaje = 0;
+		ControladorNivel nivel = new ControladorNivel(controlador);
+		while (!salir){
+			this.controlador.comenzarJuego();
+			this.descargarMenu();
+			switch (this.accion){
+				case JUEGONUEVO:	nivel.cargar();
+									nivel.setPuntaje(puntaje);
+									controlador.comenzarJuego();
+									nivel.descargar();
+									this.cargarMenu();
+									break;
+				
+				case CONTINUARJUEGO: //cuando se le hace click a continuar juego termina, aca,
+									//como no hay nada que hacer, no pasa nada.
+									break;
+				
+				default: break;
+			}
+		}
+		
+	}
+	
+	
+	
 	
 	
 	/*

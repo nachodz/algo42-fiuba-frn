@@ -86,31 +86,28 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 		Proyectil proyectil;
 		int numero;
 		
-		if (seguidor){
-			numero = 2;
-			this.dispararSeguidor = false;
+		int rand = 1 + (int)(Math.random()* 80); //disminuye la frecuencia de torpedos seguidores
+		if (rand<10){
 			proyectil = new ProyectilTorpedoSeguidor((this.zonaDeCombate), true, (this.x), (this.y + 1));
 		}
 		else{
-			numero = 1 + (int)(Math.random()* 2); //genera un numero aleatorio del 1 al 3
-			
+			numero = 1 + (int)(Math.random()* 2); //genera un numero aleatorio del 1 al 2
 			switch(numero){
-			case 1:
-				proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
-				this.dispararSeguidor = true;
-				break;
+				case 1:
+					proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
+					this.dispararSeguidor = true;
+					break;
+						
+				case 2:
+					proyectil = new ProyectilCohete((this.zonaDeCombate), true, (this.x), (this.y + 1));
+					this.dispararSeguidor = true;
+					break;
 					
-			case 2:
-				proyectil = new ProyectilCohete((this.zonaDeCombate), true, (this.x), (this.y + 1));
-				this.dispararSeguidor = true;
-				break;
-				
-			default:
-				proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
-				break;
+				default:
+					proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
+					break;
 			}
 		}
-		
 		(this.zonaDeCombate).agregarProyectil(proyectil);
 			
 	}
