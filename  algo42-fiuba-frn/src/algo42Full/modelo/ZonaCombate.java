@@ -253,7 +253,7 @@ public class ZonaCombate implements ObjetoVivo{
 				zonaCombate.flotaEnemiga = FlotaEnemiga.fromElement((Element)child, zonaCombate);
 			}
 			
-			else if (child.getNodeName().equals("FlotaAliada")) {
+			else if (child.getNodeName().equals("Flota")) {
 				zonaCombate.flotaAliada = Flota.fromElement((Element)child, zonaCombate);
 			}
 			
@@ -336,6 +336,19 @@ public class ZonaCombate implements ObjetoVivo{
 	
 	public List<ActualizacionAlgo42> getActualizaciones(){
 		return this.listaActualizaciones;
+	}
+	
+	public Algo42 getAlgo42(){
+		return this.algo42;
+	}
+	
+	
+	public FlotaEnemiga getFlotaEnemiga(){
+		return this.flotaEnemiga;
+	}
+	
+	public Flota getFlotaAliada(){
+		return this.flotaAliada;
 	}
 	
 

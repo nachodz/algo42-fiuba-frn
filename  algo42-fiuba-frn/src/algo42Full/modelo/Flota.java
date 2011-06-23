@@ -138,5 +138,11 @@ public class Flota {
 		return flota;
 	}
 	
+	
+	
+	public List<NaveViva> getListaAviones(){
+		return this.listaAviones;
+	}
+	
 
 }

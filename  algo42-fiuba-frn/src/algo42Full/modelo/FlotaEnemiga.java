@@ -195,6 +195,11 @@ public class FlotaEnemiga{
 		return flotaEnemiga;
 	}
 	
+	public List<NaveVivaEnemiga> getListaAviones(){
+		return this.listaAviones;
+	}
+	
+	
 	
 	
 }
