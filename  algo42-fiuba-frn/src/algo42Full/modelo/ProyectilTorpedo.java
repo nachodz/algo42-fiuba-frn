@@ -7,6 +7,7 @@ public class ProyectilTorpedo extends Proyectil{
 	public ProyectilTorpedo(ZonaCombate zona, boolean enemigo, int x, int y) 
 	{
 		super(zona,enemigo,x,y,7,5,5,4);
+		if (!enemigo) this.velY = 12;
 	}
 	
 	public ProyectilTorpedo (Element proyectil, ZonaCombate zona){

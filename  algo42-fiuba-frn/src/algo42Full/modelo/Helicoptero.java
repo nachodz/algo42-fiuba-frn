@@ -1,6 +1,5 @@
 package algo42Full.modelo;
 
-import algo42Full.modelo.excepciones.*;
 import java.lang.Math;
 
 import org.w3c.dom.Document;
@@ -19,13 +18,9 @@ public class Helicoptero extends NaveViva{
 	
 	public Helicoptero(ZonaCombate unaZonaDeCombate, int posX, int posY){
 		super(unaZonaDeCombate,posX,posY,25,0,3);
-		if (unaZonaDeCombate.comprobarSalidaZona(this)){
-			
-			throw new ObjetoFueraDeZonaDeCombateException();			
-		}
 		
 		this.energia = 1;
-		this.puntos = -200;
+		this.puntos = 200;
 		this.centroGiroX = 300;
 		this.centroGiroY = 300;
 		this.radioGiro = 120;

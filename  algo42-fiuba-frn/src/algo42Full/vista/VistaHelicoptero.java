@@ -1,8 +1,7 @@
 package algo42Full.vista;
 
-import ar.uba.fi.algo3.titiritero.vista.Imagen;
 
-public class VistaHelicoptero extends Imagen{
+public class VistaHelicoptero extends VistaNave{
 	
 	public VistaHelicoptero(){
 		this.setNombreArchivoImagen("/media/helicoptero.png");

@@ -7,6 +7,7 @@ public class ProyectilLaser extends Proyectil {
 
 	public ProyectilLaser(ZonaCombate zona, boolean enemigo, int x, int y) {
 		super(zona,enemigo,x,y,7,0,7,1);
+		if (!enemigo) this.velY = 12;
 	}
 	
 	public ProyectilLaser (Element proyectil, ZonaCombate zona){

@@ -6,6 +6,13 @@ import org.w3c.dom.Node;
 
 
 public class AvionCivil extends NaveViva{
+	
+	public AvionCivil(ZonaCombate unaZonaDeCombate, int x, int y){
+		super(unaZonaDeCombate,x,y,25,0,2);
+		this.energia = 1;
+		this.puntos = 300;
+	
+	}
 
 	public void vivir(){
 		
@@ -34,14 +41,7 @@ public class AvionCivil extends NaveViva{
 		
 	
 	}
-	
-	public AvionCivil(ZonaCombate unaZonaDeCombate, int x, int y){
-		super(unaZonaDeCombate,x,y,25,0,2);
-		this.energia = 1;
-		this.puntos = -300;
-	
-	}
-	
+		
 	public Element getElement(Document doc) {
 		Element avionCivil = doc.createElement("AvionCivil");
 		

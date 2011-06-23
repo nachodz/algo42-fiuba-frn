@@ -48,7 +48,9 @@ public class ZonaCombate implements ObjetoVivo{
 	}
 	
 	public void agregarProyectil(Proyectil proyectil){
-		this.listaProyectiles.add(proyectil);
+		synchronized (this.listaProyectiles){
+			this.listaProyectiles.add(proyectil);
+		}
 	}
 	
 
@@ -56,8 +58,10 @@ public class ZonaCombate implements ObjetoVivo{
 		
 		if(this.flotaAliada != null) this.flotaAliada.vivir();
 		if(this.flotaEnemiga != null) this.flotaEnemiga.vivir();
-		for (Proyectil proyect: this.listaProyectiles){
-			proyect.vivir();
+		synchronized (this.listaProyectiles){
+			for (Proyectil proyect: this.listaProyectiles){
+				proyect.vivir();
+			}
 		}
 		for (ObjetoVivo actualizacion: this.listaActualizaciones){
 			actualizacion.vivir();
@@ -142,8 +146,10 @@ public class ZonaCombate implements ObjetoVivo{
 		} 
 		this.listaActualizaciones = tempLista;
 		List<Proyectil> tempProyectiles = new ArrayList<Proyectil>();
-		for (Proyectil proyect : this.listaProyectiles){
-			if (proyect.estaVivo()) tempProyectiles.add(proyect);
+		synchronized(this.listaProyectiles){
+			for (Proyectil proyect : this.listaProyectiles){
+				if (proyect.estaVivo()) tempProyectiles.add(proyect);
+			}
 		}
 		this.listaProyectiles = tempProyectiles;
 	
@@ -160,7 +166,9 @@ public class ZonaCombate implements ObjetoVivo{
 		if(this.flotaEnemiga != null) puntosEnemigos = this.flotaEnemiga.reportarPuntosBajas();
 		else puntosEnemigos = 0;
 		
-		return puntosAliados+puntosEnemigos;	
+		
+		int puntaje = (puntosEnemigos-puntosAliados);		
+		return puntaje;	
 	}
 	
 
@@ -313,6 +321,7 @@ public class ZonaCombate implements ObjetoVivo{
 	@Override
 	public void vivir() {
 		this.combatir();
+		this.quitarObjetosMuertos();
 		
 	}
 
@@ -321,6 +330,13 @@ public class ZonaCombate implements ObjetoVivo{
 		return true;
 	}
 	
+	public List<Proyectil> getProyectiles(){
+		return this.listaProyectiles;
+	}
+	
+	public List<ActualizacionAlgo42> getActualizaciones(){
+		return this.listaActualizaciones;
+	}
 	
 
 }
