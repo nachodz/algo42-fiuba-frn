@@ -252,9 +252,7 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 	public static Explorador fromElement(Element element, ZonaCombate zona) {
 		Explorador explorador = new Explorador(zona, 0, 0);
 		
-		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables
-		
-		
+		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables		
 		
 		writeNaveVivaEnemiga((Element)variables, explorador);
 

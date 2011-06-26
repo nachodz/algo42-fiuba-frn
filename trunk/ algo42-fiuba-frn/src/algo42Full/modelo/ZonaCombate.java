@@ -154,6 +154,14 @@ public class ZonaCombate implements ObjetoVivo{
 		return this.algo42.getY();
 	}
 	
+	public int getAncho(){
+		return this.ancho;
+	}
+	
+	public int getAlto(){
+		return this.alto;
+	}
+	
 	
 	public void quitarObjetosMuertos(){
 		

@@ -32,107 +32,7 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 		this.velY = 0;
 	}
 
-	public Element getElement(Document doc) {
-		Element algo42 = doc.createElement("Algo42");
-		
-		Element atributos = doc.createElement("Atributos");
-		algo42.appendChild(atributos);
-		
-		/*
-		 * atributos de ObjetoColisionable
-		 */
-		
-		Element x = doc.createElement("X");
-		atributos.appendChild(x);
-		x.setTextContent(String.valueOf(this.x));
-		
-		Element y = doc.createElement("Y");
-		atributos.appendChild(y);
-		y.setTextContent(String.valueOf(this.y));
-		
-		Element radio = doc.createElement("Radio");
-		atributos.appendChild(radio);
-		radio.setTextContent(String.valueOf(this.radio));
-		
-		///////////////////////////////////////////////////
-
-		Element energia = doc.createElement("Energia");
-		atributos.appendChild(energia);
-		energia.setTextContent(String.valueOf(this.energia));
-
-//		Element zonaDeCombate = doc.createElement("ZonaDeCombate");
-//	    algo42.appendChild(zonaDeCombate);
-//		zonaDeCombate.setTextContent(this.zonaDeCombate);
-		
-		Element cantCohetes = doc.createElement("CantCohetes");
-		atributos.appendChild(cantCohetes);
-		cantCohetes.setTextContent(String.valueOf(this.cantCohetes));
-		
-		Element cantTorpedos = doc.createElement("CantTorpedos");
-		atributos.appendChild(cantTorpedos);
-		cantTorpedos.setTextContent(String.valueOf(this.cantTorpedos));
-		
-		Element muerto = doc.createElement("Muerto");
-		atributos.appendChild(muerto);
-		muerto.setTextContent(String.valueOf(this.muerto));
-		
-		Element velocidad = doc.createElement("Velocidad");
-		atributos.appendChild(velocidad);
-		velocidad.setTextContent(String.valueOf(this.velocidad));
-		
-		Element velX = doc.createElement("VelX");     //nuevo agregado
-		atributos.appendChild(velX);
-		velX.setTextContent(String.valueOf(this.velX));
-		
-		Element velY = doc.createElement("VelY");      //nuevo agregado
-		atributos.appendChild(velY);
-		velY.setTextContent(String.valueOf(this.velY));
-
-
-		return algo42;
-	}
-
-	public static Algo42 fromElement(Element element, ZonaCombate zona) {
-		Algo42 algo42 = new Algo42(zona, 0, 0);
-		
-		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables
-			
-		NodeList childs = variables.getChildNodes();
-		
-		for (int i = 0; i < childs.getLength(); i++) {
-			
-			Node child = childs.item(i);
-			
-			
-			if (child.getNodeName().equals("X")) {
-				algo42.x = Integer.parseInt(child.getTextContent());
-			} else if (child.getNodeName().equals("Y")) {
-				
-				algo42.y = Integer.parseInt(child.getTextContent());
-			} else if (child.getNodeName().equals("Radio")) {
-				algo42.radio = Integer.parseInt(child.getTextContent());
-			} else if (child.getNodeName().equals("Energia")) {
-				algo42.energia = Integer.parseInt(child.getTextContent());
-			} else if (child.getNodeName().equals("CantCohetes")) {
-				algo42.cantCohetes = Integer.parseInt(child.getTextContent());
-			} else if (child.getNodeName().equals("CantTorpedos")) {
-				algo42.cantTorpedos = Integer.parseInt(child.getTextContent());
-			} else if (child.getNodeName().equals("Muerto")) {
-				algo42.muerto = Boolean.parseBoolean(child.getTextContent());
-			} else if (child.getNodeName().equals("Velocidad")) {
-				algo42.velocidad = Integer.parseInt(child.getTextContent());
-			}
-			else if (child.getNodeName().equals("VelX")) {        //nuevo agregado
-				algo42.velX = Integer.parseInt(child.getTextContent());
-			}
-			else if (child.getNodeName().equals("VelY")) {     //nuevo agregado
-				algo42.velY = Integer.parseInt(child.getTextContent());
-			}
-		
-		}
-		
-		return algo42;
-	}
+	
 		
 	public void cargarCohete(){
 		this.cantCohetes++;
@@ -264,8 +164,100 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 	}
 	
 	
-	
-	
-	
+	public Element getElement(Document doc) {
+		Element algo42 = doc.createElement("Algo42");
+		
+		Element atributos = doc.createElement("Atributos");
+		algo42.appendChild(atributos);
+		
+		/*
+		 * atributos de ObjetoColisionable
+		 */
+		
+		Element x = doc.createElement("X");
+		atributos.appendChild(x);
+		x.setTextContent(String.valueOf(this.x));
+		
+		Element y = doc.createElement("Y");
+		atributos.appendChild(y);
+		y.setTextContent(String.valueOf(this.y));
+		
+		Element radio = doc.createElement("Radio");
+		atributos.appendChild(radio);
+		radio.setTextContent(String.valueOf(this.radio));
+		
+		///////////////////////////////////////////////////
+
+		Element energia = doc.createElement("Energia");
+		atributos.appendChild(energia);
+		energia.setTextContent(String.valueOf(this.energia));
+
+		Element cantCohetes = doc.createElement("CantCohetes");
+		atributos.appendChild(cantCohetes);
+		cantCohetes.setTextContent(String.valueOf(this.cantCohetes));
+		
+		Element cantTorpedos = doc.createElement("CantTorpedos");
+		atributos.appendChild(cantTorpedos);
+		cantTorpedos.setTextContent(String.valueOf(this.cantTorpedos));
+		
+		Element muerto = doc.createElement("Muerto");
+		atributos.appendChild(muerto);
+		muerto.setTextContent(String.valueOf(this.muerto));
+		
+		Element velocidad = doc.createElement("Velocidad");
+		atributos.appendChild(velocidad);
+		velocidad.setTextContent(String.valueOf(this.velocidad));
+		
+		Element velX = doc.createElement("VelX");     //nuevo agregado
+		atributos.appendChild(velX);
+		velX.setTextContent(String.valueOf(this.velX));
+		
+		Element velY = doc.createElement("VelY");      //nuevo agregado
+		atributos.appendChild(velY);
+		velY.setTextContent(String.valueOf(this.velY));
+
+
+		return algo42;
+	}
+
+	public static Algo42 fromElement(Element element, ZonaCombate zona) {
+		Algo42 algo42 = new Algo42(zona, 0, 0);
+		
+		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables
+			
+		NodeList childs = variables.getChildNodes();
+		
+		for (int i = 0; i < childs.getLength(); i++) {
+			
+			Node child = childs.item(i);			
+			
+			if (child.getNodeName().equals("X")) {
+				algo42.x = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("Y")) {				
+				algo42.y = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("Radio")) {
+				algo42.radio = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("Energia")) {
+				algo42.energia = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("CantCohetes")) {
+				algo42.cantCohetes = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("CantTorpedos")) {
+				algo42.cantTorpedos = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("Muerto")) {
+				algo42.muerto = Boolean.parseBoolean(child.getTextContent());
+			} else if (child.getNodeName().equals("Velocidad")) {
+				algo42.velocidad = Integer.parseInt(child.getTextContent());
+			}
+			else if (child.getNodeName().equals("VelX")) {        //nuevo agregado
+				algo42.velX = Integer.parseInt(child.getTextContent());
+			}
+			else if (child.getNodeName().equals("VelY")) {     //nuevo agregado
+				algo42.velY = Integer.parseInt(child.getTextContent());
+			}
+		
+		}
+		
+		return algo42;
+	}	
 
 }

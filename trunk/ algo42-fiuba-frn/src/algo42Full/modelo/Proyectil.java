@@ -63,42 +63,7 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 			zonaDeCombate = zona;
 	}
 	
-	public void grabar (Element proyectil, Document doc){
-		Element muerto = doc.createElement("Muerto");
-		proyectil.appendChild(muerto);
-		muerto.setTextContent(Boolean.toString(this.muerto));
 
-		Element velX = doc.createElement("VelocidadX");
-		proyectil.appendChild(velX);
-		velX.setTextContent(Integer.toString(this.velX));
-		
-		Element velY = doc.createElement("VelocidadY");
-		proyectil.appendChild(velY);
-		velX.setTextContent(Integer.toString(this.velY));
-		
-		Element posInicialX = doc.createElement("PosicionInicialX");
-		proyectil.appendChild(posInicialX);
-		posInicialX.setTextContent(Integer.toString(this.posInicialX));
-		
-		Element posInicialY = doc.createElement("PosicionInicialY");
-		proyectil.appendChild(posInicialY);
-		posInicialY.setTextContent(Integer.toString(this.posInicialY));
-        
-		Element danio = doc.createElement("Danio");
-		proyectil.appendChild(danio);
-		danio.setTextContent(Integer.toString(this.danio));
-        
-		Element enemigo = doc.createElement("Enemigo");
-		proyectil.appendChild(enemigo);
-		enemigo.setTextContent(Boolean.toString(this.enemigo));
-
-	}
-	
-	public Element getElement(Document doc){
-		Element naveViva= doc.createElement("AvionCivil");
-		
-		return naveViva;
-	}
 	
 	
 	public boolean estaVivo(){
@@ -143,6 +108,43 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 			}
 		}
   }
+    
+	public void grabar (Element proyectil, Document doc){
+		Element muerto = doc.createElement("Muerto");
+		proyectil.appendChild(muerto);
+		muerto.setTextContent(Boolean.toString(this.muerto));
+
+		Element velX = doc.createElement("VelocidadX");
+		proyectil.appendChild(velX);
+		velX.setTextContent(Integer.toString(this.velX));
+		
+		Element velY = doc.createElement("VelocidadY");
+		proyectil.appendChild(velY);
+		velX.setTextContent(Integer.toString(this.velY));
+		
+		Element posInicialX = doc.createElement("PosicionInicialX");
+		proyectil.appendChild(posInicialX);
+		posInicialX.setTextContent(Integer.toString(this.posInicialX));
+		
+		Element posInicialY = doc.createElement("PosicionInicialY");
+		proyectil.appendChild(posInicialY);
+		posInicialY.setTextContent(Integer.toString(this.posInicialY));
+        
+		Element danio = doc.createElement("Danio");
+		proyectil.appendChild(danio);
+		danio.setTextContent(Integer.toString(this.danio));
+        
+		Element enemigo = doc.createElement("Enemigo");
+		proyectil.appendChild(enemigo);
+		enemigo.setTextContent(Boolean.toString(this.enemigo));
+
+	}
+	
+	public Element getElement(Document doc){
+		Element naveViva= doc.createElement("AvionCivil");
+		
+		return naveViva;
+	}
 	
 
 }

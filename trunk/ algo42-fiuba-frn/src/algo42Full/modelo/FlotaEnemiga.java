@@ -58,6 +58,8 @@ public class FlotaEnemiga{
 	
 	public void revivirFlota(){
 		for (NaveVivaEnemiga avion : this.listaAviones){
+			int posXSalida = (int) (Math.random()* (avion.zonaDeCombate.getAncho() - avion.getRadio()))+ avion.getRadio();
+			avion.setPosInicialX(posXSalida);
 			avion.setRelevado(false);
 			avion.setMuerto(false);
 			avion.revivir();
@@ -112,6 +114,14 @@ public class FlotaEnemiga{
 		atributos.appendChild(puntosBajas);
 		puntosBajas.setTextContent(String.valueOf(this.puntosBajas));
 		
+		Element cantNaves = doc.createElement("CantidadNaves");
+		atributos.appendChild(cantNaves);
+		cantNaves.setTextContent(String.valueOf(this.cantidadNaves));
+		
+		Element flotaEstaDestruida = doc.createElement("FlotaDestruida");
+		atributos.appendChild(puntosBajas);
+		flotaEstaDestruida.setTextContent(String.valueOf(this.flotaDestruida));
+		
 		Element listaNavesVivasEnemigas = doc.createElement("ListaNavesVivasEnemigas");
 		flotaEnemiga.appendChild(listaNavesVivasEnemigas);
 		
@@ -143,6 +153,13 @@ public class FlotaEnemiga{
 					Node childLevel3 = childsLevel2.item(h);
 					if (childLevel3.getNodeName().equals("PuntosBajas")) {
 						flotaEnemiga.puntosBajas = Integer.parseInt(childLevel3.getTextContent());
+					}
+					else if (childLevel3.getNodeName().equals("CantidadNaves")) {
+						flotaEnemiga.cantidadNaves = Integer.parseInt(childLevel3.getTextContent());
+					}
+					
+					else if (childLevel3.getNodeName().equals("FlotaDestruida")) {
+						flotaEnemiga.flotaDestruida = Boolean.parseBoolean(childLevel3.getTextContent());
 					}
 				}//fin for
 			}//fin if
@@ -181,7 +198,7 @@ public class FlotaEnemiga{
 				}
 			} //fin else if primero
 			
-			else if (child.getNodeName().equals("ListaNavesVivasEnemigas")) {
+			else if (child.getNodeName().equals("AvionGuia")) {
 				NodeList childsLevel2 = child.getChildNodes();  //lista de aviones
 				for (int h = 0; h < childsLevel2.getLength(); h++) { //itera entre los aviones
 					Node childLevel3 = childsLevel2.item(h); //nodo que representa un avion de la lista

@@ -26,8 +26,7 @@ public class CazaII extends Caza implements Atacable{
 		Element atributos = doc.createElement("Atributos");
 		cazaII.appendChild(atributos);
 		
-		super.writeElement(atributos, doc);
-		
+		super.writeElement(atributos, doc);		
 			
 		Element frecuenciaDisparo = doc.createElement("FrecuenciaDisparo");
 		atributos.appendChild(frecuenciaDisparo);
