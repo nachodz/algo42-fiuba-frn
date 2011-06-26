@@ -49,9 +49,13 @@ public class ControladorNivel implements Accion {
 	private Map<ActualizacionAlgo42,VistaActualizacion> mapaActualizaciones;
 	private Map<NaveViva,VistaNave> mapaNaves;
 	private Map<ObjetoDeTexto,Texto> mapaTexto;
-	private VistaFondoNivel vistaFondo;
-	
+	private VistaFondoNivel vistaFondo;	
 	private int puntaje;
+	
+	
+	public void setControlador(ControladorJuego unControlador){
+		this.controlador = unControlador;
+	}
 	
 	
 	
@@ -61,6 +65,10 @@ public class ControladorNivel implements Accion {
 					
 					this.controlador = unControlador;
 					this.zona = new ZonaCombate(600, 800);
+					
+					algo42 = new Algo42(zona, 250, 550);
+					zona.agregarAlgo42(algo42);
+
 						
 					Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File(pathArchivoNivel));
 					Element flotas = doc.getDocumentElement();
@@ -78,11 +86,16 @@ public class ControladorNivel implements Accion {
 						} else if (child.getNodeName().equals("FlotaEnemiga")) {
 							
 							FlotaEnemiga flota1 =  FlotaEnemiga.fromElement((Element)child, this.zona);
-							this.zona.agregarFlotaEnemiga(flota1); 					
-											
-						}
-						
-						
+							this.zona.agregarFlotaEnemiga(flota1);										
+						}						
+					}
+					
+					for(NaveViva nave: this.zona.getFlotaAliada().getListaAviones()){
+						nave.setZonaCombate(this.zona);
+					}
+					
+					for(NaveViva nave: this.zona.getFlotaEnemiga().getListaAviones()){
+						nave.setZonaCombate(this.zona);
 					}
 					
 					completarNivelAPartirDeZonaCombate();	
@@ -98,107 +111,6 @@ public class ControladorNivel implements Accion {
 	}
 			
 			
-	public ControladorNivel(ControladorJuego controlador){
-				this.controlador = controlador;
-				mapaProyectiles = new HashMap<Proyectil, VistaProyectil>();
-				mapaActualizaciones = new HashMap<ActualizacionAlgo42, VistaActualizacion>();
-				mapaNaves = new HashMap<NaveViva,VistaNave>();
-				mapaTexto = new HashMap<ObjetoDeTexto,Texto>();
-				puntaje = 0;
-				
-				
-				vistaFondo = new VistaFondoNivel();
-				Coordenada coord = new Coordenada(0,0,1);
-				vistaFondo.setPosicionable(coord);
-				vistaFondo.setNombreArchivoImagen("/media/fondo1.jpg");
-				
-				zona = new ZonaCombate(600, 800);
-				flotaEnemiga = new FlotaEnemiga();
-				this.zona.agregarFlotaEnemiga(this.flotaEnemiga);
-				
-				
-				NaveVivaEnemiga avion = new Avioneta(zona, 400, 250);
-				this.flotaEnemiga.agregarAvion(avion);	
-				VistaAvioneta vistaAvioneta = new VistaAvioneta();
-				vistaAvioneta.setPosicionable(avion);
-				mapaNaves.put(avion, vistaAvioneta);
-				
-				
-				NaveVivaEnemiga bombardero = new Bombardero(zona, 650, 0);
-				this.flotaEnemiga.agregarAvion(bombardero);	
-				VistaBombardero vistaBombardero = new VistaBombardero();
-				vistaBombardero.setPosicionable(bombardero);
-				mapaNaves.put(bombardero, vistaBombardero);
-				
-				
-				NaveVivaEnemiga caza = new Caza(zona, 100, 0);
-				this.flotaEnemiga.agregarAvion(caza);	
-				VistaCaza vistaCaza = new VistaCaza();
-				vistaCaza.setPosicionable(caza);
-				mapaNaves.put(caza, vistaCaza);
-				
-				
-				NaveVivaEnemiga explorador = new Explorador(zona, 100, 0);
-				this.flotaEnemiga.agregarAvion(explorador);	
-				VistaExplorador vistaExplorador = new VistaExplorador();
-				vistaExplorador.setPosicionable(explorador);
-				mapaNaves.put(explorador, vistaExplorador);
-				
-				algo42 = new Algo42(zona, 250, 550);
-				zona.agregarAlgo42(algo42);
-				vistaAlgo42 = new VistaAlgo42();
-				vistaAlgo42.setPosicionable(algo42);
-				controladorAlgo42 = new ControladorAlgo42(algo42);
-				
-				
-				this.flota = new Flota();
-				this.zona.agregarFlotaAliada(flota);
-				
-				avion.hacerGuia();
-				this.flotaEnemiga.agregarAvionGuia(avion);
-				
-				
-				NaveViva civil = new AvionCivil(zona, 100, 0);
-				this.flota.agregarAvion(civil);	
-				VistaAvionCivil vistaCivil = new VistaAvionCivil();
-				vistaCivil.setPosicionable(civil);
-				mapaNaves.put(civil,vistaCivil);
-				
-				NaveViva heli = new Helicoptero(zona, 500, 0);
-				this.flota.agregarAvion(heli);	
-				VistaHelicoptero vistaHeli = new VistaHelicoptero();
-				vistaHeli.setPosicionable(heli);
-				mapaNaves.put(heli, vistaHeli);
-				
-				
-				TextoCantEnergia textoEnergia = new TextoCantEnergia(this.algo42);
-				Coordenada cTextEnergia = new Coordenada(700,50,1);
-				TextoDinamico vistaTextEnergia = new TextoDinamico(textoEnergia, Color.WHITE, new Font("Serif",Font.BOLD,16));
-				vistaTextEnergia.setPosicionable(cTextEnergia);
-				mapaTexto.put(textoEnergia, vistaTextEnergia);
-				
-				
-				TextoCantTorpedos textoTorpedos = new TextoCantTorpedos(this.algo42);
-				Coordenada cTextTorpedos = new Coordenada(700,70,1);
-				TextoDinamico vistaTextTorpedos = new TextoDinamico(textoTorpedos, Color.WHITE, new Font("Serif",Font.BOLD,16));
-				vistaTextTorpedos.setPosicionable(cTextTorpedos);
-				mapaTexto.put(textoTorpedos, vistaTextTorpedos);
-				
-				
-				TextoCantCohetes textoCohetes = new TextoCantCohetes(this.algo42);
-				Coordenada cTextCohetes = new Coordenada(700,90,1);
-				TextoDinamico vistaTextCohetes = new TextoDinamico(textoCohetes, Color.WHITE, new Font("Serif",Font.BOLD,16));
-				vistaTextCohetes.setPosicionable(cTextCohetes);
-				mapaTexto.put(textoCohetes, vistaTextCohetes);
-				
-				TextoPuntaje textPuntaje = new TextoPuntaje(this);
-				Coordenada cTextPuntaje = new Coordenada(30,50,1);
-				TextoDinamico vistaTextPuntaje = new TextoDinamico(textPuntaje, Color.WHITE, new Font("Serif",Font.BOLD,16));
-				vistaTextPuntaje.setPosicionable(cTextPuntaje);
-				mapaTexto.put(textPuntaje, vistaTextPuntaje);
-				
-				
-	}
 	
 	
 	private void agregarDibujablesNuevos(){
@@ -299,20 +211,19 @@ public class ControladorNivel implements Accion {
 		this.quitarDibujablesObsoletos();
 		if((this.flotaEnemiga.estaDestruida()) || (this.flota.estaDestruida())){
 			this.agregarVistaAviones();
-		}
-		
-		
+		}		
 		puntaje += this.zona.reportarPuntosBajas();
 		// Cuando se tiene 1000 puntos termina el nivel
-		if (puntaje> 1000){
+		if  (puntaje> 1000) {
 			this.controlador.detenerJuego();
 			System.out.print("GANE!!!!!");
 		}
-	}
-	
-	
-	
-	
+		
+		if (! this.algo42.estaVivo()){
+			this.controlador.detenerJuego();
+			System.out.print("PERDISTE, SOS MALISIMO");
+		}
+	}	
 	
 	public void cargar(){
 		controlador.agregarAccion(this);

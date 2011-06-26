@@ -59,8 +59,16 @@ public abstract class NaveViva extends ObjetoColisionable implements Atacable, O
 		this.relevado = valor;
 	}
 	
+	public void setPosInicialX(int pos){
+		this.posInicialX = pos;
+	}
+	
 	public void setMuerto(Boolean valor){
 		this.muerto = valor;
+	}
+	
+	public void setZonaCombate(ZonaCombate unaZona){
+		this.zonaDeCombate = unaZona;
 	}
 	
 	public void recibirDanio(int cantidadEnergia){
@@ -125,9 +133,7 @@ public abstract class NaveViva extends ObjetoColisionable implements Atacable, O
 		unElement.appendChild(energiaO);
 		energiaO.setTextContent(String.valueOf(this.energiaOriginal));
 
-//		Element zonaDeCombate = unDoc.createElement("ZonaDeCombate");
-//		unElement.appendChild(zonaDeCombate);
-//		zonaDeCombate.setTextContent(this.zonaDeCombate);
+
 	}
 	
 	public static void writeNaveViva(Element element, NaveViva unaNaveViva) {

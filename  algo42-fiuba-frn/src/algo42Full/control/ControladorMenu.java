@@ -90,7 +90,7 @@ public class ControladorMenu {
 	public void ejecutar(){
 		boolean salir = false;
 		int puntaje = 0;
-		ControladorNivel nivel = new ControladorNivel(controlador);
+		ControladorNivel nivel = new ControladorNivel("nivel1.xml", controlador);
 		while (!salir){
 			this.controlador.comenzarJuego();
 			this.descargarMenu();

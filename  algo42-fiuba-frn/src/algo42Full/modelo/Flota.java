@@ -39,7 +39,6 @@ public class Flota {
 	
 	public void quitarBajas(){
 		
-		//List<NaveViva> tempLista = new ArrayList<NaveViva>();
 		int contador = 0;
 		for (NaveViva avion : this.listaAviones){
 			if(! avion.estaVivo()){
@@ -62,6 +61,8 @@ public class Flota {
 	
 	public void revivirFlota(){
 		for (NaveViva avion : this.listaAviones){
+			int posXSalida = (int) (Math.random()* (avion.zonaDeCombate.getAncho() - avion.getRadio()))+ avion.getRadio();
+			avion.setPosInicialX(posXSalida);
 			avion.setRelevado(false);
 			avion.setMuerto(false);
 			avion.revivir();
@@ -91,6 +92,14 @@ public class Flota {
 		atributos.appendChild(puntosBajas);
 		puntosBajas.setTextContent(String.valueOf(this.puntosBajas));
 		
+		Element cantNaves = doc.createElement("CantidadNaves");
+		atributos.appendChild(cantNaves);
+		cantNaves.setTextContent(String.valueOf(this.cantidadNaves));
+		
+		Element flotaEstaDestruida = doc.createElement("FlotaDestruida");
+		atributos.appendChild(puntosBajas);
+		flotaEstaDestruida.setTextContent(String.valueOf(this.flotaDestruida));
+		
 		Element listaNavesVivas = doc.createElement("ListaNavesVivas");
 		flota.appendChild(listaNavesVivas);
 		
@@ -98,10 +107,8 @@ public class Flota {
 			
 			for (NaveViva avion : this.listaAviones){
 				listaNavesVivas.appendChild(avion.getElement(doc));
-			}
-			
+			}			
 		}
-
 
 		return flota;
 	}
@@ -118,6 +125,13 @@ public class Flota {
 					Node childLevel3 = childsLevel2.item(h);
 					if (childLevel3.getNodeName().equals("PuntosBajas")) {
 						flota.puntosBajas = Integer.parseInt(childLevel3.getTextContent());
+					}
+					else if (childLevel3.getNodeName().equals("CantidadNaves")) {
+						flota.cantidadNaves = Integer.parseInt(childLevel3.getTextContent());
+					}
+					
+					else if (childLevel3.getNodeName().equals("FlotaDestruida")) {
+						flota.flotaDestruida = Boolean.parseBoolean(childLevel3.getTextContent());
 					}
 				}//fin for
 			}
