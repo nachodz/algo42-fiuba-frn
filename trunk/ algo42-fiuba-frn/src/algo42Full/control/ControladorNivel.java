@@ -110,7 +110,11 @@ public class ControladorNivel implements Accion {
 				
 	}
 			
-			
+	
+	public ControladorNivel(){
+		// TODO implementar para poder usar dps el cargarJuego
+		//fijarse el tema algo42
+	}
 	
 	
 	private void agregarDibujablesNuevos(){
