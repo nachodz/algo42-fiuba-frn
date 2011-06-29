@@ -67,9 +67,7 @@ public class ZonaCombate implements ObjetoVivo{
 		
 		if(this.flotaEnemiga.estaDestruida()){
 			this.flotaEnemiga.revivirFlota();
-		}
-		
-		
+		}		
 		
 		if(this.flotaAliada != null) this.flotaAliada.vivir();
 		if(this.flotaEnemiga != null) this.flotaEnemiga.vivir();
@@ -196,9 +194,6 @@ public class ZonaCombate implements ObjetoVivo{
 		return puntaje;	
 	}
 	
-
-
-	
 	public Element getElement(Document doc) {
 		Element zonaCombate = doc.createElement("ZonaCombate");
 		
@@ -230,7 +225,9 @@ public class ZonaCombate implements ObjetoVivo{
 		
 		if(this.listaProyectiles != null){
 			for (Proyectil proyectil : this.listaProyectiles){
-				listaProyectiles.appendChild(proyectil.getElement(doc));
+				if(! this.comprobarSalidaZona(proyectil)){
+					listaProyectiles.appendChild(proyectil.getElement(doc));
+				}				
 			}
 		}
 
@@ -240,12 +237,11 @@ public class ZonaCombate implements ObjetoVivo{
 		
 		if(this.listaActualizaciones != null){
 			for (ActualizacionAlgo42 actualizacion : this.listaActualizaciones){   //se utilizo el tipo ActualizacionAlgo42 cambiada al comienzo
-				listaActualizaciones.appendChild(actualizacion.getElement(doc)); ////////////
-			}
-				
-		}
-	
-				
+				if(! this.comprobarSalidaZona(actualizacion)){
+					listaActualizaciones.appendChild(actualizacion.getElement(doc)); ////////////
+				}				
+			}				
+		}				
 
 		return zonaCombate;
 	}
@@ -262,82 +258,70 @@ public class ZonaCombate implements ObjetoVivo{
 					Node childLevel3 = childsLevel2.item(h);
 					if (childLevel3.getNodeName().equals("Ancho")) {
 						zonaCombate.ancho = Integer.parseInt(childLevel3.getTextContent());
-					}
-					
+					}					
 					else if (childLevel3.getNodeName().equals("Alto")) {
 						zonaCombate.alto = Integer.parseInt(childLevel3.getTextContent());
 					}
 				}//fin for
-			}
-			
+			}			
 			else if (child.getNodeName().equals("Algo42")) {
 				zonaCombate.algo42 = Algo42.fromElement((Element)child, zonaCombate);
-			}
-			
+			}			
 			else if (child.getNodeName().equals("FlotaEnemiga")) {
 				zonaCombate.flotaEnemiga = FlotaEnemiga.fromElement((Element)child, zonaCombate);
-			}
-			
+			}			
 			else if (child.getNodeName().equals("Flota")) {
 				zonaCombate.flotaAliada = Flota.fromElement((Element)child, zonaCombate);
-			}
-			
+			}			
 			else if (child.getNodeName().equals("ListaProyectiles")) {
 				NodeList childsLevel2 = child.getChildNodes();  //lista de proyectiles
 				for (int h = 0; h < childsLevel2.getLength(); h++) { //itera entre los proyectiles
 					Node childLevel3 = childsLevel2.item(h); //nodo que representa un proyectil de la lista
 					if (childLevel3.getNodeName().equals("ProyectilCohete")) {
-						(zonaCombate.listaProyectiles).add(new ProyectilCohete(((Element)childLevel3) , zonaCombate) );
+						(zonaCombate.listaProyectiles).add(ProyectilCohete.fromElement(((Element)childLevel3) , zonaCombate) );
 					}
 					
 					else if (childLevel3.getNodeName().equals("ProyectilLaser")){
-						(zonaCombate.listaProyectiles).add(new ProyectilLaser(((Element)childLevel3) , zonaCombate) );
+						(zonaCombate.listaProyectiles).add(ProyectilLaser.fromElement(((Element)childLevel3) , zonaCombate) );
 						
 					}
 					
 					else if (childLevel3.getNodeName().equals("ProyectilTorpedo")){
-						(zonaCombate.listaProyectiles).add(new ProyectilTorpedo(((Element)childLevel3) , zonaCombate) );
+						(zonaCombate.listaProyectiles).add(ProyectilTorpedo.fromElement(((Element)childLevel3) , zonaCombate) );
 						
 					}
 					
 					else if (childLevel3.getNodeName().equals("ProyectilTorpedoAdaptable")){
-						(zonaCombate.listaProyectiles).add(new ProyectilTorpedoAdaptable(((Element)childLevel3) , zonaCombate) );
+						(zonaCombate.listaProyectiles).add(ProyectilTorpedoAdaptable.fromElement(((Element)childLevel3) , zonaCombate) );
 						
 					}
 					
 					else if (childLevel3.getNodeName().equals("ProyectilTorpedoSeguidor")){
-						(zonaCombate.listaProyectiles).add(new ProyectilTorpedoSeguidor(((Element)childLevel3) , zonaCombate) );
+						(zonaCombate.listaProyectiles).add(ProyectilTorpedoSeguidor.fromElement(((Element)childLevel3) , zonaCombate) );
 						
-					}					
-										
+					}										
 				}
-			} 
-			
+			} 			
 			else if (child.getNodeName().equals("ListaActualizaciones")) {
 				NodeList childsLevel2 = child.getChildNodes();  //lista de actualizaciones
 				for (int h = 0; h < childsLevel2.getLength(); h++) { //itera entre las actualizaciones
 					Node childLevel3 = childsLevel2.item(h); //nodo que representa una actualizacion de la lista
 					if (childLevel3.getNodeName().equals("Cohete")) {
-						(zonaCombate.listaActualizaciones).add(new Cohete(((Element)childLevel3) , zonaCombate) );
+						(zonaCombate.listaActualizaciones).add(Cohete.fromElement(((Element)childLevel3) , zonaCombate) );
 					}
 					
 					else if (childLevel3.getNodeName().equals("TanqueEnergia")){
-						(zonaCombate.listaActualizaciones).add(new TanqueEnergia(((Element)childLevel3) , zonaCombate) );
+						(zonaCombate.listaActualizaciones).add(TanqueEnergia.fromElement(((Element)childLevel3) , zonaCombate) );
 						
 					}
 					
 					else if (childLevel3.getNodeName().equals("Torpedo")){
-						(zonaCombate.listaActualizaciones).add(new Torpedo(((Element)childLevel3) , zonaCombate) );
+						(zonaCombate.listaActualizaciones).add(Torpedo.fromElement(((Element)childLevel3) , zonaCombate) );
 						
-					}
-					
-					
-										
+					}										
 				}
 			} 
 		} 
-				
-
 
 		return zonaCombate;
 	}
@@ -346,8 +330,7 @@ public class ZonaCombate implements ObjetoVivo{
 	@Override
 	public void vivir() {
 		this.combatir();
-		this.quitarObjetosMuertos();
-		
+		this.quitarObjetosMuertos();		
 	}
 
 	@Override

@@ -126,10 +126,13 @@ public class CreadorNiveles {
 	
 	public void generarNivel(String pathGuardado){
 		
+		
 		int indice = (int) (Math.random()* (this.flotaEnemiga.getListaAviones().size() - 1)+ 1);
+		
 		NaveVivaEnemiga nave = this.flotaEnemiga.getListaAviones().get(indice);
 		nave.hacerGuia();
 		this.flotaEnemiga.agregarAvionGuia(nave);
+		
 		
 		try{
 		

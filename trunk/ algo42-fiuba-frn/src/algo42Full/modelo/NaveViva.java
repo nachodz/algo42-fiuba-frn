@@ -106,7 +106,7 @@ public abstract class NaveViva extends ObjetoColisionable implements Atacable, O
 		velX.setTextContent(String.valueOf(this.velX));
 		
 		Element velY = unDoc.createElement("VelY");
-		unElement.appendChild(velX);
+		unElement.appendChild(velY);		
 		velY.setTextContent(String.valueOf(this.velY));
 		
 		Element posInicialX = unDoc.createElement("PosInicialX");

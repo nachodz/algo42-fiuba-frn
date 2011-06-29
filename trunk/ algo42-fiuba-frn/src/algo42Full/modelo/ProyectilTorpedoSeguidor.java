@@ -28,13 +28,21 @@ public class ProyectilTorpedoSeguidor extends ProyectilTorpedo {
 			this.y = this.y + this.velY;
 	}	
  
-	public ProyectilTorpedoSeguidor (Element proyectil, ZonaCombate zona){
-		super (proyectil, zona);
-	}
+//	public ProyectilTorpedoSeguidor (Element proyectil, ZonaCombate zona){
+//		super (proyectil, zona);
+//	}
 	
 	public Element getElement(Document doc) {
 		Element proyectil = doc.createElement("ProyectilTorpedoSeguidor");
-           this.grabar (proyectil,doc);
+           this.writeElement(proyectil,doc);
            return proyectil;
+	}
+	
+	public static ProyectilTorpedoSeguidor fromElement(Element element, ZonaCombate zona) {
+		ProyectilTorpedoSeguidor proyectilTorpedoSeguidor = new ProyectilTorpedoSeguidor(zona,true, 0, 0);
+		
+		writeProyectil(element, proyectilTorpedoSeguidor);
+
+		return proyectilTorpedoSeguidor;
 	}
 }

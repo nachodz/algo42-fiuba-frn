@@ -10,13 +10,21 @@ public class ProyectilCohete extends Proyectil {
 		if (!enemigo) this.velY = 18;
 	}
 	
-	public ProyectilCohete (Element proyectil, ZonaCombate zona){
-		super (proyectil, zona);
+//	public ProyectilCohete (Element proyectil, ZonaCombate zona){
+//		super (proyectil, zona);
+//	}
+	
+	public static ProyectilCohete fromElement(Element element, ZonaCombate zona) {
+		ProyectilCohete proyectilCohete = new ProyectilCohete(zona,true, 0, 0);
+		
+		writeProyectil(element, proyectilCohete);
+
+		return proyectilCohete;
 	}
 	
 	public Element getElement(Document doc) {
 		Element proyectil = doc.createElement("ProyectilCohete");
-           this.grabar (proyectil,doc);
+           this.writeElement(proyectil,doc);
            return proyectil;
 	}  
 }

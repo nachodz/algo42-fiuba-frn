@@ -10,15 +10,10 @@ public class TanqueEnergia extends ActualizacionAlgo42{
 		super(zona,x,y,2);
 	}
 	
-	public  TanqueEnergia (Element actualizacion, ZonaCombate zona){
-		super (actualizacion, zona);
-	}
-    
-	public Element getElement(Document doc) {
-		Element actualizacion = doc.createElement("TanqueEnergia");
-           this.grabar (actualizacion,doc);
-           return actualizacion;
-	}  
+//	public  TanqueEnergia (Element actualizacion, ZonaCombate zona){
+//		super (actualizacion, zona);
+//	}
+ 
 
 	public void vivir (){
 		Algo42 algo42;
@@ -32,6 +27,20 @@ public class TanqueEnergia extends ActualizacionAlgo42{
 		     }
 		}
 	}
+	
+	public static TanqueEnergia fromElement(Element element, ZonaCombate zona) {
+		TanqueEnergia tanqueEnergia = new TanqueEnergia(zona, 0, 0);
+		
+		writeActualizacion(element, tanqueEnergia);
+
+		return tanqueEnergia;
+	}
+    
+	public Element getElement(Document doc) {
+		Element actualizacion = doc.createElement("TanqueEnergia");
+           this.writeElement (actualizacion,doc);
+           return actualizacion;
+	} 
 
 	
 }
