@@ -17,9 +17,11 @@ public class ControladorMenu {
 	private enum Accion{ JUGAR, GUARDARJUEGO, CARGARJUEGO, SALIR};
 	private Accion accion;	
 	private ObservadorSalir observadorSalir;
+	private boolean botonGuardarCreado;
 	
 	public ControladorMenu(ControladorJuego controlador){
 		
+		botonGuardarCreado = false;
 		this.accion = Accion.SALIR;
 		this.controlador = controlador;
 		mapBotones = new HashMap<Boton,VistaBoton>();
@@ -34,11 +36,6 @@ public class ControladorMenu {
 		BotonContinuarJuego botonContinuar = new BotonContinuarJuego( this, 270, 330, vistaBotonContinuar.getAncho(), vistaBotonContinuar.getAlto());
 		vistaBotonContinuar.setPosicionable(botonContinuar);
 		mapBotones.put(botonContinuar, vistaBotonContinuar);
-		
-		VistaBoton vistaBotonGuardar = new VistaBoton("/media/botonGuardar.png");
-		BotonGuardar botonGuardar= new BotonGuardar( this, 270, 410, vistaBotonGuardar.getAncho(), vistaBotonGuardar.getAlto());
-		vistaBotonGuardar.setPosicionable(botonGuardar);
-		mapBotones.put(botonGuardar, vistaBotonGuardar);
 		
 		VistaBoton vistaBotonSalir = new VistaBoton("/media/botonSalir.png");
 		BotonSalir botonSalir= new BotonSalir( this, 270, 490, vistaBotonSalir.getAncho(), vistaBotonSalir.getAlto());
@@ -76,6 +73,16 @@ public class ControladorMenu {
 		
 	}
 	
+	
+	private void crearBotonGuardar(){
+		
+		botonGuardarCreado = true;
+		VistaBoton vistaBotonGuardar = new VistaBoton("/media/botonGuardar.png");
+		BotonGuardar botonGuardar= new BotonGuardar( this, 270, 410, vistaBotonGuardar.getAncho(), vistaBotonGuardar.getAlto());
+		vistaBotonGuardar.setPosicionable(botonGuardar);
+		mapBotones.put(botonGuardar, vistaBotonGuardar);
+	}
+	
 
 	public void ejecutar(){
 		boolean salir = false;
@@ -97,6 +104,7 @@ public class ControladorMenu {
 			//this.descargarMenu();
 			switch (this.accion){
 				case JUGAR:			descargarMenu();
+									if (!botonGuardarCreado) crearBotonGuardar();
 									nivel.cargar();
 									nivel.setPuntaje(puntaje);
 									controlador.comenzarJuego();
@@ -106,6 +114,7 @@ public class ControladorMenu {
 									break;
 				
 				case CARGARJUEGO:	descargarMenu();
+									if (!botonGuardarCreado) crearBotonGuardar();
 									nivel.cargarJuego("save.xml", controlador);
 									accion = Accion.JUGAR;
 									nivel.cargar();
@@ -142,7 +151,7 @@ public class ControladorMenu {
 		this.accion = Accion.JUGAR;
 	}
 	
-	// lo mismo que arriba pero para cargar un juego guardado juego
+	
 	public void continuarJuego(){
 		//continua el juego guardado
 		System.out.print("CLICK: continuar juego guardado. \n");
@@ -156,7 +165,6 @@ public class ControladorMenu {
 	}
 	
 	public void guardar(){
-		//haga algo para guardar?
 		System.out.print("CLICK: guardar juego. \n");
 		this.controlador.detenerJuego();
 		accion = Accion.GUARDARJUEGO;
