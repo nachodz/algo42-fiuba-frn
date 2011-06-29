@@ -51,7 +51,9 @@ public class ControladorNivel implements Accion {
 	private Map<ObjetoDeTexto,Texto> mapaTexto;
 	private VistaFondoNivel vistaFondo;	
 	private int puntaje;
+	private EstadoNivel estado;
 	
+	public enum EstadoNivel{ JUGANDO, TERMINADO, ALGO42MUERTO};
 	
 	public void setControlador(ControladorJuego unControlador){
 		this.controlador = unControlador;
@@ -62,7 +64,7 @@ public class ControladorNivel implements Accion {
 	public ControladorNivel(String pathArchivoNivel, ControladorJuego unControlador){
 		
 		try {
-					
+					estado = EstadoNivel.JUGANDO;
 					this.controlador = unControlador;
 					this.zona = new ZonaCombate(600, 800);
 					
@@ -214,14 +216,20 @@ public class ControladorNivel implements Accion {
 		// Cuando se tiene 1000 puntos termina el nivel
 		if  (puntaje> 1000) {
 			this.controlador.detenerJuego();
+			estado = EstadoNivel.TERMINADO;
 			System.out.print("GANE!!!!!");
 		}
 		
 		if (! this.algo42.estaVivo()){
 			this.controlador.detenerJuego();
+			estado = EstadoNivel.ALGO42MUERTO;
 			System.out.print("PERDISTE, SOS MALISIMO");
 		}
 	}	
+	
+		public EstadoNivel getEstadoNivel(){
+		return estado;
+	}
 	
 	public void cargar(){
 		controlador.agregarAccion(this);
