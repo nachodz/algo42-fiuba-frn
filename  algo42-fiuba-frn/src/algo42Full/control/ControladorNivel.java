@@ -109,12 +109,6 @@ public class ControladorNivel implements Accion {
 				}
 				
 	}
-			
-	
-	public ControladorNivel(){
-		// TODO implementar para poder usar dps el cargarJuego
-		//fijarse el tema algo42
-	}
 	
 	
 	private void agregarDibujablesNuevos(){
@@ -284,7 +278,7 @@ public class ControladorNivel implements Accion {
 	
 	public void guardarJuego(String pathGuardado){
 		try{
-		
+			System.out.print("guardando \n");
 			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
 						
 			Element nivel = this.getElement(doc); 			
@@ -304,6 +298,39 @@ public class ControladorNivel implements Accion {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void cargarJuego(String pathJuegoGuardado, ControladorJuego unControlador){
+		
+		try {
+			
+			this.controlador = unControlador;
+				
+			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File(pathJuegoGuardado));
+			Element nivel = doc.getDocumentElement();
+			
+			NodeList childs = nivel.getChildNodes();
+			
+			for (int i = 0; i < childs.getLength(); i++){
+				Node child = childs.item(i);
+				if (child.getNodeName().equals("Puntaje")){
+					this.puntaje = Integer.parseInt(child.getTextContent());
+				} 
+				else 
+					if (child.getNodeName().equals("ZonaCombate")){
+						this.zona = ZonaCombate.fromElement((Element)child);				
+				}
+			}
+			
+			completarNivelAPartirDeZonaCombate();
+
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		}
 	}
@@ -341,9 +368,9 @@ public class ControladorNivel implements Accion {
 		this.flota = this.zona.getFlotaAliada();
 		this.flotaEnemiga = this.zona.getFlotaEnemiga();
 		
-		agregarVistaAviones();
-		
-		agregarDibujablesNuevos();
+		//agregarVistaAviones();
+		agregarVistas();
+		//agregarDibujablesNuevos();
 		
 		TextoCantEnergia textoEnergia = new TextoCantEnergia(this.algo42);
 		Coordenada cTextEnergia = new Coordenada(700,50,1);
@@ -373,42 +400,45 @@ public class ControladorNivel implements Accion {
 		
 	}
 	
-	public void cargarJuego(String pathJuegoGuardado, ControladorJuego unControlador){
+	
+	private void agregarVistas(){
+		VistaAvion vistaAvion;
+		VistaActualizacion actVista;
+		VistaProyectil proyeVista;
 		
-		try {
-			
-			this.controlador = unControlador;
-				
-			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File(pathJuegoGuardado));
-			Element nivel = doc.getDocumentElement();
-			
-			NodeList childs = nivel.getChildNodes();
-			
-			for (int i = 0; i < childs.getLength(); i++) {
-				
-				Node child = childs.item(i);
-				
-				
-				if (child.getNodeName().equals("Puntaje")) {
-					this.puntaje = Integer.parseInt(child.getTextContent());
-				} else if (child.getNodeName().equals("ZonaCombate")) {
-					
-					this.zona = ZonaCombate.fromElement((Element)child);
-					
-										
-				}
-			}
-			
-			completarNivelAPartirDeZonaCombate();
-
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
+		List<Proyectil> lProyectil = zona.getProyectiles();
+		List<ActualizacionAlgo42> lAct = zona.getActualizaciones();
+		List<NaveViva> listaAviones1 = this.flota.getListaAviones();
+		List<NaveVivaEnemiga> listaAviones2 = this.flotaEnemiga.getListaAviones();
+		
+		for (NaveViva avion : listaAviones1){
+			vistaAvion = new VistaAvion(avion);
+			mapaNaves.put(avion, vistaAvion);		
 		}
+		
+		for (NaveVivaEnemiga avion : listaAviones2){
+			vistaAvion = new VistaAvion(avion);
+			mapaNaves.put(avion, vistaAvion);			
+		}
+		for (ActualizacionAlgo42 actualizacion : lAct){
+			if (!mapaActualizaciones.containsKey(actualizacion)){
+				actVista = new VistaActualizacion(actualizacion);
+				mapaActualizaciones.put(actualizacion, actVista);
+			}
+		}
+		if (!lProyectil.isEmpty()){
+			synchronized(lProyectil){
+				for (Proyectil proyectil : lProyectil){
+					if (!mapaProyectiles.containsKey(proyectil)){
+						proyeVista = new VistaProyectil(proyectil);
+						mapaProyectiles.put(proyectil, proyeVista);
+					}
+				}	
+			}
+		}
+		
 	}
+	
 	
 	
 	

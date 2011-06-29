@@ -20,6 +20,7 @@ public class Juego {
 
 		ControladorMenu menu = new ControladorMenu(controlador);
 		menu.ejecutar();
+		System.exit(0);
 	}
 
 }

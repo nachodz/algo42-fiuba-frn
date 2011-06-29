@@ -31,17 +31,17 @@ public class ControladorMenu {
 		mapBotones.put(botonNuevo, vistaBotonNuevo);
 		
 		VistaBoton vistaBotonContinuar = new VistaBoton("/media/botonContinuar.png");
-		BotonContinuarJuego botonContinuar = new BotonContinuarJuego( this, 270, 350, vistaBotonContinuar.getAncho(), vistaBotonContinuar.getAlto());
+		BotonContinuarJuego botonContinuar = new BotonContinuarJuego( this, 270, 330, vistaBotonContinuar.getAncho(), vistaBotonContinuar.getAlto());
 		vistaBotonContinuar.setPosicionable(botonContinuar);
 		mapBotones.put(botonContinuar, vistaBotonContinuar);
 		
 		VistaBoton vistaBotonGuardar = new VistaBoton("/media/botonGuardar.png");
-		BotonGuardar botonGuardar= new BotonGuardar( this, 270, 420, vistaBotonGuardar.getAncho(), vistaBotonGuardar.getAlto());
+		BotonGuardar botonGuardar= new BotonGuardar( this, 270, 410, vistaBotonGuardar.getAncho(), vistaBotonGuardar.getAlto());
 		vistaBotonGuardar.setPosicionable(botonGuardar);
 		mapBotones.put(botonGuardar, vistaBotonGuardar);
 		
 		VistaBoton vistaBotonSalir = new VistaBoton("/media/botonSalir.png");
-		BotonSalir botonSalir= new BotonSalir( this, 270, 480, vistaBotonSalir.getAncho(), vistaBotonSalir.getAlto());
+		BotonSalir botonSalir= new BotonSalir( this, 270, 490, vistaBotonSalir.getAncho(), vistaBotonSalir.getAlto());
 		vistaBotonSalir.setPosicionable(botonSalir);
 		mapBotones.put(botonSalir, vistaBotonSalir);
 		
@@ -94,9 +94,10 @@ public class ControladorMenu {
 		ControladorNivel nivel = new ControladorNivel("nivel1.xml", controlador);
 		while (!salir){
 			this.controlador.comenzarJuego();
-			this.descargarMenu();
+			//this.descargarMenu();
 			switch (this.accion){
-				case JUGAR:			nivel.cargar();
+				case JUGAR:			descargarMenu();
+									nivel.cargar();
 									nivel.setPuntaje(puntaje);
 									controlador.comenzarJuego();
 									puntaje = nivel.getPuntaje();
@@ -104,15 +105,22 @@ public class ControladorMenu {
 									this.cargarMenu();
 									break;
 				
-				case CARGARJUEGO:	nivel.cargarJuego("save.xml", controlador);
+				case CARGARJUEGO:	descargarMenu();
+									nivel.cargarJuego("save.xml", controlador);
 									accion = Accion.JUGAR;
+									nivel.cargar();
+									nivel.setPuntaje(puntaje);
+									controlador.comenzarJuego();
+									puntaje = nivel.getPuntaje();
+									nivel.descargar();
+									this.cargarMenu();
 									break;
 									
 				case GUARDARJUEGO:	nivel.guardarJuego("save.xml");
 									accion = Accion.JUGAR;
 									break;
 				
-				case SALIR:			System.exit(0);
+				case SALIR:			salir = true;
 									break;
 			}
 		}
@@ -149,6 +157,8 @@ public class ControladorMenu {
 	
 	public void guardar(){
 		//haga algo para guardar?
+		System.out.print("CLICK: guardar juego. \n");
+		this.controlador.detenerJuego();
 		accion = Accion.GUARDARJUEGO;
 	}
 

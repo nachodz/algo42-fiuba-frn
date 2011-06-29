@@ -1,10 +1,11 @@
 package algo42Full.modelo;
 
-import javax.xml.soap.Node;
+//import javax.xml.soap.Node;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
 
 import algo42Full.modelo.excepciones.ObjetoFueraDeZonaDeCombateException;
 import ar.uba.fi.algo3.titiritero.ObjetoVivo;
@@ -60,7 +61,7 @@ public abstract class ActualizacionAlgo42 extends ObjetoColisionable implements 
 		
 		Element velY = doc.createElement("VelocidadY");
 		actualizacion.appendChild(velY);
-		velX.setTextContent(Integer.toString(this.velY));
+		velY.setTextContent(Integer.toString(this.velY));
 		
 		Element posInicialX = doc.createElement("PosicionInicialX");
 		actualizacion.appendChild(posInicialX);
@@ -73,17 +74,17 @@ public abstract class ActualizacionAlgo42 extends ObjetoColisionable implements 
 	
 
 	
-	public Element getElement(Document doc){
-		Element naveViva= doc.createElement("Element");
-		
-		return naveViva;
-	}
+//	public Element getElement(Document doc){
+//		Element naveViva= doc.createElement("Element");
+//		
+//		return naveViva;
+//	}
 	
 	public ActualizacionAlgo42 (Element actualizacion, ZonaCombate zona){
 		NodeList childs = actualizacion.getChildNodes();
 		
 		for (int i = 0; i < childs.getLength(); i++) {
-			Node child = (Node) childs.item(i);
+			Node child = childs.item(i);
 			if (child.getNodeName().equals("Muerto")) {
 				this.muerto = Boolean.parseBoolean(child.getTextContent());
 			 }else if (child.getNodeName().equals("VelocidadX")) {
