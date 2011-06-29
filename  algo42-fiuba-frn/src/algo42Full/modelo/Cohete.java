@@ -10,15 +10,11 @@ public class Cohete extends ActualizacionAlgo42{
 		super(zona,x,y,7);
 	}
 	
-	public Cohete (Element actualizacion, ZonaCombate zona){
-		super (actualizacion, zona);
-	}
-    
-	public Element getElement(Document doc) {
-		Element actualizacion = doc.createElement("Cohete");
-           this.grabar (actualizacion,doc);
-           return actualizacion;
-	} 
+//	public Cohete (Element actualizacion, ZonaCombate zona){
+//		super (actualizacion, zona);
+//	}
+	
+
 	
 	public void vivir (){
 	 Algo42 algo42;
@@ -32,4 +28,18 @@ public class Cohete extends ActualizacionAlgo42{
 		    } 
 	    }
    }
+	
+	public static Cohete fromElement(Element element, ZonaCombate zona) {
+		Cohete cohete = new Cohete(zona, 0, 0);
+		
+		writeActualizacion(element, cohete);
+
+		return cohete;
+	}
+    
+	public Element getElement(Document doc) {
+		Element actualizacion = doc.createElement("Cohete");
+           this.writeElement(actualizacion,doc);
+           return actualizacion;
+	} 
 }

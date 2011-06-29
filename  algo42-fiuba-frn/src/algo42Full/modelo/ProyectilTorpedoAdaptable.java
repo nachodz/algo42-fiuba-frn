@@ -27,13 +27,21 @@ public class ProyectilTorpedoAdaptable extends Proyectil{
   		}
     }
 
-	public ProyectilTorpedoAdaptable (Element proyectil, ZonaCombate zona){
-		super (proyectil, zona);
-	}
+//	public ProyectilTorpedoAdaptable (Element proyectil, ZonaCombate zona){
+//		super (proyectil, zona);
+//	}
 	
 	public Element getElement(Document doc) {
 		Element proyectil = doc.createElement("ProyectilTorpedoAdaptable");
-           this.grabar (proyectil,doc);
+           this.writeElement(proyectil,doc);
            return proyectil;
 	} 
+	
+	public static ProyectilTorpedoAdaptable fromElement(Element element, ZonaCombate zona) {
+		ProyectilTorpedoAdaptable proyectilTorpedoAdaptable = new ProyectilTorpedoAdaptable(zona,true, 0, 0);
+		
+		writeProyectil(element, proyectilTorpedoAdaptable);
+
+		return proyectilTorpedoAdaptable;
+	}
 }

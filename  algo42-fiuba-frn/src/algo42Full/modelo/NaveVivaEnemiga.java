@@ -41,10 +41,19 @@ public abstract class NaveVivaEnemiga extends NaveViva{
 
         }
         
+        public boolean esGuia(){
+        	return this.esGuia;
+        }
+        
         public void hacerGuia(){
                 this.esGuia = true;
                 this.energia = 7;
-                this.energiaOriginal = 7;
+                
+        }
+        
+        public void desmarcarComoGuia(){
+        	this.esGuia = false;
+        	
         }
         
     	public void revivir(){

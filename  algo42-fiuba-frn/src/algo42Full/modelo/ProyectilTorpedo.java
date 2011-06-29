@@ -10,15 +10,23 @@ public class ProyectilTorpedo extends Proyectil{
 		if (!enemigo) this.velY = 12;
 	}
 	
-	public ProyectilTorpedo (Element proyectil, ZonaCombate zona){
-		super (proyectil, zona);
-	}
+//	public ProyectilTorpedo (Element proyectil, ZonaCombate zona){
+//		super (proyectil, zona);
+//	}
 	
 	public Element getElement(Document doc) {
 		Element proyectil = doc.createElement("ProyectilTorpedo");
-           this.grabar (proyectil,doc);
+           this.writeElement (proyectil,doc);
            return proyectil;
 	} 
+	
+	public static ProyectilTorpedo fromElement(Element element, ZonaCombate zona) {
+		ProyectilTorpedo proyectilTorpedo = new ProyectilTorpedo(zona,true, 0, 0);
+		
+		writeProyectil(element, proyectilTorpedo);
+
+		return proyectilTorpedo;
+	}
 	
 }
 	

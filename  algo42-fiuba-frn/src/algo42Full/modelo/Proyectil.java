@@ -1,7 +1,5 @@
 package algo42Full.modelo;
 
-//import javax.xml.soap.Node;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -37,34 +35,39 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 		this.danio = danio;
 	}
 	
-	public Proyectil (Element proyectil, ZonaCombate zona){
-		NodeList childs = proyectil.getChildNodes();
-		
-		for (int i = 0; i < childs.getLength(); i++) {
-			Node child = (Node) childs.item(i);
-			if (child.getNodeName().equals("Muerto")) {
-				this.muerto = Boolean.parseBoolean(child.getTextContent());
-			 }else if (child.getNodeName().equals("VelocidadX")) {
-				 this.velX = Integer.parseInt(child.getTextContent());
-			    	}else if (child.getNodeName().equals("VelocidadY")) {
-			    		this.velY = Integer.parseInt(child.getTextContent());
-				         }else if (child.getNodeName().equals("PosicionInicialX")) {
-				        	 this.posInicialX = Integer.parseInt(child.getTextContent());   
-			                     }else if (child.getNodeName().equals("PosicionInicialY")) {
-			                    	 this.posInicialY = Integer.parseInt(child.getTextContent());
-			                       } else if (child.getNodeName().equals("Danio")) {
-			                    	   this.danio = Integer.parseInt(child.getTextContent());
-			                          } else if (child.getNodeName().equals("Enemigo")) {
-			                        	  this.enemigo = Boolean.parseBoolean(child.getTextContent());
-			             			     }
-		}
-		if (zona.comprobarSalidaZona(this))
-			throw new ObjetoFueraDeZonaDeCombateException();
-		else
-			zonaDeCombate = zona;
-	}
-	
-
+//	public Proyectil (Element proyectil, ZonaCombate zona){
+//		NodeList childs = proyectil.getChildNodes();
+//		
+//		for (int i = 0; i < childs.getLength(); i++) {
+//			Node child = (Node) childs.item(i);
+//			if (child.getNodeName().equals("Muerto")) {
+//				this.muerto = Boolean.parseBoolean(child.getTextContent());
+//				
+//			}else if (child.getNodeName().equals("X")) {
+//				this.x = Integer.parseInt(child.getTextContent());
+//			} else if (child.getNodeName().equals("Y")) {				
+//				this.y = Integer.parseInt(child.getTextContent());
+//			} else if (child.getNodeName().equals("Radio")) {
+//				this.radio = Integer.parseInt(child.getTextContent());
+//			 }else if (child.getNodeName().equals("VelocidadX")) {
+//				 this.velX = Integer.parseInt(child.getTextContent());
+//			 }else if (child.getNodeName().equals("VelocidadY")) {
+//			    this.velY = Integer.parseInt(child.getTextContent());
+//			 }else if (child.getNodeName().equals("PosicionInicialX")) {
+//				 this.posInicialX = Integer.parseInt(child.getTextContent());   
+//			 }else if (child.getNodeName().equals("PosicionInicialY")) {
+//			      this.posInicialY = Integer.parseInt(child.getTextContent());
+//			 } else if (child.getNodeName().equals("Danio")) {
+//			      this.danio = Integer.parseInt(child.getTextContent());
+//			 } else if (child.getNodeName().equals("Enemigo")) {
+//			      this.enemigo = Boolean.parseBoolean(child.getTextContent());
+//			 }
+//		}
+//		if (zona.comprobarSalidaZona(this))
+//			throw new ObjetoFueraDeZonaDeCombateException();
+//		else
+//			zonaDeCombate = zona;
+//	}
 	
 	
 	public boolean estaVivo(){
@@ -110,7 +113,20 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 		}
   }
     
-	public void grabar (Element proyectil, Document doc){
+	public void writeElement(Element proyectil, Document doc){
+		
+		Element x = doc.createElement("X");
+		proyectil.appendChild(x);
+		x.setTextContent(String.valueOf(this.x));
+		
+		Element y = doc.createElement("Y");
+		proyectil.appendChild(y);
+		y.setTextContent(String.valueOf(this.y));
+		
+		Element radio = doc.createElement("Radio");
+		proyectil.appendChild(radio);
+		radio.setTextContent(String.valueOf(this.radio));
+		
 		Element muerto = doc.createElement("Muerto");
 		proyectil.appendChild(muerto);
 		muerto.setTextContent(Boolean.toString(this.muerto));
@@ -139,6 +155,38 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 		proyectil.appendChild(enemigo);
 		enemigo.setTextContent(Boolean.toString(this.enemigo));
 
+	}
+	
+	public static void writeProyectil(Element element, Proyectil unProyectil) {
+		
+		NodeList childs = element.getChildNodes();
+		
+		for (int i = 0; i < childs.getLength(); i++) {
+			Node child = (Node) childs.item(i);
+			if (child.getNodeName().equals("Muerto")) {
+				unProyectil.muerto = Boolean.parseBoolean(child.getTextContent());				
+			}else if (child.getNodeName().equals("X")) {
+				unProyectil.x = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("Y")) {				
+				unProyectil.y = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("Radio")) {
+				unProyectil.radio = Integer.parseInt(child.getTextContent());
+			 }else if (child.getNodeName().equals("VelocidadX")) {
+				 unProyectil.velX = Integer.parseInt(child.getTextContent());
+			 }else if (child.getNodeName().equals("VelocidadY")) {
+				 unProyectil.velY = Integer.parseInt(child.getTextContent());
+			 }else if (child.getNodeName().equals("PosicionInicialX")) {
+				 unProyectil.posInicialX = Integer.parseInt(child.getTextContent());   
+			 }else if (child.getNodeName().equals("PosicionInicialY")) {
+				 unProyectil.posInicialY = Integer.parseInt(child.getTextContent());
+			 } else if (child.getNodeName().equals("Danio")) {
+				 unProyectil.danio = Integer.parseInt(child.getTextContent());
+			 } else if (child.getNodeName().equals("Enemigo")) {
+				 unProyectil.enemigo = Boolean.parseBoolean(child.getTextContent());
+			 }
+		}
+		
+		
 	}
 	
 	

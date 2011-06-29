@@ -10,14 +10,22 @@ public class ProyectilLaser extends Proyectil {
 		if (!enemigo) this.velY = 12;
 	}
 	
-	public ProyectilLaser (Element proyectil, ZonaCombate zona){
-		super (proyectil, zona);
-	}
+//	public ProyectilLaser (Element proyectil, ZonaCombate zona){
+//		super (proyectil, zona);
+//	}
 	
 	public Element getElement(Document doc) {
 		Element proyectil = doc.createElement("ProyectilLaser");
-           this.grabar (proyectil,doc);
+           this.writeElement(proyectil,doc);
            return proyectil;
-	} 
+	}
+	
+	public static ProyectilLaser fromElement(Element element, ZonaCombate zona) {
+		ProyectilLaser proyectilLaser = new ProyectilLaser(zona,true, 0, 0);
+		
+		writeProyectil(element, proyectilLaser);
+
+		return proyectilLaser;
+	}
   
 }

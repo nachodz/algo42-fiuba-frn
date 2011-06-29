@@ -50,7 +50,20 @@ public abstract class ActualizacionAlgo42 extends ObjetoColisionable implements 
 	
 	
 	
-	public void grabar (Element actualizacion, Document doc){
+	public void writeElement(Element actualizacion, Document doc){
+		
+		Element x = doc.createElement("X");
+		actualizacion.appendChild(x);
+		x.setTextContent(String.valueOf(this.x));
+		
+		Element y = doc.createElement("Y");
+		actualizacion.appendChild(y);
+		y.setTextContent(String.valueOf(this.y));
+		
+		Element radio = doc.createElement("Radio");
+		actualizacion.appendChild(radio);
+		radio.setTextContent(String.valueOf(this.radio));
+		
 		Element muerto = doc.createElement("Muerto");
 		actualizacion.appendChild(muerto);
 		muerto.setTextContent(Boolean.toString(this.muerto));
@@ -73,35 +86,61 @@ public abstract class ActualizacionAlgo42 extends ObjetoColisionable implements 
 	}
 	
 
-	
-//	public Element getElement(Document doc){
-//		Element naveViva= doc.createElement("Element");
+//	public ActualizacionAlgo42 (Element actualizacion, ZonaCombate zona){
+//		NodeList childs = actualizacion.getChildNodes();
 //		
-//		return naveViva;
+//		for (int i = 0; i < childs.getLength(); i++) {
+//			Node child = childs.item(i);
+//			if (child.getNodeName().equals("Muerto")) {
+//				this.muerto = Boolean.parseBoolean(child.getTextContent());
+//				
+//			}else if (child.getNodeName().equals("X")) {
+//				this.x = Integer.parseInt(child.getTextContent());
+//			} else if (child.getNodeName().equals("Y")) {				
+//				this.y = Integer.parseInt(child.getTextContent());
+//			} else if (child.getNodeName().equals("Radio")) {
+//				this.radio = Integer.parseInt(child.getTextContent());
+//			}else if (child.getNodeName().equals("VelocidadX")) {
+//				 this.velX = Integer.parseInt(child.getTextContent());
+//			}else if (child.getNodeName().equals("VelocidadY")) {
+//				this.velY = Integer.parseInt(child.getTextContent());
+//			}else if (child.getNodeName().equals("PosicionInicialX")) {
+//			  	 this.posInicialX = Integer.parseInt(child.getTextContent());   
+//			}else if (child.getNodeName().equals("PosicionInicialY")) {
+//			   	 this.posInicialY = Integer.parseInt(child.getTextContent());
+//			}
+//			
+//		}
+//		if (zona.comprobarSalidaZona(this))
+//			throw new ObjetoFueraDeZonaDeCombateException();
+//		else
+//			zonaDeCombate = zona;
 //	}
 	
-	public ActualizacionAlgo42 (Element actualizacion, ZonaCombate zona){
-		NodeList childs = actualizacion.getChildNodes();
+	public static void writeActualizacion(Element element, ActualizacionAlgo42 unaActualizacion) {
 		
+			
+		NodeList childs = element.getChildNodes();
 		for (int i = 0; i < childs.getLength(); i++) {
 			Node child = childs.item(i);
 			if (child.getNodeName().equals("Muerto")) {
-				this.muerto = Boolean.parseBoolean(child.getTextContent());
-			 }else if (child.getNodeName().equals("VelocidadX")) {
-				 this.velX = Integer.parseInt(child.getTextContent());
-			    	}else if (child.getNodeName().equals("VelocidadY")) {
-			    		this.velY = Integer.parseInt(child.getTextContent());
-				         }else if (child.getNodeName().equals("PosicionInicialX")) {
-				        	 this.posInicialX = Integer.parseInt(child.getTextContent());   
-			                     }else if (child.getNodeName().equals("PosicionInicialY")) {
-			                    	 this.posInicialY = Integer.parseInt(child.getTextContent());
-			                     }
-			
+				unaActualizacion.muerto = Boolean.parseBoolean(child.getTextContent());				
+			}else if (child.getNodeName().equals("X")) {
+				unaActualizacion.x = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("Y")) {				
+				unaActualizacion.y = Integer.parseInt(child.getTextContent());
+			} else if (child.getNodeName().equals("Radio")) {
+				unaActualizacion.radio = Integer.parseInt(child.getTextContent());
+			}else if (child.getNodeName().equals("VelocidadX")) {
+				unaActualizacion.velX = Integer.parseInt(child.getTextContent());
+			}else if (child.getNodeName().equals("VelocidadY")) {
+				unaActualizacion.velY = Integer.parseInt(child.getTextContent());
+			}else if (child.getNodeName().equals("PosicionInicialX")) {
+				unaActualizacion.posInicialX = Integer.parseInt(child.getTextContent());   
+			}else if (child.getNodeName().equals("PosicionInicialY")) {
+				unaActualizacion.posInicialY = Integer.parseInt(child.getTextContent());
+			}
 		}
-		if (zona.comprobarSalidaZona(this))
-			throw new ObjetoFueraDeZonaDeCombateException();
-		else
-			zonaDeCombate = zona;
 	}
 	
 }

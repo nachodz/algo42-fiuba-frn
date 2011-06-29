@@ -137,28 +137,28 @@ public class ControladorNivel implements Accion {
 	
 	///////
 	
-	private void agregarVistaAviones(){
-		
-		VistaAvion vistaAvion;
-		
-		
-		List<NaveViva> listaAviones1 = this.flota.getListaAviones();
-		List<NaveVivaEnemiga> listaAviones2 = this.flotaEnemiga.getListaAviones();
-		
-		
-		for (NaveViva avion : listaAviones1){
-			vistaAvion = new VistaAvion(avion);
-			mapaNaves.put(avion, vistaAvion);
-			this.controlador.agregarDibujable(vistaAvion);			
-		}
-		
-		for (NaveVivaEnemiga avion : listaAviones2){
-			vistaAvion = new VistaAvion(avion);
-			mapaNaves.put(avion, vistaAvion);
-			this.controlador.agregarDibujable(vistaAvion);			
-		}
-
-	}
+//	private void agregarVistaAviones(){
+//		
+//		VistaAvion vistaAvion;
+//		
+//		
+//		List<NaveViva> listaAviones1 = this.flota.getListaAviones();
+//		List<NaveVivaEnemiga> listaAviones2 = this.flotaEnemiga.getListaAviones();
+//		
+//		
+//		for (NaveViva avion : listaAviones1){
+//			vistaAvion = new VistaAvion(avion);
+//			mapaNaves.put(avion, vistaAvion);
+//			this.controlador.agregarDibujable(vistaAvion);			
+//		}
+//		
+//		for (NaveVivaEnemiga avion : listaAviones2){
+//			vistaAvion = new VistaAvion(avion);
+//			mapaNaves.put(avion, vistaAvion);
+//			this.controlador.agregarDibujable(vistaAvion);			
+//		}
+//
+//	}
 	
 	private void quitarDibujablesObsoletos(){
 		VistaActualizacion actVista;
@@ -189,17 +189,17 @@ public class ControladorNivel implements Accion {
 		mapaActualizaciones.clear();
 		mapaActualizaciones = aMap;
 		
-		Set<NaveViva> setN = mapaNaves.keySet();
-		HashMap<NaveViva,VistaNave> nMap = new HashMap<NaveViva,VistaNave>();
-		for( NaveViva nave : setN){
-			VistaNave naveVista = mapaNaves.get(nave);
-			if (!nave.estaVivo())
-				this.controlador.removerDibujable(naveVista);
-			else
-				nMap.put(nave, naveVista);
-		}
-		mapaNaves.clear();
-		mapaNaves = nMap;
+//		Set<NaveViva> setN = mapaNaves.keySet();
+//		HashMap<NaveViva,VistaNave> nMap = new HashMap<NaveViva,VistaNave>();
+//		for( NaveViva nave : setN){
+//			VistaNave naveVista = mapaNaves.get(nave);
+//			if (!nave.estaVivo())
+//				this.controlador.removerDibujable(naveVista);
+//			else
+//				nMap.put(nave, naveVista);
+//		}
+//		mapaNaves.clear();
+//		mapaNaves = nMap;
 		
 	}
 
@@ -207,9 +207,9 @@ public class ControladorNivel implements Accion {
 	public void ejecutarAccion() {
 		this.agregarDibujablesNuevos();
 		this.quitarDibujablesObsoletos();
-		if((this.flotaEnemiga.estaDestruida()) || (this.flota.estaDestruida())){
-			this.agregarVistaAviones();
-		}		
+//		if((this.flotaEnemiga.estaDestruida()) || (this.flota.estaDestruida())){
+//			this.agregarVistaAviones();
+//		}		
 		puntaje += this.zona.reportarPuntosBajas();
 		// Cuando se tiene 1000 puntos termina el nivel
 		if  (puntaje> 1000) {
