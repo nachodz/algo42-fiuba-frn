@@ -1,9 +1,10 @@
 package algo42Full.modelo;
 
-import javax.xml.soap.Node;
+//import javax.xml.soap.Node;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import algo42Full.modelo.excepciones.ObjetoFueraDeZonaDeCombateException;
@@ -120,7 +121,7 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 		
 		Element velY = doc.createElement("VelocidadY");
 		proyectil.appendChild(velY);
-		velX.setTextContent(Integer.toString(this.velY));
+		velY.setTextContent(Integer.toString(this.velY));
 		
 		Element posInicialX = doc.createElement("PosicionInicialX");
 		proyectil.appendChild(posInicialX);
@@ -140,11 +141,13 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 
 	}
 	
-	public Element getElement(Document doc){
-		Element naveViva= doc.createElement("AvionCivil");
-		
-		return naveViva;
-	}
+	
+	//esto es horrible
+//	public Element getElement(Document doc){
+//		Element naveViva= doc.createElement("AvionCivil");
+//		
+//		return naveViva;
+//	}
 	
 
 }
