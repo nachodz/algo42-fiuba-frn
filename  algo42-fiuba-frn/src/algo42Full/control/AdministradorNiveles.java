@@ -66,10 +66,10 @@ public class AdministradorNiveles {
 	
 	//el loop principal del nivel
 	public void jugar(){
-		boolean seguirJugando = true;
+		this.sigueJugando = true;
 		boolean irMenu = false;
 		
-		while ((seguirJugando) && (!irMenu)){
+		while ((sigueJugando) && (!irMenu)){
 			controladorNivel.cargar();
 			controladorNivel.setPuntaje(puntaje);
 			controlador.comenzarJuego();
@@ -84,7 +84,6 @@ public class AdministradorNiveles {
 					pantallaPerder.ejecutar();
 					pantallaPerder = null;
 					puntaje = 0;
-					seguirJugando = false;
 					this.sigueJugando = false;
 					//deberia avisarle algo al menu
 				}
@@ -96,14 +95,13 @@ public class AdministradorNiveles {
 							String proximoNivel = niveles.get(index);
 							controladorNivel.cargarNivel(proximoNivel);
 							PantallaNivelTerminado pantallaTerminado = new PantallaNivelTerminado(controlador);
-							pantallaTerminado.ejecutar();
+							pantallaTerminado.ejecutar(puntajeTotal,puntaje);
 							pantallaTerminado = null;
 						}
 						catch (IndexOutOfBoundsException e){
 							PantallaGanar pantallaGanar = new PantallaGanar(controlador);
 							pantallaGanar.ejecutar();
 							pantallaGanar = null;
-							seguirJugando = false;
 							this.sigueJugando = false;
 							//deberia avisarle algo al menu
 						}
