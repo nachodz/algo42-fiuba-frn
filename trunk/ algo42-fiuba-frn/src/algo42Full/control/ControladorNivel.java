@@ -66,56 +66,60 @@ public class ControladorNivel implements Accion {
 	
 	public ControladorNivel(String pathArchivoNivel, ControladorJuego unControlador){
 		
-		try {
-					estado = EstadoNivel.JUGANDO;
-					this.nombreNivel = pathArchivoNivel;
-					this.controlador = unControlador;
-					this.zona = new ZonaCombate(600, 800);
-					this.puntaje = 0;
-					this.observadorSalir = new ObservadorSalir(this.controlador);
-					
-					algo42 = new Algo42(zona, 250, 550);
-					zona.agregarAlgo42(algo42);
-
-						
-					Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File(pathArchivoNivel));
-					Element flotas = doc.getDocumentElement();
-					
-					NodeList childs = flotas.getChildNodes();
-					
-					for (int i = 0; i < childs.getLength(); i++) {
-						
-						Node child = childs.item(i);			
-						
-						if (child.getNodeName().equals("Flota")) {
-							Flota flota1 =  Flota.fromElement((Element)child, this.zona);
-							this.zona.agregarFlotaAliada(flota1); 
-							
-						} else if (child.getNodeName().equals("FlotaEnemiga")) {
-							
-							FlotaEnemiga flota1 =  FlotaEnemiga.fromElement((Element)child, this.zona);
-							this.zona.agregarFlotaEnemiga(flota1);										
-						}						
-					}
-					
-					for(NaveViva nave: this.zona.getFlotaAliada().getListaAviones()){
-						nave.setZonaCombate(this.zona);
-					}
-					
-					for(NaveViva nave: this.zona.getFlotaEnemiga().getListaAviones()){
-						nave.setZonaCombate(this.zona);
-					}
-					
-					completarNivelAPartirDeZonaCombate();	
-
-				} catch (SAXException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ParserConfigurationException e) {
-					e.printStackTrace();
-				}
+		this.controlador = unControlador;
+		this.cargarNivel(pathArchivoNivel);
 				
+	}
+	
+	public void cargarNivel(String pathArchivoNivel){
+		try {
+			estado = EstadoNivel.JUGANDO;
+			this.nombreNivel = pathArchivoNivel;
+			this.zona = new ZonaCombate(600, 800);
+			this.puntaje = 0;
+			this.observadorSalir = new ObservadorSalir(this.controlador);
+			
+			algo42 = new Algo42(zona, 250, 550);
+			zona.agregarAlgo42(algo42);
+
+				
+			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File(pathArchivoNivel));
+			Element flotas = doc.getDocumentElement();
+			
+			NodeList childs = flotas.getChildNodes();
+			
+			for (int i = 0; i < childs.getLength(); i++) {
+				
+				Node child = childs.item(i);			
+				
+				if (child.getNodeName().equals("Flota")) {
+					Flota flota1 =  Flota.fromElement((Element)child, this.zona);
+					this.zona.agregarFlotaAliada(flota1); 
+					
+				} else if (child.getNodeName().equals("FlotaEnemiga")) {
+					
+					FlotaEnemiga flota1 =  FlotaEnemiga.fromElement((Element)child, this.zona);
+					this.zona.agregarFlotaEnemiga(flota1);										
+				}						
+			}
+			
+			for(NaveViva nave: this.zona.getFlotaAliada().getListaAviones()){
+				nave.setZonaCombate(this.zona);
+			}
+			
+			for(NaveViva nave: this.zona.getFlotaEnemiga().getListaAviones()){
+				nave.setZonaCombate(this.zona);
+			}
+			
+			completarNivelAPartirDeZonaCombate();	
+
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -220,7 +224,7 @@ public class ControladorNivel implements Accion {
 //		}		
 		puntaje += this.zona.reportarPuntosBajas();
 		// Cuando se tiene 1000 puntos termina el nivel
-		if  (puntaje> 1000) {
+		if  (puntaje> 10) {
 			this.controlador.detenerJuego();
 			estado = EstadoNivel.TERMINADO;
 			System.out.print("GANE!!!!!");
