@@ -36,6 +36,7 @@ import algo42Full.vista.*;
 import ar.uba.fi.algo3.titiritero.Accion;
 import ar.uba.fi.algo3.titiritero.ControladorJuego;
 import ar.uba.fi.algo3.titiritero.vista.*;
+
 public class ControladorNivel implements Accion {
 	
 	private ControladorJuego controlador;
@@ -44,6 +45,7 @@ public class ControladorNivel implements Accion {
 	private Algo42 algo42;
 	private VistaAlgo42 vistaAlgo42;
 	private ControladorAlgo42 controladorAlgo42;
+	private ObservadorSalir observadorSalir;
 	private Flota flota;
 	private Map<Proyectil,VistaProyectil> mapaProyectiles;
 	private Map<ActualizacionAlgo42,VistaActualizacion> mapaActualizaciones;
@@ -51,6 +53,7 @@ public class ControladorNivel implements Accion {
 	private Map<ObjetoDeTexto,Texto> mapaTexto;
 	private VistaFondoNivel vistaFondo;	
 	private int puntaje;
+	private String nombreNivel;
 	private EstadoNivel estado;
 	
 	public enum EstadoNivel{ JUGANDO, TERMINADO, ALGO42MUERTO};
@@ -65,8 +68,11 @@ public class ControladorNivel implements Accion {
 		
 		try {
 					estado = EstadoNivel.JUGANDO;
+					this.nombreNivel = pathArchivoNivel;
 					this.controlador = unControlador;
 					this.zona = new ZonaCombate(600, 800);
+					this.puntaje = 0;
+					this.observadorSalir = new ObservadorSalir(this.controlador);
 					
 					algo42 = new Algo42(zona, 250, 550);
 					zona.agregarAlgo42(algo42);
@@ -227,13 +233,19 @@ public class ControladorNivel implements Accion {
 		}
 	}	
 	
-		public EstadoNivel getEstadoNivel(){
+	public EstadoNivel getEstadoNivel(){
 		return estado;
 	}
+	
+	public String getNombre(){
+		return this.nombreNivel;
+	}
+		
 	
 	public void cargar(){
 		controlador.agregarAccion(this);
 		controlador.agregarKeyPressObservador(controladorAlgo42);
+		controlador.agregarKeyPressObservador(observadorSalir);
 		
 		this.controlador.agregarDibujable(vistaFondo);
 		this.controlador.agregarDibujable(vistaAlgo42);
@@ -272,6 +284,7 @@ public class ControladorNivel implements Accion {
 		this.controlador.removerTodosObjetosVivos();
 		this.controlador.removerAccion(this);
 		this.controlador.removerKeyPressObservador(controladorAlgo42);
+		this.controlador.removerKeyPressObservador(observadorSalir);
 	}
 	
 	
@@ -326,9 +339,11 @@ public class ControladorNivel implements Accion {
 				if (child.getNodeName().equals("Puntaje")){
 					this.puntaje = Integer.parseInt(child.getTextContent());
 				} 
-				else 
-					if (child.getNodeName().equals("ZonaCombate")){
+				else if (child.getNodeName().equals("ZonaCombate")){
 						this.zona = ZonaCombate.fromElement((Element)child);				
+				}
+				else if (child.getNodeName().equals("NombreNivel")){
+					this.nombreNivel = child.getTextContent();
 				}
 			}
 			
@@ -350,6 +365,10 @@ public class ControladorNivel implements Accion {
 		Element puntaje = doc.createElement("Puntaje");
 		nivel.appendChild(puntaje);
 		puntaje.setTextContent(String.valueOf(this.puntaje));
+		
+		Element nombre = doc.createElement("NombreNivel");
+		nivel.appendChild(nombre);
+		nombre.setTextContent(String.valueOf(this.nombreNivel));
 		
 		nivel.appendChild(this.zona.getElement(doc));
 		
