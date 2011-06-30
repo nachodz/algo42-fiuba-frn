@@ -1,13 +1,10 @@
 package algo42Full.control;
 
-import java.awt.Color;
-import java.awt.Font;
 
 import algo42Full.modelo.Coordenada;
-import algo42Full.vista.TextoPuntaje;
+
 import algo42Full.vista.VistaPantallaNivelTerminado;
 import ar.uba.fi.algo3.titiritero.ControladorJuego;
-import ar.uba.fi.algo3.titiritero.vista.TextoDinamico;
 import ar.uba.fi.algo3.titiritero.vista.TextoEstatico;
 
 public class PantallaNivelTerminado {

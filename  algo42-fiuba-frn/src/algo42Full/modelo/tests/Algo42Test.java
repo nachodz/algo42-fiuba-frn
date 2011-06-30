@@ -13,7 +13,7 @@ public class Algo42Test extends TestCase {
 	@Before
 	public void setUp() throws Exception {
 		this.zona = new ZonaCombate(600,500);
-		this.algo42 = new Algo42(zona,250,580);
+		this.algo42 = new Algo42(zona,250,480);
 	}
 	
 	public void testRecibirDanio(){
@@ -35,6 +35,7 @@ public class Algo42Test extends TestCase {
 		iniX = this.algo42.getX();
 		iniY = this.algo42.getY();
 		this.algo42.moverAbajo();
+		this.algo42.vivir();
 		actX = this.algo42.getX();
 		actY = this.algo42.getY();
 		assertEquals(actX,iniX);
@@ -49,6 +50,7 @@ public class Algo42Test extends TestCase {
 		iniX = this.algo42.getX();
 		iniY = this.algo42.getY();
 		this.algo42.moverArriba();
+		this.algo42.vivir();
 		actX = this.algo42.getX();
 		actY = this.algo42.getY();
 		assertEquals(actX,iniX);
@@ -63,18 +65,20 @@ public class Algo42Test extends TestCase {
 		iniX = this.algo42.getX();
 		iniY = this.algo42.getY();
 		this.algo42.moverDerecha();
+		this.algo42.vivir();
 		actX = this.algo42.getX();
 		actY = this.algo42.getY();
 		assertEquals(actY,iniY);
 		assertTrue(this.esMajor(actX, iniX));
 	}
 	
-	public void testMoverIzqierda(){
+	public void testMoverIzquierda(){
 		int iniX, iniY, actX, actY;
 		
 		iniX = this.algo42.getX();
 		iniY = this.algo42.getY();
 		this.algo42.moverIzquierda();
+		this.algo42.vivir();
 		actX = this.algo42.getX();
 		actY = this.algo42.getY();
 		assertEquals(actY,iniY);

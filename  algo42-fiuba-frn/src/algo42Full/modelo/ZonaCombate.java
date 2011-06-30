@@ -61,13 +61,17 @@ public class ZonaCombate implements ObjetoVivo{
 		/*agregar el delay para el revivir de las flotas
 		 * 
 		 */
-		if(this.flotaAliada.estaDestruida()){
-			this.flotaAliada.revivirFlota();
+		if (this.flotaAliada != null){
+			if(this.flotaAliada.estaDestruida()){
+				this.flotaAliada.revivirFlota();
+			}
 		}
 		
-		if(this.flotaEnemiga.estaDestruida()){
-			this.flotaEnemiga.revivirFlota();
-		}		
+		if (this.flotaEnemiga != null){
+			if(this.flotaEnemiga.estaDestruida()){
+				this.flotaEnemiga.revivirFlota();
+			}
+		}
 		
 		if(this.flotaAliada != null) this.flotaAliada.vivir();
 		if(this.flotaEnemiga != null) this.flotaEnemiga.vivir();

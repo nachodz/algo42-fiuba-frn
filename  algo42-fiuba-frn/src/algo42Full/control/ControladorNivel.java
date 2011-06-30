@@ -34,7 +34,6 @@ import org.xml.sax.SAXException;
 import algo42Full.modelo.*;
 import algo42Full.vista.*;
 import ar.uba.fi.algo3.titiritero.Accion;
-import ar.uba.fi.algo3.titiritero.ControladorJuego;
 import ar.uba.fi.algo3.titiritero.vista.*;
 
 public class ControladorNivel implements Accion {
@@ -225,7 +224,7 @@ public class ControladorNivel implements Accion {
 //		}		
 		puntaje += this.zona.reportarPuntosBajas();
 		// Cuando se tiene 1000 puntos termina el nivel
-		if  (puntaje> 10) {
+		if  (puntaje> 1000) {
 			this.controlador.detenerJuego();
 			estado = EstadoNivel.TERMINADO;
 			System.out.print("GANE!!!!!");

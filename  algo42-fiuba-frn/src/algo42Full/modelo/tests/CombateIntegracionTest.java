@@ -13,7 +13,7 @@ public class CombateIntegracionTest extends TestCase{
 	@Before
 	public void setUp() throws Exception {
 		this.zona = new ZonaCombate(600,500);
-		this.algo42 = new Algo42(zona,250,580);
+		this.algo42 = new Algo42(zona,250,550);
 		this.zona.agregarAlgo42(this.algo42);
 	}
 	
@@ -27,12 +27,12 @@ public class CombateIntegracionTest extends TestCase{
 		NaveVivaEnemiga caza;
 		FlotaEnemiga flota;
 		
-		caza = new Caza(this.zona,250,420);
+		caza = new Caza(this.zona,250,320);
 		flota = new FlotaEnemiga();
 		flota.agregarAvion(caza);
 		this.zona.agregarFlotaEnemiga(flota);
 		cantEnergia = this.algo42.getCantEnergia();
-		for (i=0;i<38;i++)
+		for (i=0;i<58;i++)
 			this.zona.combatir();
 		this.zona.quitarObjetosMuertos();
 		assertTrue(caza.estaVivo());
@@ -62,7 +62,7 @@ public class CombateIntegracionTest extends TestCase{
 		NaveVivaEnemiga bombardero;
 		FlotaEnemiga flota;
 		
-		bombardero = new Bombardero(this.zona,250,520);
+		bombardero = new Bombardero(this.zona,250,420);
 		bombardero.recibirDanio(3);
 		flota = new FlotaEnemiga();
 		flota.agregarAvion(bombardero);
@@ -70,7 +70,7 @@ public class CombateIntegracionTest extends TestCase{
 		cantTorpedos = this.algo42.getCantTorpedos();
 		cantCohetes = this.algo42.getCantCohetes();
 		this.algo42.dispararLaser();
-		for (i=0;i<99;i++)
+		for (i=0;i<90;i++)
 			this.zona.combatir();
 		
 		this.zona.quitarObjetosMuertos();
@@ -207,10 +207,16 @@ public class CombateIntegracionTest extends TestCase{
 		flota.agregarAvion(explorador);
 		this.zona.agregarFlotaEnemiga(flota);
 		
-		this.algo42.dispararLaser();
-		for(i=0;i<500;i++) // es 500 para darle tiempo a las navesEnemigas a escapar
+		this.algo42.cargarTorpedo();
+		this.algo42.cargarTorpedo();
+		this.algo42.dispararTorpedo();
+		this.algo42.dispararTorpedo();
+		for(i=0;i<300;i++) // es 500 para darle tiempo a las navesEnemigas a escapar
 			this.zona.combatir();
-		
+
+		/*
+		 * este test falla porque ahora la flota enemiga revive, revisar!
+		 */
 		assertFalse(avionGuia.estaVivo());
 		assertTrue(avioneta.seEscapo());
 		assertTrue(bombardero.seEscapo());
@@ -224,12 +230,12 @@ public class CombateIntegracionTest extends TestCase{
 		NaveVivaEnemiga cazaII;
 		FlotaEnemiga flota;
 		
-		cazaII = new CazaII(this.zona,250,420);
+		cazaII = new CazaII(this.zona,250,320);
 		flota = new FlotaEnemiga();
 		flota.agregarAvion(cazaII);
 		this.zona.agregarFlotaEnemiga(flota);
 		cantEnergia = this.algo42.getCantEnergia();
-		for (i=0;i<38;i++)
+		for (i=0;i<58;i++)
 			this.zona.combatir();
 		this.zona.quitarObjetosMuertos();
 		assertTrue(cazaII.estaVivo());
@@ -242,12 +248,12 @@ public class CombateIntegracionTest extends TestCase{
 		int cantEnergia, i;
 		Proyectil proyectilTorpedoAdaptable;
 				
-		proyectilTorpedoAdaptable = new ProyectilTorpedoAdaptable(this.zona, true, 250, 580);
+		proyectilTorpedoAdaptable = new ProyectilTorpedoAdaptable(this.zona, true, 250, 380);
 
 		this.zona.agregarProyectil(proyectilTorpedoAdaptable);
 		cantEnergia = this.algo42.getCantEnergia();
 		
-		for (i=0;i<5;i++)
+		for (i=0;i<50;i++)
 			this.zona.combatir();
 		this.zona.quitarObjetosMuertos();
 		
