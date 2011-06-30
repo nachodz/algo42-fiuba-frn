@@ -142,6 +142,7 @@ public class ControladorMenu {
 									admNiveles.jugar();
 									if (!admNiveles.sigueJugando()) {
 										accion = Accion.SALIR;
+										desactivarBotonGuardar();
 									}
 									this.cargarMenu();
 									break;

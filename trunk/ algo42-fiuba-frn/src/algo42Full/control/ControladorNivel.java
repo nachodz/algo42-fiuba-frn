@@ -51,6 +51,7 @@ public class ControladorNivel implements Accion {
 	private Map<ActualizacionAlgo42,VistaActualizacion> mapaActualizaciones;
 	private Map<NaveViva,VistaNave> mapaNaves;
 	private Map<ObjetoDeTexto,Texto> mapaTexto;
+	private Map<Coordenada,Imagen> mapaHUD;
 	private VistaFondoNivel vistaFondo;	
 	private int puntaje;
 	private String nombreNivel;
@@ -281,6 +282,12 @@ public class ControladorNivel implements Accion {
 			controlador.agregarDibujable(vistaTexto);
 		}
 		
+		Set<Coordenada> sHUD = mapaHUD.keySet();
+		for (Coordenada coord : sHUD){
+			Imagen imag = mapaHUD.get(coord);
+			controlador.agregarDibujable(imag);
+		}
+		
 	}
 	
 	public void descargar(){
@@ -385,6 +392,7 @@ public class ControladorNivel implements Accion {
 		mapaActualizaciones = new HashMap<ActualizacionAlgo42, VistaActualizacion>();
 		mapaNaves = new HashMap<NaveViva,VistaNave>();
 		mapaTexto = new HashMap<ObjetoDeTexto,Texto>();
+		mapaHUD =  new HashMap<Coordenada,Imagen>();
 					
 		vistaFondo = new VistaFondoNivel();
 		Coordenada coord = new Coordenada(0,0,1);
@@ -403,28 +411,39 @@ public class ControladorNivel implements Accion {
 		agregarVistas();
 		//agregarDibujablesNuevos();
 		
+		Coordenada hud = new Coordenada(670,40,1);
+		Imagen vistaHUD = new Imagen();
+		vistaHUD.setNombreArchivoImagen("/media/hud.png");
+		vistaHUD.setPosicionable(hud);
+		mapaHUD.put(hud, vistaHUD);
+		
 		TextoCantEnergia textoEnergia = new TextoCantEnergia(this.algo42);
-		Coordenada cTextEnergia = new Coordenada(700,50,1);
+		Coordenada cTextEnergia = new Coordenada(755,50,1);
 		TextoDinamico vistaTextEnergia = new TextoDinamico(textoEnergia, Color.WHITE, new Font("Serif",Font.BOLD,16));
 		vistaTextEnergia.setPosicionable(cTextEnergia);
 		mapaTexto.put(textoEnergia, vistaTextEnergia);
 		
-		
-		TextoCantTorpedos textoTorpedos = new TextoCantTorpedos(this.algo42);
-		Coordenada cTextTorpedos = new Coordenada(700,70,1);
-		TextoDinamico vistaTextTorpedos = new TextoDinamico(textoTorpedos, Color.WHITE, new Font("Serif",Font.BOLD,16));
-		vistaTextTorpedos.setPosicionable(cTextTorpedos);
-		mapaTexto.put(textoTorpedos, vistaTextTorpedos);
-		
-		
 		TextoCantCohetes textoCohetes = new TextoCantCohetes(this.algo42);
-		Coordenada cTextCohetes = new Coordenada(700,90,1);
+		Coordenada cTextCohetes = new Coordenada(755,73,1);
 		TextoDinamico vistaTextCohetes = new TextoDinamico(textoCohetes, Color.WHITE, new Font("Serif",Font.BOLD,16));
 		vistaTextCohetes.setPosicionable(cTextCohetes);
 		mapaTexto.put(textoCohetes, vistaTextCohetes);
 		
+		TextoCantTorpedos textoTorpedos = new TextoCantTorpedos(this.algo42);
+		Coordenada cTextTorpedos = new Coordenada(755,95,1);
+		TextoDinamico vistaTextTorpedos = new TextoDinamico(textoTorpedos, Color.WHITE, new Font("Serif",Font.BOLD,16));
+		vistaTextTorpedos.setPosicionable(cTextTorpedos);
+		mapaTexto.put(textoTorpedos, vistaTextTorpedos);
+		
+		Coordenada puntajeHud = new Coordenada(30,40,1);
+		Imagen vistaPuntajeHUD = new Imagen();
+		vistaPuntajeHUD.setNombreArchivoImagen("/media/hudPuntos.png");
+		vistaPuntajeHUD.setPosicionable(puntajeHud);
+		mapaHUD.put(puntajeHud, vistaPuntajeHUD);
+
+		
 		TextoPuntaje textPuntaje = new TextoPuntaje(this);
-		Coordenada cTextPuntaje = new Coordenada(30,50,1);
+		Coordenada cTextPuntaje = new Coordenada(50,65,1);
 		TextoDinamico vistaTextPuntaje = new TextoDinamico(textPuntaje, Color.WHITE, new Font("Serif",Font.BOLD,16));
 		vistaTextPuntaje.setPosicionable(cTextPuntaje);
 		mapaTexto.put(textPuntaje, vistaTextPuntaje);
