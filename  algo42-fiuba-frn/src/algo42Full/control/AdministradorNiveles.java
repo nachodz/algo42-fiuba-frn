@@ -10,6 +10,8 @@ public class AdministradorNiveles {
 	private ControladorNivel controladorNivel;
 	private ControladorJuego controlador;
 	List<String> niveles;
+	private int puntaje;
+	private EstadoNivel estado;
 	
 	public AdministradorNiveles(ControladorNivel controladorNivel, ControladorJuego controlador){
 		this.controlador = controlador;
@@ -18,6 +20,8 @@ public class AdministradorNiveles {
 		niveles.add("nivel1.xml");
 		niveles.add("nivel2.xml");
 		niveles.add("nivel3.xml");
+		puntaje = 0;
+		estado = EstadoNivel.JUGANDO;
 	}
 	
 	public void cargarNuevoNivel(String archivoNivel){
@@ -60,6 +64,50 @@ public class AdministradorNiveles {
 			pantalla.ejecutar();
 		}
 		
+	}
+	
+	//el loop principal del nivel
+	public void jugar(){
+		boolean seguirJugando = true;
+		boolean irMenu = false;
+		
+		while ((seguirJugando) && (!irMenu)){
+			controladorNivel.cargar();
+			controladorNivel.setPuntaje(puntaje);
+			controlador.comenzarJuego();
+			puntaje = controladorNivel.getPuntaje();
+			controladorNivel.descargar();
+			estado = controladorNivel.getEstadoNivel();
+			
+			//PROBLEMA: no sale mas del juego asi, no vuelve al menu
+			if (estado != EstadoNivel.JUGANDO){
+				if (estado == EstadoNivel.ALGO42MUERTO){
+					PantallaPerder pantallaPerder = new PantallaPerder(controlador);
+					pantallaPerder.ejecutar();
+					pantallaPerder = null;
+					puntaje = 0;
+					seguirJugando = false;
+				}
+				else{
+					int index = niveles.indexOf(controladorNivel.getNombre());
+					if (index != -1){
+						index++;
+						try{
+							String proximoNivel = niveles.get(index);
+							this.cargarNuevoNivel(proximoNivel);
+						}
+						catch (IndexOutOfBoundsException e){
+							PantallaGanar pantallaGanar = new PantallaGanar(controlador);
+							pantallaGanar.ejecutar();
+							pantallaGanar = null;
+							seguirJugando = false;
+						}
+					}
+					else System.out.print("BOOOM\n");
+				}
+			}
+			else irMenu = true;
+		}
 	}
 
 }

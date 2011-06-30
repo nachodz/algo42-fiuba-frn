@@ -67,6 +67,7 @@ public class ControladorMenu {
 		
 		this.controlador.removerTodosDibujables();
 		this.controlador.removerTodosObjetosVivos();
+		this.controlador.removerKeyPressObservador(observadorSalir);
 		Set<Boton> setBotones = mapBotones.keySet();
 		for (Boton boton : setBotones){
 			this.controlador.removerMouseClickObservador(boton);
@@ -87,7 +88,6 @@ public class ControladorMenu {
 
 	public void ejecutar(){
 		boolean salir = false;
-		int puntaje = 0;
 
 		//Cargando inicio (esto se puede sacar, dps vemos)
 		Imagen vistaCargando = new Imagen();
@@ -100,33 +100,26 @@ public class ControladorMenu {
 		// Cargando FIN
 		
 		ControladorNivel nivel = new ControladorNivel("nivel1.xml", controlador);
+		AdministradorNiveles admNiveles = new AdministradorNiveles(nivel, controlador);
 		while (!salir){
 			this.controlador.comenzarJuego();
 			//this.descargarMenu();
 			switch (this.accion){
 				case JUGAR:			descargarMenu();
 									if (!botonGuardarCreado) crearBotonGuardar();
-									nivel.cargar();
-									nivel.setPuntaje(puntaje);
-									controlador.comenzarJuego();
-									puntaje = nivel.getPuntaje();
-									nivel.descargar();
+									admNiveles.jugar();
 									this.cargarMenu();
 									break;
 				
 				case CARGARJUEGO:	descargarMenu();
 									if (!botonGuardarCreado) crearBotonGuardar();
-									nivel.cargarJuego("save.xml", controlador);
+									admNiveles.cargarNuevoNivel("save.xml");
 									accion = Accion.JUGAR;
-									nivel.cargar();
-									nivel.setPuntaje(puntaje);
-									controlador.comenzarJuego();
-									puntaje = nivel.getPuntaje();
-									nivel.descargar();
+									admNiveles.jugar();
 									this.cargarMenu();
 									break;
 									
-				case GUARDARJUEGO:	nivel.guardarJuego("save.xml");
+				case GUARDARJUEGO:	admNiveles.guardarNivel("save.xml");
 									accion = Accion.JUGAR;
 									break;
 				
