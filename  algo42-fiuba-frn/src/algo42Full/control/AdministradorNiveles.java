@@ -11,7 +11,9 @@ public class AdministradorNiveles {
 	private ControladorJuego controlador;
 	List<String> niveles;
 	private int puntaje;
+	private int puntajeTotal;
 	private EstadoNivel estado;
+	private boolean sigueJugando;
 	
 	public AdministradorNiveles(ControladorNivel controladorNivel, ControladorJuego controlador){
 		this.controlador = controlador;
@@ -21,14 +23,16 @@ public class AdministradorNiveles {
 		niveles.add("nivel2.xml");
 		niveles.add("nivel3.xml");
 		puntaje = 0;
+		puntajeTotal = 0;
 		estado = EstadoNivel.JUGANDO;
+		sigueJugando = true;
 	}
 	
-	public void cargarNuevoNivel(String archivoNivel){
+	public void cargarJuego(String archivoNivel){
 		controladorNivel.cargarJuego(archivoNivel, this.controlador);
 	}
 	
-	public void guardarNivel(String archivoDestino){
+	public void guardarJuego(String archivoDestino){
 		controladorNivel.guardarJuego(archivoDestino);
 	}
 	
@@ -52,18 +56,12 @@ public class AdministradorNiveles {
 		return controladorNivel.getEstadoNivel();
 	}
 	
-	/*se fija porque termino el nivel y hace la accion necesaria para cada situacion:
-	 * -Si el algo42 esta muerto llama a la pantalla de perder
-	 * -Si termino el nivel llama a la pantalla de nivel terminado o a la de Pantallaganar
-	 * si es que no hay mas niveles por jugar
-	 */
-	public void resolverResultadoNivel(){
-		EstadoNivel estado = controladorNivel.getEstadoNivel();
-		if (estado != EstadoNivel.JUGANDO){
-			PantallaResultado pantalla = new PantallaResultado(controlador,estado,controladorNivel.getPuntaje());
-			pantalla.ejecutar();
-		}
-		
+	public boolean sigueJugando(){
+		return sigueJugando;
+	}
+	
+	public void cargarNivel(String archivoNivel){
+		controladorNivel.cargarNivel(archivoNivel);
 	}
 	
 	//el loop principal del nivel
@@ -76,10 +74,10 @@ public class AdministradorNiveles {
 			controladorNivel.setPuntaje(puntaje);
 			controlador.comenzarJuego();
 			puntaje = controladorNivel.getPuntaje();
+			puntajeTotal += puntaje;
 			controladorNivel.descargar();
 			estado = controladorNivel.getEstadoNivel();
 			
-			//PROBLEMA: no sale mas del juego asi, no vuelve al menu
 			if (estado != EstadoNivel.JUGANDO){
 				if (estado == EstadoNivel.ALGO42MUERTO){
 					PantallaPerder pantallaPerder = new PantallaPerder(controlador);
@@ -87,6 +85,8 @@ public class AdministradorNiveles {
 					pantallaPerder = null;
 					puntaje = 0;
 					seguirJugando = false;
+					this.sigueJugando = false;
+					//deberia avisarle algo al menu
 				}
 				else{
 					int index = niveles.indexOf(controladorNivel.getNombre());
@@ -94,14 +94,20 @@ public class AdministradorNiveles {
 						index++;
 						try{
 							String proximoNivel = niveles.get(index);
-							this.cargarNuevoNivel(proximoNivel);
+							controladorNivel.cargarNivel(proximoNivel);
+							PantallaNivelTerminado pantallaTerminado = new PantallaNivelTerminado(controlador);
+							pantallaTerminado.ejecutar();
+							pantallaTerminado = null;
 						}
 						catch (IndexOutOfBoundsException e){
 							PantallaGanar pantallaGanar = new PantallaGanar(controlador);
 							pantallaGanar.ejecutar();
 							pantallaGanar = null;
 							seguirJugando = false;
+							this.sigueJugando = false;
+							//deberia avisarle algo al menu
 						}
+						puntaje = 0;
 					}
 					else System.out.print("BOOOM\n");
 				}

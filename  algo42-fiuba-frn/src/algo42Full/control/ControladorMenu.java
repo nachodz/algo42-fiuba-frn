@@ -15,14 +15,15 @@ public class ControladorMenu {
 	
 	private ControladorJuego controlador;
 	private Map<Boton,VistaBoton> mapBotones;
-	private enum Accion{ JUGAR, GUARDARJUEGO, CARGARJUEGO, SALIR};
+	private enum Accion{ JUGAR, JUEGONUEVO, GUARDARJUEGO, CARGARJUEGO, SALIR};
 	private Accion accion;	
 	private ObservadorSalir observadorSalir;
-	private boolean botonGuardarCreado;
+	private boolean botonGuardarActivado;
+	private VistaBoton vistaBotonGuardar;
 	
 	public ControladorMenu(ControladorJuego controlador){
 		
-		botonGuardarCreado = false;
+		botonGuardarActivado = false;
 		this.accion = Accion.SALIR;
 		this.controlador = controlador;
 		mapBotones = new HashMap<Boton,VistaBoton>();
@@ -38,10 +39,15 @@ public class ControladorMenu {
 		vistaBotonContinuar.setPosicionable(botonContinuar);
 		mapBotones.put(botonContinuar, vistaBotonContinuar);
 		
+		this.vistaBotonGuardar = new VistaBoton("/media/botonGuardar.png");
+		BotonGuardar botonGuardar= new BotonGuardar( this, 270, 410, vistaBotonGuardar.getAncho(), vistaBotonGuardar.getAlto());
+		vistaBotonGuardar.setPosicionable(botonGuardar);
+		
 		VistaBoton vistaBotonSalir = new VistaBoton("/media/botonSalir.png");
 		BotonSalir botonSalir= new BotonSalir( this, 270, 490, vistaBotonSalir.getAncho(), vistaBotonSalir.getAlto());
 		vistaBotonSalir.setPosicionable(botonSalir);
 		mapBotones.put(botonSalir, vistaBotonSalir);
+		
 		
 		this.cargarMenu();
 	}
@@ -75,19 +81,21 @@ public class ControladorMenu {
 		
 	}
 	
-	
-	private void crearBotonGuardar(){
 		
-		botonGuardarCreado = true;
-		VistaBoton vistaBotonGuardar = new VistaBoton("/media/botonGuardar.png");
-		BotonGuardar botonGuardar= new BotonGuardar( this, 270, 410, vistaBotonGuardar.getAncho(), vistaBotonGuardar.getAlto());
-		vistaBotonGuardar.setPosicionable(botonGuardar);
-		mapBotones.put(botonGuardar, vistaBotonGuardar);
+	private void activarBotonGuardar(){
+		botonGuardarActivado = true;
+		mapBotones.put((Boton)vistaBotonGuardar.getPosicionable(), vistaBotonGuardar);
+	}
+	
+	private void desactivarBotonGuardar(){
+		botonGuardarActivado = false;
+		mapBotones.remove((Boton)vistaBotonGuardar.getPosicionable());
 	}
 	
 
 	public void ejecutar(){
 		boolean salir = false;
+		PantallaGuardar pantallaGuardar = new PantallaGuardar(controlador);
 
 		//Cargando inicio (esto se puede sacar, dps vemos)
 		Imagen vistaCargando = new Imagen();
@@ -105,22 +113,44 @@ public class ControladorMenu {
 			this.controlador.comenzarJuego();
 			//this.descargarMenu();
 			switch (this.accion){
-				case JUGAR:			descargarMenu();
-									if (!botonGuardarCreado) crearBotonGuardar();
+				case JUEGONUEVO:	descargarMenu();
+									if (!botonGuardarActivado) activarBotonGuardar();
+									admNiveles.cargarNivel("nivel1.xml");
+									accion = Accion.JUGAR;
 									admNiveles.jugar();
+									if (!admNiveles.sigueJugando()) {
+										accion = Accion.SALIR;
+										desactivarBotonGuardar();
+									}
+									this.cargarMenu();
+									break;
+			
+				case JUGAR:			descargarMenu();
+									if (!botonGuardarActivado) activarBotonGuardar();
+									admNiveles.jugar();
+									if (!admNiveles.sigueJugando()){
+										accion = Accion.SALIR;
+										desactivarBotonGuardar();
+									}
 									this.cargarMenu();
 									break;
 				
 				case CARGARJUEGO:	descargarMenu();
-									if (!botonGuardarCreado) crearBotonGuardar();
-									admNiveles.cargarNuevoNivel("save.xml");
+									if (!botonGuardarActivado) activarBotonGuardar();
+									admNiveles.cargarJuego("save.xml");
 									accion = Accion.JUGAR;
 									admNiveles.jugar();
+									if (!admNiveles.sigueJugando()) {
+										accion = Accion.SALIR;
+									}
 									this.cargarMenu();
 									break;
 									
-				case GUARDARJUEGO:	admNiveles.guardarNivel("save.xml");
+				case GUARDARJUEGO:	admNiveles.guardarJuego("save.xml");
 									accion = Accion.JUGAR;
+									descargarMenu();
+									pantallaGuardar.ejecutar();
+									cargarMenu();
 									break;
 				
 				case SALIR:			salir = true;
@@ -142,7 +172,7 @@ public class ControladorMenu {
 		//empieza un juegoNuevo
 		System.out.print("CLICK: empezar juego nuevo. \n");
 		this.controlador.detenerJuego();
-		this.accion = Accion.JUGAR;
+		this.accion = Accion.JUEGONUEVO;
 	}
 	
 	
