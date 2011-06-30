@@ -109,22 +109,18 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 	
 	public void moverAbajo(){
 		this.velY = velocidad;
-		//this.mover();
 	}
 	
 	public void moverArriba(){
 		this.velY = velocidad*-1;
-		//this.mover();
 	}
 	
 	public void moverDerecha(){
 		this.velX = velocidad;
-		//this.mover();
 	}
 	
 	public void moverIzquierda(){
 		this.velX = velocidad*-1;
-		//this.mover();
 	}
 	
 	public void detenerEjeX(){

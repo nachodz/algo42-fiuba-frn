@@ -17,8 +17,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import algo42Full.control.ControladorAlgo42;
-import algo42Full.modelo.Algo42;
 import algo42Full.modelo.AvionCivil;
 import algo42Full.modelo.Avioneta;
 import algo42Full.modelo.Bombardero;
@@ -38,6 +36,7 @@ public class CreadorNiveles {
 	private FlotaEnemiga flotaEnemiga;
 	private Flota flota;
 	private int anchoZona;
+	@SuppressWarnings("unused")
 	private int altoZona;
 	private ZonaCombate zona;
 	

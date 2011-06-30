@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import algo42Full.control.ControladorNivel.EstadoNivel;
 import algo42Full.modelo.Coordenada;
 import algo42Full.vista.VistaBoton;
 import algo42Full.vista.VistaMenuPrincipal;

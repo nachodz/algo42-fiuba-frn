@@ -1,7 +1,7 @@
 package algo42Full.temporal;
 
-import ar.uba.fi.algo3.titiritero.*;
-import algo42Full.control.*;
+//import ar.uba.fi.algo3.titiritero.*;
+//import algo42Full.control.*;
 
 
 public class PruebaPersistenciaGeneral {

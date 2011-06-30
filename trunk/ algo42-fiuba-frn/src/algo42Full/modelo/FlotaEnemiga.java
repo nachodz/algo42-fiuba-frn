@@ -80,19 +80,40 @@ public class FlotaEnemiga{
 	}
 	
 
+	//se cambio para que contemple la posibilidad de que la flota enemiga no tenga avionguia
 	public void vivir(){
 		
-		if (this.avionGuia.estaVivo())
+		if (this.avionGuia == null){
 			for (NaveVivaEnemiga nave : this.listaAviones){
 				nave.vivir();
 			}
+		}
 		else{
-			for (NaveVivaEnemiga nave : this.listaAviones){
-				nave.huir();
-			
+			if (this.avionGuia.estaVivo())
+				for (NaveVivaEnemiga nave : this.listaAviones){
+					nave.vivir();
+				}
+			else{
+				for (NaveVivaEnemiga nave : this.listaAviones){
+					nave.huir();
+				
+				}
 			}
 		}
+		
+//		if (this.avionGuia.estaVivo())
+//			for (NaveVivaEnemiga nave : this.listaAviones){
+//				nave.vivir();
+//			}
+//		else{
+//			for (NaveVivaEnemiga nave : this.listaAviones){
+//				nave.huir();
+//			
+//			}
+//		}
 	}
+	
+
 	
 	
 	public Atacable comprobarColision(ObjetoColisionable objeto){
