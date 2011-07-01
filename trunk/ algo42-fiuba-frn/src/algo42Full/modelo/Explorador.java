@@ -13,11 +13,7 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 	private int centroGiroX;
 	private int centroGiroY;
 	private boolean regresando;
-	private boolean entroAlCirculo;
-	
-	
-
-	
+	private boolean entroAlCirculo;	
 	
 	public Explorador(ZonaCombate unaZonaDeCombate, int posX, int posY){
 		super(unaZonaDeCombate,posX,posY,25,0,3,1);
@@ -34,8 +30,7 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 	protected void mover(){
 		//La aeronave se mueve de la posicion en la que se encuentra hacia el borde superior de la circunferencia sobre 
 		//la cual realizara su moviento. Una vez alli, comienza a moverse en circulos en sentdo contrario a las agujas del reloj. 
-		//Si al moverse la aeronave sobrepasa los limites del espacioAereo sale del mismo"
-			
+				
 			int centroX;
 			int centroY;
 			int radioGiro1;
@@ -72,9 +67,7 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 						}
 						
 						else{}
-				}
-				
-				
+				}				
 				
 				if ((this.y <= (centroGiroY + (radioGiro - incrementoY))) || (this.y >= (centroGiroY - (radioGiro - incrementoY)))){
 					
@@ -83,8 +76,7 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 						//calcula la posicion de x de acuerdo al movimiento en y, 
 						//con la formula de una circunferencia plana
 						coordX = (int) (Math.sqrt( (Math.pow(radioGiro1, 2)) - (Math.pow(((this.y - 1) - centroY), 2))) ) + centroX ;
-						
-						
+												
 						diferenciaEnX = coordX - centroX;
 						
 						this.x = coordX;
@@ -93,22 +85,15 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 					
 					else{
 						coordX = (int) (Math.sqrt( (Math.pow(radioGiro1, 2)) - (Math.pow(((this.y + 1) - centroY), 2))) ) + centroX ;
-						
-						
+												
 						diferenciaEnX = coordX - centroX;
 						
 						this.x = centroX - diferenciaEnX;
 						this.y += incrementoY;
 					}
-				}
-				
+				}				
 			}
-				
-
-					
-
-		}
-	
+	}
 	
 	
 	public void vivir(){
@@ -129,25 +114,21 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 				algo42tmp.recibirDanio(20);   //hacer q se muera
 				this.muerto = true;
 			}
-			
-
 		}
 	}
 	
 	
 	public void dirigirHaciaPunto(int x, int y){
 		
-		//"El metodo se encarga de dirigir la aeronave hacia un punto pasado como parametro que 
-		//"pertene al borde de la circunferencia en la cual debe moverse.
-		//Cuando el avion llega al punto indicado, marca el atributo entroAlCirculo como true."
+		//El metodo se encarga de dirigir la aeronave hacia un punto pasado como parametro que 
+		//pertene al borde de la circunferencia en la cual debe moverse.
+		//Cuando el avion llega al punto indicado, marca el atributo entroAlCirculo como true.
 
 		int coordenadaXObjetivo;
 		int coordenadaYObjetivo;
 		int distanciaEnX;
 		int distanciaEnY;
-		int incrementoDesplazamiento = 1;
-		
-				
+		int incrementoDesplazamiento = 1;				
 							
 		coordenadaXObjetivo = x;	
 		distanciaEnX = coordenadaXObjetivo - this.x;
@@ -206,24 +187,22 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 				(this.y >= y - incrementoDesplazamiento) && (this.y <= y + incrementoDesplazamiento)){
 			this.x = x;
 			this.y = y;
-			this.entroAlCirculo = true;
-			
-		}	
-		
-										
-	}
-	
-
-	
+			this.entroAlCirculo = true;			
+		}											
+	}	
 	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto Explorador.
+		 */
 		Element explorador = doc.createElement("Explorador");
 		
 		Element atributos = doc.createElement("Atributos");
 		explorador.appendChild(atributos);
 		
-		super.writeElement(atributos, doc);
-		
+		super.writeElement(atributos, doc);		
 			
 		Element radioGiro = doc.createElement("RadioGiro");
 		atributos.appendChild(radioGiro);
@@ -250,6 +229,10 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 	}
 
 	public static Explorador fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo Explorador, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		Explorador explorador = new Explorador(zona, 0, 0);
 		
 		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables		

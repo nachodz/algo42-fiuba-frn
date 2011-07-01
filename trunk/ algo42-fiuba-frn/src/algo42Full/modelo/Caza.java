@@ -15,8 +15,7 @@ public class Caza extends NaveVivaEnemiga implements Atacable{
 	public Caza(ZonaCombate unaZonaDeCombate, int posX, int posY){
 		super(unaZonaDeCombate,posX,posY,25,0,3,2);
 
-		this.puntos = 30;
-	
+		this.puntos = 30;	
 		this.frecuenciaDisparo = 20;
 		this.turnosDisparo = 0;		
 
@@ -30,7 +29,10 @@ public class Caza extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	protected synchronized void morir(){
-		
+		/*
+		 * Deja la actualizacionAlgo42 TanqueEnergia en la zona de combate y setea
+		 * al Caza como muerto.
+		 */
 		
 		TanqueEnergia tanqueEnergia= new TanqueEnergia((this.zonaDeCombate), (this.x), (this.y));
 		(this.zonaDeCombate).agregarActualizacionAlgo42(tanqueEnergia);
@@ -42,9 +44,7 @@ public class Caza extends NaveVivaEnemiga implements Atacable{
 		this.y = (this.y) + (this.velY);
 		if ((this.zonaDeCombate).comprobarSalidaZona(this)){
 			(this.y) = (this.posInicialY);
-		}
-		
-	
+		}	
 	}
 	
 	public void recibirDanio(int cantidadDanio){
@@ -93,6 +93,11 @@ public class Caza extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto Caza.
+		 */
 		Element caza = doc.createElement("Caza");
 		
 		Element atributos = doc.createElement("Atributos");
@@ -113,6 +118,10 @@ public class Caza extends NaveVivaEnemiga implements Atacable{
 	}
 
 	public static Caza fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo Caza, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		Caza caza = new Caza(zona, 0, 0);
 		
 		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables

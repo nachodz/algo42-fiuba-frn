@@ -27,17 +27,22 @@ public class ProyectilTorpedoAdaptable extends Proyectil{
   		}
     }
 
-//	public ProyectilTorpedoAdaptable (Element proyectil, ZonaCombate zona){
-//		super (proyectil, zona);
-//	}
-	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto ProyectilTorpedoAdaptable.
+		 */
 		Element proyectil = doc.createElement("ProyectilTorpedoAdaptable");
            this.writeElement(proyectil,doc);
            return proyectil;
 	} 
 	
 	public static ProyectilTorpedoAdaptable fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo ProyectilTorpedoAdaptable, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		ProyectilTorpedoAdaptable proyectilTorpedoAdaptable = new ProyectilTorpedoAdaptable(zona,true, 0, 0);
 		
 		writeProyectil(element, proyectilTorpedoAdaptable);

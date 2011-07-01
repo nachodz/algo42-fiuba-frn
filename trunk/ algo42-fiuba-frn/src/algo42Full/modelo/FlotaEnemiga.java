@@ -34,8 +34,12 @@ public class FlotaEnemiga{
 	}
 	
 	public void quitarBajas(){
-		
-		//List<NaveViva> tempLista = new ArrayList<NaveViva>();
+		/*
+		 * Comprueba los aviones de la flota destruidos, agregando sus puntos por destruccion
+		 * a la flota si es que anteriormente no fuero relevados. 
+		 * Si todos los aviones de la flota fueron destruidos, la flota se marca como destruida.
+		 */
+	
 		int contador = 0;
 		for (NaveVivaEnemiga avion : this.listaAviones){
 			if(! avion.estaVivo()){
@@ -56,7 +60,15 @@ public class FlotaEnemiga{
 		return this.flotaDestruida;
 	}
 	
+	public List<NaveVivaEnemiga> getListaAviones(){
+		return this.listaAviones;
+	}
+	
 	public void revivirFlota(){
+		/*
+		 * Revive los aviones de la flota, asignandoles una nueva posicion
+		 * de salida aleatoria y cambiando el avion guia de la flota.
+		 */
 		for (NaveVivaEnemiga avion : this.listaAviones){
 			int posXSalida = (int) (Math.random()* (avion.zonaDeCombate.getAncho() - avion.getRadio()))+ avion.getRadio();
 			avion.setPosInicialX(posXSalida);
@@ -80,7 +92,6 @@ public class FlotaEnemiga{
 	}
 	
 
-	//se cambio para que contemple la posibilidad de que la flota enemiga no tenga avionguia
 	public void vivir(){
 		
 		if (this.avionGuia == null){
@@ -100,38 +111,32 @@ public class FlotaEnemiga{
 				}
 			}
 		}
-		
-//		if (this.avionGuia.estaVivo())
-//			for (NaveVivaEnemiga nave : this.listaAviones){
-//				nave.vivir();
-//			}
-//		else{
-//			for (NaveVivaEnemiga nave : this.listaAviones){
-//				nave.huir();
-//			
-//			}
-//		}
-	}
-	
-
-	
+	}	
 	
 	public Atacable comprobarColision(ObjetoColisionable objeto){
+		/*
+		 * Chequea si el objetoColisionable pasado como parametro, choca contra alguno
+		 * de los aviones de la flota. En caso de ser verdadero, devuelve el avion
+		 * con el que colisiona. En caso contrario, retorna null.
+		 */
 		
-	//no es necesario ya q se supone q avion guia esta en la flota
-//		if (this.avionGuia != null)
-//			if (this.avionGuia.huboColision(objeto)) return this.avionGuia;
 		for (NaveVivaEnemiga nave : this.listaAviones){
 			if(nave.estaVivo()){
 				if (nave.huboColision(objeto)) return nave;
-			}
-			
+			}			
 		}
 		return null;
 	}
 	
 	
 	public Element getElement(Document doc) {
+		
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto FlotaEnemiga, incluyendo la lista de todos
+		 * sus aviones.
+		 */
 		Element flotaEnemiga = doc.createElement("FlotaEnemiga");
 		
 		Element atributos = doc.createElement("Atributos");
@@ -158,15 +163,14 @@ public class FlotaEnemiga{
 			}
 		}
 
-//		
-//		Element avionGuia = doc.createElement("AvionGuia");
-//		flotaEnemiga.appendChild(avionGuia);
-//		avionGuia.appendChild(this.avionGuia.getElement(doc));
-
 		return flotaEnemiga;
 	}
 
 	public static FlotaEnemiga fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo FlotaEnemiga, con un estado interno cargado
+		 * desde el Element pasado como parametro, incluyendo su lista de naves.
+		 */
 		
 		FlotaEnemiga flotaEnemiga = new FlotaEnemiga();
 		
@@ -191,8 +195,7 @@ public class FlotaEnemiga{
 				}//fin for
 			}//fin if
 			
-			else if (child.getNodeName().equals("ListaNavesVivasEnemigas")) {
-				
+			else if (child.getNodeName().equals("ListaNavesVivasEnemigas")) {				
 				
 				NodeList childsLevel2 = child.getChildNodes();  //lista de aviones
 				for (int h = 0; h < childsLevel2.getLength(); h++) { //itera entre los aviones
@@ -203,85 +206,41 @@ public class FlotaEnemiga{
 						flotaEnemiga.listaAviones.add(unaNave);
 						if(unaNave.esGuia()){
 							flotaEnemiga.agregarAvionGuia(unaNave);
-						}
-						
-					}
-					
+						}						
+					}					
 					else if (childLevel3.getNodeName().equals("Bombardero")){
 						NaveVivaEnemiga unaNave = Bombardero.fromElement((Element)childLevel3, zona);
 						flotaEnemiga.listaAviones.add(unaNave);
 						if(unaNave.esGuia()){
 							flotaEnemiga.agregarAvionGuia(unaNave);
-						}
-						
-					}
-					
+						}						
+					}					
 					else if (childLevel3.getNodeName().equals("Caza")){
 						NaveVivaEnemiga unaNave = Caza.fromElement((Element)childLevel3, zona);
 						flotaEnemiga.listaAviones.add(unaNave);
 						if(unaNave.esGuia()){
 							flotaEnemiga.agregarAvionGuia(unaNave);
-						}
-						
-					}
-					
+						}						
+					}					
 					else if (childLevel3.getNodeName().equals("CazaII")){
 						NaveVivaEnemiga unaNave = CazaII.fromElement((Element)childLevel3, zona);
 						flotaEnemiga.listaAviones.add(unaNave);
 						if(unaNave.esGuia()){
 							flotaEnemiga.agregarAvionGuia(unaNave);
-						}
-						
-					}
-					
+						}						
+					}					
 					else if (childLevel3.getNodeName().equals("Explorador")){
 						NaveVivaEnemiga unaNave = Explorador.fromElement((Element)childLevel3, zona);
 						flotaEnemiga.listaAviones.add(unaNave);
 						if(unaNave.esGuia()){
 							flotaEnemiga.agregarAvionGuia(unaNave);
-						}
-						
-						
+						}						
 					}					
 				}
-			} //fin else if primero
-			
-//			else if (child.getNodeName().equals("AvionGuia")) {
-//				System.out.println("entro avion guiaaa");
-//				NodeList childsLevel2 = child.getChildNodes();  //lista de aviones
-//				for (int h = 0; h < childsLevel2.getLength(); h++) { //itera entre los aviones
-//					Node childLevel3 = childsLevel2.item(h); //nodo que representa un avion de la lista
-//					
-//					if (childLevel3.getNodeName().equals("Avioneta")){
-//						flotaEnemiga.avionGuia = Avioneta.fromElement((Element)childLevel3, zona);						
-//					}					
-//					else if (childLevel3.getNodeName().equals("Bombardero")){
-//						flotaEnemiga.avionGuia = Bombardero.fromElement((Element)childLevel3, zona);
-//						
-//					}					
-//					else if (childLevel3.getNodeName().equals("Caza")){
-//						flotaEnemiga.avionGuia = Caza.fromElement((Element)childLevel3, zona);
-//					}					
-//					else if (childLevel3.getNodeName().equals("CazaII")){
-//						flotaEnemiga.avionGuia = CazaII.fromElement((Element)childLevel3, zona);
-//					}					
-//					else if (childLevel3.getNodeName().equals("Explorador")){
-//						flotaEnemiga.avionGuia = Explorador.fromElement((Element)childLevel3, zona);
-//					}
-//				}
-//			}			
-			
-		} //fin primer for		
-
+			} 			
+		} 	
 
 		return flotaEnemiga;
-	}
-	
-	public List<NaveVivaEnemiga> getListaAviones(){
-		return this.listaAviones;
-	}
-	
-	
-	
+	}	
 	
 }

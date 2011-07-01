@@ -14,30 +14,28 @@ public abstract class NaveVivaEnemiga extends NaveViva{
                 super(zona,x,y,radio,velX,velY,energia);
                 this.escapo = false;
                 this.esGuia = false;
-        }
-        
+        }        
                 
         public boolean seEscapo(){
                 
                 return (this.escapo);
         }
         
-        public void huir(){  //antes estaba implementado en cada clase
+        public void huir(){  
         	
     		if(this.escapo){
     			this.muerto = true;
-    		}
+    		}       
                 
-                
-                if (!(this.escapo)){
-                        if ((this.velY) > 0 ){
-                                
-                                (this.velY) *= -1; 
-                        }
-                        
-                        this.y += this.velY;
-                        this.escapo = (this.zonaDeCombate).comprobarSalidaZona(this);
+            else{
+            	if ((this.velY) > 0 ){
+                             
+            		(this.velY) *= -1; 
                 }
+                        
+                this.y += this.velY;
+                this.escapo = (this.zonaDeCombate).comprobarSalidaZona(this);
+            }
 
         }
         
@@ -46,8 +44,9 @@ public abstract class NaveVivaEnemiga extends NaveViva{
         }
         
         public void hacerGuia(){
-                this.esGuia = true;
-                this.energia = 7;
+
+            this.esGuia = true;
+            this.energia = 7;
                 
         }
         
@@ -57,6 +56,10 @@ public abstract class NaveVivaEnemiga extends NaveViva{
         }
         
     	public void revivir(){
+    		/*
+    		 * Restaura las condiciones iniciales de las variables x, y,
+    		 * 	energia, velY y escapo.
+    		 */
     		this.x = this.posInicialX;
     		this.y= this.posInicialY;
     		this.energia = energiaOriginal;
@@ -65,6 +68,11 @@ public abstract class NaveVivaEnemiga extends NaveViva{
     	}
         
     	public void writeElement(Element unElement, Document unDoc) {
+    		/*
+    		 * Escribe en el Element pasado como parametro perteneciente al Document
+    		 * tambien parametro, todas las variables pertenecientes
+    		 * al tipo NaveVivaEnemiga.
+    		 */		
 			
     		super.writeElement(unElement, unDoc);
     		
@@ -78,6 +86,11 @@ public abstract class NaveVivaEnemiga extends NaveViva{
     	}
     	
     	public static void writeNaveVivaEnemiga(Element element, NaveVivaEnemiga unaNaveVivaEnemiga) {
+    		/*
+    		 * Escribe en el Element pasado como parametro perteneciente al Document
+    		 * tambien parametro, todas las variables pertenecientes
+    		 * al tipo NaveViva
+    		 */		
     		
     		writeNaveViva(element, unaNaveVivaEnemiga);
     		
@@ -87,12 +100,9 @@ public abstract class NaveVivaEnemiga extends NaveViva{
     			if (child.getNodeName().equals("Escapo")) {
     				unaNaveVivaEnemiga.escapo = Boolean.parseBoolean(child.getTextContent());
     			}else if (child.getNodeName().equals("EsGuia")) {
-        				unaNaveVivaEnemiga.esGuia = Boolean.parseBoolean(child.getTextContent());
-    		
+        				unaNaveVivaEnemiga.esGuia = Boolean.parseBoolean(child.getTextContent());    		
     			}
-    		}
-    		
-    		
+    		}    		
     	}
 
 }

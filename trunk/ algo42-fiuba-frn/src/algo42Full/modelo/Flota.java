@@ -28,16 +28,25 @@ public class Flota {
 	}
 	
 	public Atacable comprobarColision(ObjetoColisionable objeto){
+		/*
+		 * Chequea si el objetoColisionable pasado como parametro, choca contra alguno
+		 * de los aviones de la flota. En caso de ser verdadero, devuelve el avion
+		 * con el que colisiona. En caso contrario, retorna null.
+		 */
 		for( NaveViva avion : this.listaAviones){
 			if(avion.estaVivo()){
 				if (avion.huboColision(objeto)) return avion;
-			}
-			
+			}			
 		}
 		return null;
 	}
 	
 	public void quitarBajas(){
+		/*
+		 * Comprueba los aviones de la flota destruidos, agregando sus puntos por destruccion
+		 * a la flota si es que anteriormente no fuero relevados. 
+		 * Si todos los aviones de la flota fueron destruidos, la flota se marca como destruida.
+		 */
 		
 		int contador = 0;
 		for (NaveViva avion : this.listaAviones){
@@ -60,6 +69,7 @@ public class Flota {
 	}
 	
 	public void revivirFlota(){
+	
 		for (NaveViva avion : this.listaAviones){
 			int posXSalida = (int) (Math.random()* (avion.zonaDeCombate.getAncho() - avion.getRadio()))+ avion.getRadio();
 			avion.setPosInicialX(posXSalida);
@@ -71,6 +81,9 @@ public class Flota {
 	}
 	
 	public int reportarPuntosBajas(){
+		/*
+		 * Retorna los puntos de los aviones destruidos, cuyos puntos no fueron reportados.
+		 */
 		int puntos = this.puntosBajas;
 		this.puntosBajas = 0;
 		return puntos;
@@ -82,7 +95,17 @@ public class Flota {
 		}
 	}
 	
+	public List<NaveViva> getListaAviones(){
+		return this.listaAviones;
+	}
+	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto Flota, incluyendo la lista de todos
+		 * sus aviones.
+		 */
 		Element flota = doc.createElement("Flota");
 		
 		Element atributos = doc.createElement("Atributos");
@@ -114,6 +137,10 @@ public class Flota {
 	}
 
 	public static Flota fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo Flota, con un estado interno cargado
+		 * desde el Element pasado como parametro, incluyendo su lista de naves.
+		 */
 		Flota flota = new Flota();
 		
 		NodeList childs = element.getChildNodes(); //contiene atributos y lista de NavesVivas
@@ -142,51 +169,30 @@ public class Flota {
 					Node childLevel3 = childsLevel2.item(h); //nodo que representa un avion de la lista
 					if (childLevel3.getNodeName().equals("AvionCivil")) {
 						flota.listaAviones.add(AvionCivil.fromElement((Element)childLevel3, zona));
-					}
-					
+					}					
 					else if (childLevel3.getNodeName().equals("Helicoptero")){
 						flota.listaAviones.add(Helicoptero.fromElement((Element)childLevel3, zona));
-						
-					}
-					
+					}					
 					else if (childLevel3.getNodeName().equals("Avioneta")){
 						flota.listaAviones.add(Avioneta.fromElement((Element)childLevel3, zona));
-						
-					}
-					
+					}					
 					else if (childLevel3.getNodeName().equals("Bombardero")){
-						flota.listaAviones.add(Bombardero.fromElement((Element)childLevel3, zona));
-						
-					}
-					
+						flota.listaAviones.add(Bombardero.fromElement((Element)childLevel3, zona));						
+					}					
 					else if (childLevel3.getNodeName().equals("Caza")){
-						flota.listaAviones.add(Caza.fromElement((Element)childLevel3, zona));
-						
-					}
-					
+						flota.listaAviones.add(Caza.fromElement((Element)childLevel3, zona));						
+					}					
 					else if (childLevel3.getNodeName().equals("CazaII")){
-						flota.listaAviones.add(CazaII.fromElement((Element)childLevel3, zona));
-						
-					}
-					
+						flota.listaAviones.add(CazaII.fromElement((Element)childLevel3, zona));						
+					}					
 					else if (childLevel3.getNodeName().equals("Explorador")){
-						flota.listaAviones.add(Explorador.fromElement((Element)childLevel3, zona));
-						
+						flota.listaAviones.add(Explorador.fromElement((Element)childLevel3, zona));						
 					}					
 				}
 			} //fin else if primero
 		} //fin primer for
-				
-
 
 		return flota;
-	}
-	
-	
-	
-	public List<NaveViva> getListaAviones(){
-		return this.listaAviones;
-	}
-	
+	}		
 
 }

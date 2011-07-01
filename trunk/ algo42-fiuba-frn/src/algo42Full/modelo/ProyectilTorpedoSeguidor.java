@@ -10,9 +10,8 @@ public class ProyectilTorpedoSeguidor extends ProyectilTorpedo {
 		this.danio = 2;
 	}
 	protected void mover(){
-		//persigue al algo42 sin descanso hasta hacerle un impacto
+		//se mueve siguiendo al algo42
 		int algoX, algoY;
-
 		
 		algoX = zonaDeCombate.getAlgo42PosX();
 		algoY = zonaDeCombate.getAlgo42PosY();
@@ -28,17 +27,22 @@ public class ProyectilTorpedoSeguidor extends ProyectilTorpedo {
 			this.y = this.y + this.velY;
 	}	
  
-//	public ProyectilTorpedoSeguidor (Element proyectil, ZonaCombate zona){
-//		super (proyectil, zona);
-//	}
-	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto ProyectilTorpedoSeguidor.
+		 */
 		Element proyectil = doc.createElement("ProyectilTorpedoSeguidor");
            this.writeElement(proyectil,doc);
            return proyectil;
 	}
 	
 	public static ProyectilTorpedoSeguidor fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo ProyectilTorpedoSeguidor, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		ProyectilTorpedoSeguidor proyectilTorpedoSeguidor = new ProyectilTorpedoSeguidor(zona,true, 0, 0);
 		
 		writeProyectil(element, proyectilTorpedoSeguidor);

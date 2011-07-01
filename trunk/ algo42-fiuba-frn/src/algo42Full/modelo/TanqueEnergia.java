@@ -10,11 +10,6 @@ public class TanqueEnergia extends ActualizacionAlgo42{
 		super(zona,x,y,2);
 	}
 	
-//	public  TanqueEnergia (Element actualizacion, ZonaCombate zona){
-//		super (actualizacion, zona);
-//	}
- 
-
 	public void vivir (){
 		Algo42 algo42;
 
@@ -29,6 +24,10 @@ public class TanqueEnergia extends ActualizacionAlgo42{
 	}
 	
 	public static TanqueEnergia fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo TanqueEnergia, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		TanqueEnergia tanqueEnergia = new TanqueEnergia(zona, 0, 0);
 		
 		writeActualizacion(element, tanqueEnergia);
@@ -37,6 +36,11 @@ public class TanqueEnergia extends ActualizacionAlgo42{
 	}
     
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto TanqueEnergia.
+		 */
 		Element actualizacion = doc.createElement("TanqueEnergia");
            this.writeElement (actualizacion,doc);
            return actualizacion;

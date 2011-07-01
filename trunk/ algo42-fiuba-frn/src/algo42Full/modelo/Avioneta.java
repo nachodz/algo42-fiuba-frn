@@ -30,7 +30,7 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	
-	protected void mover(){        //implementacion cambiada
+	protected void mover(){        
 		
 		if (((this.zonaDeCombate).comprobarSalidaZona(this)))
 			this.velY *= -1;
@@ -65,6 +65,11 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto Avioneta.
+		 */
 		Element avioneta = doc.createElement("Avioneta");
 		
 		Element atributos = doc.createElement("Atributos");
@@ -85,6 +90,10 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	}
 
 	public static Avioneta fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo Avioneta, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		Avioneta avioneta = new Avioneta(zona, 0, 0);
 		
 		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables
