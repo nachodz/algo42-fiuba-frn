@@ -124,9 +124,15 @@ public class CreadorNiveles {
 	}
 	
 	public void generarNivel(String pathGuardado){
+		/*
+		 * Genera un archivo xml en la direccion en la ruta pasada como String en el parametro,
+		 * con 2 flotas, una aliada y una enemiga que contienen los aviones agregados anteriormente
+		 * al llamado de este metodo por medio de los metodos que permiten agregar aeronaves.
+		 * Se selecciona aleatoriamente un lider a la flota de navesEnemigas.
+		 */
 		
 		
-		int indice = (int) (Math.random()* (this.flotaEnemiga.getListaAviones().size() - 1)+ 1);
+		int indice = 1+ ( (int) (Math.random()* (this.flotaEnemiga.getListaAviones().size() - 1))) ;
 		
 		NaveVivaEnemiga nave = this.flotaEnemiga.getListaAviones().get(indice);
 		nave.hacerGuia();

@@ -10,11 +10,11 @@ public class ProyectilCohete extends Proyectil {
 		if (!enemigo) this.velY = 18;
 	}
 	
-//	public ProyectilCohete (Element proyectil, ZonaCombate zona){
-//		super (proyectil, zona);
-//	}
-	
 	public static ProyectilCohete fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo ProyectilCohete, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		ProyectilCohete proyectilCohete = new ProyectilCohete(zona,true, 0, 0);
 		
 		writeProyectil(element, proyectilCohete);
@@ -23,6 +23,11 @@ public class ProyectilCohete extends Proyectil {
 	}
 	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto ProyectilCohete.
+		 */
 		Element proyectil = doc.createElement("ProyectilCohete");
            this.writeElement(proyectil,doc);
            return proyectil;

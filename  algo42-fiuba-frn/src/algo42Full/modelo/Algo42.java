@@ -161,6 +161,11 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 	
 	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto Algo42.
+		 */
 		Element algo42 = doc.createElement("Algo42");
 		
 		Element atributos = doc.createElement("Atributos");
@@ -217,6 +222,10 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 	}
 
 	public static Algo42 fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo Algo42, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		Algo42 algo42 = new Algo42(zona, 0, 0);
 		
 		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables
@@ -244,15 +253,13 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 			} else if (child.getNodeName().equals("Velocidad")) {
 				algo42.velocidad = Integer.parseInt(child.getTextContent());
 			}
-			else if (child.getNodeName().equals("VelX")) {        //nuevo agregado
+			else if (child.getNodeName().equals("VelX")) {        
 				algo42.velX = Integer.parseInt(child.getTextContent());
 			}
-			else if (child.getNodeName().equals("VelY")) {     //nuevo agregado
+			else if (child.getNodeName().equals("VelY")) {     
 				algo42.velY = Integer.parseInt(child.getTextContent());
-			}
-		
-		}
-		
+			}		
+		}		
 		return algo42;
 	}	
 

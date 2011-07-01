@@ -33,40 +33,6 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 		this.danio = danio;
 	}
 	
-//	public Proyectil (Element proyectil, ZonaCombate zona){
-//		NodeList childs = proyectil.getChildNodes();
-//		
-//		for (int i = 0; i < childs.getLength(); i++) {
-//			Node child = (Node) childs.item(i);
-//			if (child.getNodeName().equals("Muerto")) {
-//				this.muerto = Boolean.parseBoolean(child.getTextContent());
-//				
-//			}else if (child.getNodeName().equals("X")) {
-//				this.x = Integer.parseInt(child.getTextContent());
-//			} else if (child.getNodeName().equals("Y")) {				
-//				this.y = Integer.parseInt(child.getTextContent());
-//			} else if (child.getNodeName().equals("Radio")) {
-//				this.radio = Integer.parseInt(child.getTextContent());
-//			 }else if (child.getNodeName().equals("VelocidadX")) {
-//				 this.velX = Integer.parseInt(child.getTextContent());
-//			 }else if (child.getNodeName().equals("VelocidadY")) {
-//			    this.velY = Integer.parseInt(child.getTextContent());
-//			 }else if (child.getNodeName().equals("PosicionInicialX")) {
-//				 this.posInicialX = Integer.parseInt(child.getTextContent());   
-//			 }else if (child.getNodeName().equals("PosicionInicialY")) {
-//			      this.posInicialY = Integer.parseInt(child.getTextContent());
-//			 } else if (child.getNodeName().equals("Danio")) {
-//			      this.danio = Integer.parseInt(child.getTextContent());
-//			 } else if (child.getNodeName().equals("Enemigo")) {
-//			      this.enemigo = Boolean.parseBoolean(child.getTextContent());
-//			 }
-//		}
-//		if (zona.comprobarSalidaZona(this))
-//			throw new ObjetoFueraDeZonaDeCombateException();
-//		else
-//			zonaDeCombate = zona;
-//	}
-	
 	
 	public boolean estaVivo(){
 		if (muerto) return false;
@@ -79,8 +45,8 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 	}
 	
 	protected void mover ()
-	{
-		  //se mueve en linea recta hacia adelante si es un proyectil enemigo o hacia atras si es un proyectil aliado.
+	//se mueve en linea recta hacia adelante si es un proyectil enemigo o hacia atras si es un proyectil aliado.
+	{		  
 			int tempY;
 			if (this.enemigo) 
 				tempY = this.y + this.velY;
@@ -112,6 +78,11 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
   }
     
 	public void writeElement(Element proyectil, Document doc){
+		/*
+		 * Escribe en el Element pasado como parametro perteneciente al Document
+		 * tambien parametro, todas las variables pertenecientes
+		 * al tipo Proyectil.
+		 */	
 		
 		Element x = doc.createElement("X");
 		proyectil.appendChild(x);
@@ -156,6 +127,11 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 	}
 	
 	public static void writeProyectil(Element element, Proyectil unProyectil) {
+		/*
+		 * Escribe en el Element pasado como parametro perteneciente al Document
+		 * tambien parametro, todas las variables pertenecientes
+		 * al tipo Proyectil
+		 */		
 		
 		NodeList childs = element.getChildNodes();
 		
@@ -182,18 +158,6 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 			 } else if (child.getNodeName().equals("Enemigo")) {
 				 unProyectil.enemigo = Boolean.parseBoolean(child.getTextContent());
 			 }
-		}
-		
-		
+		}		
 	}
-	
-	
-	//esto es horrible
-//	public Element getElement(Document doc){
-//		Element naveViva= doc.createElement("AvionCivil");
-//		
-//		return naveViva;
-//	}
-	
-
 }

@@ -57,7 +57,11 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	
 	
 	protected void morir(){
-		
+		/*
+		 * Se encarga de dejar el cohete y torpedo al morir, agregando a la 
+		 * zona de combate estas ActualizacionesAlgo42. Luego marca al
+		 * Bombardero como muerto.
+		 */
 		
 		Cohete cohete = new Cohete(this.zonaDeCombate, this.x, this.y);
 		Torpedo torpedo = new Torpedo(this.zonaDeCombate, (this.x-5),this.y);	
@@ -131,6 +135,11 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto Bombardero.
+		 */
 		Element bombardero = doc.createElement("Bombardero");
 		
 		Element atributos = doc.createElement("Atributos");
@@ -151,7 +160,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 		atributos.appendChild(cantMov);
 		cantMov.setTextContent(String.valueOf(this.cantMov));
 		
-		Element dispararSeguidor = doc.createElement("DispararSeguidor"); //nuevo agregado
+		Element dispararSeguidor = doc.createElement("DispararSeguidor"); 
 		atributos.appendChild(dispararSeguidor);
 		dispararSeguidor.setTextContent(String.valueOf(this.dispararSeguidor));
 
@@ -160,6 +169,10 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	}
 
 	public static Bombardero fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo Bombardero, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		Bombardero bombardero = new Bombardero(zona, 0, 0);
 		
 		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables
@@ -176,7 +189,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 				bombardero.turnosDisparo = Integer.parseInt(child.getTextContent());
 			} else if (child.getNodeName().equals("CantMov")) {
 				bombardero.cantMov = Integer.parseInt(child.getTextContent());
-			} else if (child.getNodeName().equals("DispararSeguidor")) {     //nuevo agregado
+			} else if (child.getNodeName().equals("DispararSeguidor")) {     
 				bombardero.dispararSeguidor = Boolean.parseBoolean(child.getTextContent());
 		}
 	}

@@ -10,17 +10,22 @@ public class ProyectilLaser extends Proyectil {
 		if (!enemigo) this.velY = 12;
 	}
 	
-//	public ProyectilLaser (Element proyectil, ZonaCombate zona){
-//		super (proyectil, zona);
-//	}
-	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto ProyectilLaser.
+		 */
 		Element proyectil = doc.createElement("ProyectilLaser");
            this.writeElement(proyectil,doc);
            return proyectil;
 	}
 	
 	public static ProyectilLaser fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo ProyectilLaser, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		ProyectilLaser proyectilLaser = new ProyectilLaser(zona,true, 0, 0);
 		
 		writeProyectil(element, proyectilLaser);

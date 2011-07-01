@@ -10,12 +10,6 @@ public class Cohete extends ActualizacionAlgo42{
 		super(zona,x,y,7);
 	}
 	
-//	public Cohete (Element actualizacion, ZonaCombate zona){
-//		super (actualizacion, zona);
-//	}
-	
-
-	
 	public void vivir (){
 	 Algo42 algo42;
 	 
@@ -30,6 +24,10 @@ public class Cohete extends ActualizacionAlgo42{
    }
 	
 	public static Cohete fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo Cohete, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		Cohete cohete = new Cohete(zona, 0, 0);
 		
 		writeActualizacion(element, cohete);
@@ -38,8 +36,13 @@ public class Cohete extends ActualizacionAlgo42{
 	}
     
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto Cohete.
+		 */
 		Element actualizacion = doc.createElement("Cohete");
-           this.writeElement(actualizacion,doc);
-           return actualizacion;
+        this.writeElement(actualizacion,doc);
+        return actualizacion;
 	} 
 }

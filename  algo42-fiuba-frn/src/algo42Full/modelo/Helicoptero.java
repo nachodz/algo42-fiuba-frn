@@ -31,7 +31,7 @@ public class Helicoptero extends NaveViva{
 	protected void mover(){
 	//La aeronave se mueve de la posicion en la que se encuentra hacia el borde superior de la circunferencia sobre 
 	//la cual realizara su moviento. Una vez alli, comienza a moverse en circulos en sentdo contrario a las agujas del reloj. 
-	//Si al moverse la aeronave sobrepasa los limites del espacioAereo sale del mismo"
+	
 		
 		int centroX;
 		int centroY;
@@ -69,10 +69,7 @@ public class Helicoptero extends NaveViva{
 					}
 					
 					else{}
-			}
-			
-			
-			
+			}			
 			if ((this.y <= (centroGiroY + (radioGiro - incrementoY))) || (this.y >= (centroGiroY - (radioGiro - incrementoY)))){
 				
 				if(this.regresando){
@@ -97,13 +94,8 @@ public class Helicoptero extends NaveViva{
 					this.x = centroX - diferenciaEnX;
 					this.y += incrementoY;
 				}
-			}
-			
+			}			
 		}
-			
-
-				
-
 	}
 
 
@@ -130,17 +122,15 @@ public class Helicoptero extends NaveViva{
 
 	public void dirigirHaciaPunto(int x, int y){
 	
-	//"El metodo se encarga de dirigir la aeronave hacia un punto pasado como parametro que 
-	//"pertene al borde de la circunferencia en la cual debe moverse.
-	//Cuando el avion llega al punto indicado, marca el atributo entroAlCirculo como true."
+	//El metodo se encarga de dirigir la aeronave hacia un punto pasado como parametro que 
+	//pertene al borde de la circunferencia en la cual debe moverse.
+	//Cuando el avion llega al punto indicado, marca el atributo entroAlCirculo como true.
 
 	int coordenadaXObjetivo;
 	int coordenadaYObjetivo;
 	int distanciaEnX;
 	int distanciaEnY;
-	int incrementoDesplazamiento = 1;
-	
-			
+	int incrementoDesplazamiento = 1;		
 						
 	coordenadaXObjetivo = x;	
 	distanciaEnX = coordenadaXObjetivo - this.x;
@@ -201,12 +191,16 @@ public class Helicoptero extends NaveViva{
 		this.y = y;
 		this.entroAlCirculo = true;
 		
-		}	
-	
-									
+		}									
 	}
 	
-	public Element getElement(Document doc) {
+	public Element getElement(Document doc) {		
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto Helicoptero.
+		 */
+		
 		Element helicoptero = doc.createElement("Helicoptero");
 		
 		Element atributos = doc.createElement("Atributos");
@@ -240,6 +234,10 @@ public class Helicoptero extends NaveViva{
 	}
 
 	public static Helicoptero fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo Helicoptero, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		Helicoptero helicoptero = new Helicoptero(zona, 0, 0);
 		
 		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables

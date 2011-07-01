@@ -21,6 +21,11 @@ public class CazaII extends Caza implements Atacable{
 	}
 	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto CazaII.
+		 */
 		Element cazaII = doc.createElement("CazaII");
 		
 		Element atributos = doc.createElement("Atributos");
@@ -40,6 +45,10 @@ public class CazaII extends Caza implements Atacable{
 	}
 
 	public static CazaII fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo CazaII, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		CazaII cazaII = new CazaII(zona, 0, 0);
 		
 		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables

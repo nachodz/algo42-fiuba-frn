@@ -44,6 +44,11 @@ public class ObjetoColisionable  implements Posicionable{
 	}
 	
 	public void writeElement(Element unElement, Document unDoc) {
+		/*
+		 * Escribe en el Element pasado como parametro perteneciente al Document
+		 * tambien parametro, todas las variables pertenecientes
+		 * al tipo ObjetoColisionable.
+		 */		
 				
 		/*
 		 * atributos de ObjetoColisionable
@@ -63,6 +68,11 @@ public class ObjetoColisionable  implements Posicionable{
 	}
 	
 	public static void writeObjetoColisionable(Element element, ObjetoColisionable unColisionable) {
+		/*
+		 * Escribe en el Element pasado como parametro perteneciente al Document
+		 * tambien parametro, todas las variables pertenecientes
+		 * al tipo ObjetoColisionable
+		 */		
 		
 		NodeList childs = element.getChildNodes();
 		for (int i = 0; i < childs.getLength(); i++) {
@@ -74,8 +84,6 @@ public class ObjetoColisionable  implements Posicionable{
 			} else if (child.getNodeName().equals("Radio")) {
 				unColisionable.radio = Integer.parseInt(child.getTextContent());
 			}
-		}
-		
-		
+		}		
 	}	
 }

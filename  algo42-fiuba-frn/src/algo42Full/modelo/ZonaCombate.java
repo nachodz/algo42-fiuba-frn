@@ -18,20 +18,24 @@ public class ZonaCombate implements ObjetoVivo{
 	private FlotaEnemiga flotaEnemiga;
 	private Flota flotaAliada;
 	private List<Proyectil> listaProyectiles;
-	private List<ActualizacionAlgo42> listaActualizaciones; //////////////se cambio el tipo de la lista: Objeto Vivo por ActualizacionAlgo42
+	private List<ActualizacionAlgo42> listaActualizaciones; 
+	private int contadorRevivirFlotaAliada;
+	private int contadorRevivirFlotaEnemiga;
 	
 	public ZonaCombate(int alto,int ancho){
-		this.alto = alto; // se podría chekear
+		this.alto = alto; 
 		this.ancho = ancho;
 		this.algo42 = null;
 		this.flotaAliada = null;
 		this.flotaEnemiga = null;
-		this.listaActualizaciones = new ArrayList<ActualizacionAlgo42>();  /////////////////se cambio el tipo
+		this.listaActualizaciones = new ArrayList<ActualizacionAlgo42>();  
 		this.listaProyectiles = new ArrayList<Proyectil>();
+		this.contadorRevivirFlotaAliada = 0;
+		this.contadorRevivirFlotaEnemiga = 0;
 		
 	}
 	
-	public void agregarActualizacionAlgo42(ActualizacionAlgo42 actualizacion){          ///se cambio el tipo
+	public void agregarActualizacionAlgo42(ActualizacionAlgo42 actualizacion){         
 		this.listaActualizaciones.add(actualizacion);
 	}
 	
@@ -51,30 +55,43 @@ public class ZonaCombate implements ObjetoVivo{
 		synchronized (this.listaProyectiles){
 			this.listaProyectiles.add(proyectil);
 		}
-	}
-	
+	}	
 
 	public synchronized void combatir(){
-		
-		/////////////////////////////////////////
-		//////////////////////////////////////
-		/*agregar el delay para el revivir de las flotas
-		 * 
+		/*
+		 * Se encarga de que las naves, actualizaciones y proyectiles de la zona
+		 * de combate vivan. Si alguna flota se encuentra destruida, la revive.
 		 */
+		
 		if (this.flotaAliada != null){
 			if(this.flotaAliada.estaDestruida()){
-				this.flotaAliada.revivirFlota();
+				if(this.contadorRevivirFlotaAliada == 20){
+					this.flotaAliada.revivirFlota();
+					this.contadorRevivirFlotaAliada = 0;
+				}
+				else{
+					this.contadorRevivirFlotaAliada ++;
+				}
+	
 			}
 		}
 		
 		if (this.flotaEnemiga != null){
 			if(this.flotaEnemiga.estaDestruida()){
-				this.flotaEnemiga.revivirFlota();
+				if(this.contadorRevivirFlotaEnemiga == 30){
+					this.flotaEnemiga.revivirFlota();
+					this.contadorRevivirFlotaEnemiga = 0;
+				}
+				
+				else{
+					this.contadorRevivirFlotaEnemiga ++;
+				}
 			}
 		}
 		
 		if(this.flotaAliada != null) this.flotaAliada.vivir();
 		if(this.flotaEnemiga != null) this.flotaEnemiga.vivir();
+		
 		synchronized (this.listaProyectiles){
 			for (Proyectil proyect: this.listaProyectiles){
 				proyect.vivir();
@@ -107,6 +124,10 @@ public class ZonaCombate implements ObjetoVivo{
 	}
 	
 	public boolean comprobarSalidaZonaEx(ObjetoColisionable objeto){
+		/*
+		 * Devuelve false si algun punto de el objeto colisionable esta
+		 * fuera de la zona de combate
+		 */
 		int x, y, radio;
 		
 		x = objeto.getX();
@@ -120,6 +141,9 @@ public class ZonaCombate implements ObjetoVivo{
 		}
 		
 		public boolean comprobarSalidaZona(ObjetoColisionable objeto){
+			/*
+			 * 
+			 */
 			int derO, izqO, arribaO, abajoO;
 			int derZ, izqZ, arribaZ, abajoZ;
 			int x, y, radio;
@@ -166,9 +190,13 @@ public class ZonaCombate implements ObjetoVivo{
 	
 	
 	public void quitarObjetosMuertos(){
+		/*
+		 * Elimina las actualizacione y los proyectiles muertos de la zona de combate,
+		 * y llama a quitarBajas() de las flotas.
+		 */
 		
-		List<ActualizacionAlgo42> tempLista  = new ArrayList<ActualizacionAlgo42>();         //se cambio el tipo de la lista
-		for (ActualizacionAlgo42 actualizacion : this.listaActualizaciones){         //se cambio el tipo de la lista
+		List<ActualizacionAlgo42> tempLista  = new ArrayList<ActualizacionAlgo42>();         
+		for (ActualizacionAlgo42 actualizacion : this.listaActualizaciones){         
 			if (actualizacion.estaVivo()) tempLista.add(actualizacion);
 		} 
 		this.listaActualizaciones = tempLista;
@@ -185,20 +213,28 @@ public class ZonaCombate implements ObjetoVivo{
 	}
 	
 	public int reportarPuntosBajas(){
+		/*
+		 * Agrega el puntaje de los aviones que fueron destruidos
+		 */
 		int puntosEnemigos,puntosAliados;
 		
 		if(this.flotaAliada != null) puntosAliados = this.flotaAliada.reportarPuntosBajas();
 		else puntosAliados = 0;
 		
 		if(this.flotaEnemiga != null) puntosEnemigos = this.flotaEnemiga.reportarPuntosBajas();
-		else puntosEnemigos = 0;
-		
+		else puntosEnemigos = 0;		
 		
 		int puntaje = (puntosEnemigos-puntosAliados);		
 		return puntaje;	
 	}
 	
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto ZonaCombate, que incluye sus flotas, listas
+		 * de proyectiles y actualizaciones.
+		 */
 		Element zonaCombate = doc.createElement("ZonaCombate");
 		
 		Element atributos = doc.createElement("Atributos");
@@ -211,6 +247,14 @@ public class ZonaCombate implements ObjetoVivo{
 		Element alto = doc.createElement("Alto");
 		atributos.appendChild(alto);
 		alto.setTextContent(String.valueOf(this.alto));
+		
+		Element contadorRevivirFlotaAliada = doc.createElement("ContadorRevivirFlotaAliada");
+		atributos.appendChild(contadorRevivirFlotaAliada);
+		contadorRevivirFlotaAliada.setTextContent(String.valueOf(this.contadorRevivirFlotaAliada));
+		
+		Element contadorRevivirFlotaEnemiga = doc.createElement("ContadorRevivirFlotaEnemiga");
+		atributos.appendChild(contadorRevivirFlotaEnemiga);
+		contadorRevivirFlotaEnemiga.setTextContent(String.valueOf(this.contadorRevivirFlotaEnemiga));
 		
 		@SuppressWarnings("unused")
 		Element algo42 = doc.createElement("Algo42");
@@ -234,7 +278,6 @@ public class ZonaCombate implements ObjetoVivo{
 				}				
 			}
 		}
-
 				
 		Element listaActualizaciones = doc.createElement("ListaActualizaciones");
 		zonaCombate.appendChild(listaActualizaciones);
@@ -251,6 +294,10 @@ public class ZonaCombate implements ObjetoVivo{
 	}
 
 	public static ZonaCombate fromElement(Element element) {
+		/*
+		 * Retorna un objeto del tipo ZonaCombate, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		ZonaCombate zonaCombate = new ZonaCombate(1, 1);
 		
 		NodeList childs = element.getChildNodes(); //contiene atributos y lista de NavesVivas
@@ -265,6 +312,12 @@ public class ZonaCombate implements ObjetoVivo{
 					}					
 					else if (childLevel3.getNodeName().equals("Alto")) {
 						zonaCombate.alto = Integer.parseInt(childLevel3.getTextContent());
+					}
+					else if (childLevel3.getNodeName().equals("ContadorRevivirFlotaAliada")) {
+						zonaCombate.contadorRevivirFlotaAliada = Integer.parseInt(childLevel3.getTextContent());
+					}
+					else if (childLevel3.getNodeName().equals("ContadorRevivirFlotaEnemiga")) {
+						zonaCombate.contadorRevivirFlotaEnemiga = Integer.parseInt(childLevel3.getTextContent());
 					}
 				}//fin for
 			}			
@@ -282,27 +335,18 @@ public class ZonaCombate implements ObjetoVivo{
 				for (int h = 0; h < childsLevel2.getLength(); h++) { //itera entre los proyectiles
 					Node childLevel3 = childsLevel2.item(h); //nodo que representa un proyectil de la lista
 					if (childLevel3.getNodeName().equals("ProyectilCohete")) {
-						(zonaCombate.listaProyectiles).add(ProyectilCohete.fromElement(((Element)childLevel3) , zonaCombate) );
-					}
-					
+						(zonaCombate.listaProyectiles).add(ProyectilCohete.fromElement(((Element)childLevel3) , zonaCombate) );					}					
 					else if (childLevel3.getNodeName().equals("ProyectilLaser")){
-						(zonaCombate.listaProyectiles).add(ProyectilLaser.fromElement(((Element)childLevel3) , zonaCombate) );
-						
-					}
-					
+						(zonaCombate.listaProyectiles).add(ProyectilLaser.fromElement(((Element)childLevel3) , zonaCombate) );						
+					}					
 					else if (childLevel3.getNodeName().equals("ProyectilTorpedo")){
-						(zonaCombate.listaProyectiles).add(ProyectilTorpedo.fromElement(((Element)childLevel3) , zonaCombate) );
-						
-					}
-					
+						(zonaCombate.listaProyectiles).add(ProyectilTorpedo.fromElement(((Element)childLevel3) , zonaCombate) );						
+					}					
 					else if (childLevel3.getNodeName().equals("ProyectilTorpedoAdaptable")){
-						(zonaCombate.listaProyectiles).add(ProyectilTorpedoAdaptable.fromElement(((Element)childLevel3) , zonaCombate) );
-						
-					}
-					
+						(zonaCombate.listaProyectiles).add(ProyectilTorpedoAdaptable.fromElement(((Element)childLevel3) , zonaCombate) );						
+					}					
 					else if (childLevel3.getNodeName().equals("ProyectilTorpedoSeguidor")){
-						(zonaCombate.listaProyectiles).add(ProyectilTorpedoSeguidor.fromElement(((Element)childLevel3) , zonaCombate) );
-						
+						(zonaCombate.listaProyectiles).add(ProyectilTorpedoSeguidor.fromElement(((Element)childLevel3) , zonaCombate) );						
 					}										
 				}
 			} 			
@@ -312,16 +356,12 @@ public class ZonaCombate implements ObjetoVivo{
 					Node childLevel3 = childsLevel2.item(h); //nodo que representa una actualizacion de la lista
 					if (childLevel3.getNodeName().equals("Cohete")) {
 						(zonaCombate.listaActualizaciones).add(Cohete.fromElement(((Element)childLevel3) , zonaCombate) );
-					}
-					
+					}					
 					else if (childLevel3.getNodeName().equals("TanqueEnergia")){
-						(zonaCombate.listaActualizaciones).add(TanqueEnergia.fromElement(((Element)childLevel3) , zonaCombate) );
-						
-					}
-					
+						(zonaCombate.listaActualizaciones).add(TanqueEnergia.fromElement(((Element)childLevel3) , zonaCombate) );						
+					}					
 					else if (childLevel3.getNodeName().equals("Torpedo")){
-						(zonaCombate.listaActualizaciones).add(Torpedo.fromElement(((Element)childLevel3) , zonaCombate) );
-						
+						(zonaCombate.listaActualizaciones).add(Torpedo.fromElement(((Element)childLevel3) , zonaCombate) );						
 					}										
 				}
 			} 

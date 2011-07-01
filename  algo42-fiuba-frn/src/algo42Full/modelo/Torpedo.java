@@ -12,10 +12,6 @@ public class Torpedo extends ActualizacionAlgo42{
 		super(zona,x,y,2);
 	}
 	
-//	public Torpedo (Element actualizacion, ZonaCombate zona){
-//		super (actualizacion, zona);
-//	}
-
 	
 	public void vivir (){
 	    Algo42 algo42;
@@ -32,6 +28,10 @@ public class Torpedo extends ActualizacionAlgo42{
 	
 	
 	public static Torpedo fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo Torpedo, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		Torpedo torpedo = new Torpedo(zona, 0, 0);
 		
 		writeActualizacion(element, torpedo);
@@ -41,6 +41,11 @@ public class Torpedo extends ActualizacionAlgo42{
 	}
     
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto Torpedo.
+		 */
 		Element actualizacion = doc.createElement("Torpedo");
            this.writeElement (actualizacion,doc);
            return actualizacion;

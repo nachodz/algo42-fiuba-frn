@@ -51,6 +51,11 @@ public abstract class ActualizacionAlgo42 extends ObjetoColisionable implements 
 	
 	
 	public void writeElement(Element actualizacion, Document doc){
+		/*
+		 * Escribe en el Element pasado como parametro perteneciente al Document
+		 * tambien parametro, todas las variables pertenecientes
+		 * al tipo ActualizacionAlgo42
+		 */
 		
 		Element x = doc.createElement("X");
 		actualizacion.appendChild(x);
@@ -85,40 +90,12 @@ public abstract class ActualizacionAlgo42 extends ObjetoColisionable implements 
 		posInicialY.setTextContent(Integer.toString(this.posInicialY));
 	}
 	
-
-//	public ActualizacionAlgo42 (Element actualizacion, ZonaCombate zona){
-//		NodeList childs = actualizacion.getChildNodes();
-//		
-//		for (int i = 0; i < childs.getLength(); i++) {
-//			Node child = childs.item(i);
-//			if (child.getNodeName().equals("Muerto")) {
-//				this.muerto = Boolean.parseBoolean(child.getTextContent());
-//				
-//			}else if (child.getNodeName().equals("X")) {
-//				this.x = Integer.parseInt(child.getTextContent());
-//			} else if (child.getNodeName().equals("Y")) {				
-//				this.y = Integer.parseInt(child.getTextContent());
-//			} else if (child.getNodeName().equals("Radio")) {
-//				this.radio = Integer.parseInt(child.getTextContent());
-//			}else if (child.getNodeName().equals("VelocidadX")) {
-//				 this.velX = Integer.parseInt(child.getTextContent());
-//			}else if (child.getNodeName().equals("VelocidadY")) {
-//				this.velY = Integer.parseInt(child.getTextContent());
-//			}else if (child.getNodeName().equals("PosicionInicialX")) {
-//			  	 this.posInicialX = Integer.parseInt(child.getTextContent());   
-//			}else if (child.getNodeName().equals("PosicionInicialY")) {
-//			   	 this.posInicialY = Integer.parseInt(child.getTextContent());
-//			}
-//			
-//		}
-//		if (zona.comprobarSalidaZona(this))
-//			throw new ObjetoFueraDeZonaDeCombateException();
-//		else
-//			zonaDeCombate = zona;
-//	}
 	
 	public static void writeActualizacion(Element element, ActualizacionAlgo42 unaActualizacion) {
-		
+		/*
+		 * Escribe en el objeto de tipo ActualizacionAlgo42, los atributos que se
+		 * encuentran dentro del Element pasado como parametro.
+		 */
 			
 		NodeList childs = element.getChildNodes();
 		for (int i = 0; i < childs.getLength(); i++) {

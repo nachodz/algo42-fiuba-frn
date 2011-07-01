@@ -25,8 +25,6 @@ public class AvionCivil extends NaveViva{
 				algo42tmp.recibirDanio(20);   //hacer q se muera
 				this.muerto = true;
 			}
-			
-
 		}
 	}
 	
@@ -36,12 +34,15 @@ public class AvionCivil extends NaveViva{
 		this.y += (this.velY);
 		if ((this.zonaDeCombate).comprobarSalidaZona(this)){
 			(this.y) = (this.posInicialY);
-		}
-		
-	
+		}	
 	}
 		
 	public Element getElement(Document doc) {
+		/*
+		 * Retorna un Element perteneciente al Document pasado
+		 * como parametro, en el que guardan todos los atributos
+		 * del objeto AvionCivil.
+		 */
 		Element avionCivil = doc.createElement("AvionCivil");
 		
 		Element atributos = doc.createElement("Atributos");
@@ -53,6 +54,10 @@ public class AvionCivil extends NaveViva{
 	}
 
 	public static AvionCivil fromElement(Element element, ZonaCombate zona) {
+		/*
+		 * Retorna un objeto del tipo AvionCivil, con un estado interno cargado
+		 * desde el Element pasado como parametro.
+		 */
 		AvionCivil avionCivil = new AvionCivil(zona, 0, 0);
 		
 		Node variables = element.getFirstChild().getNextSibling();  //selecciona el nodo que tiene las variables
