@@ -36,6 +36,10 @@ import algo42Full.vista.*;
 import ar.uba.fi.algo3.titiritero.Accion;
 import ar.uba.fi.algo3.titiritero.vista.*;
 
+/**
+ * El controladorNivel se encarga de manejar todos los elementos que
+ * hay en un nivel, tanto sus objetos vivos, como sus vistas.
+ */
 public class ControladorNivel implements Accion {
 	
 	private ControladorJuego controlador;
@@ -58,11 +62,10 @@ public class ControladorNivel implements Accion {
 	
 	public enum EstadoNivel{ JUGANDO, TERMINADO, ALGO42MUERTO};
 	
+	
 	public void setControlador(ControladorJuego unControlador){
 		this.controlador = unControlador;
 	}
-	
-	
 	
 	public ControladorNivel(String pathArchivoNivel, ControladorJuego unControlador){
 		
@@ -71,7 +74,10 @@ public class ControladorNivel implements Accion {
 				
 	}
 	
-	//carga un nivel al ControladorNivel
+	/**
+	 * Carga un nivel al ControladorNivel.
+	 * @param pathArchivoNivel El string con la ruta y nombre del nivel a cargar.
+	 */
 	public void cargarNivel(String pathArchivoNivel){
 		try {
 			estado = EstadoNivel.JUGANDO;
@@ -123,10 +129,10 @@ public class ControladorNivel implements Accion {
 		}
 	}
 	
-	/*  agrega dibujables nuevos que corresponden a los proyectiles y actualizaciones
+	/**
+	 *  agrega dibujables nuevos que corresponden a los proyectiles y actualizaciones
 	 *  que se generan dentro de la zonaCombate.
 	 */
-	
 	private void agregarDibujablesNuevos(){
 		VistaActualizacion actVista;
 		VistaProyectil proyeVista;
@@ -151,7 +157,9 @@ public class ControladorNivel implements Accion {
 		}
 	}
 	
-	// quita los dibujables de proyectiles y actualizaciones muertas.
+	/**
+	 *  quita los dibujables de proyectiles y actualizaciones muertas.
+	 */
 	private void quitarDibujablesObsoletos(){
 		VistaActualizacion actVista;
 		VistaProyectil proyeVista;
@@ -184,7 +192,9 @@ public class ControladorNivel implements Accion {
 	}
 
 	
-	//Accion que se va a ejecutar en el loop de comenzarJuego() del titiritero
+	/**
+	 * Accion que se va a ejecutar en el loop de comenzarJuego() del titiritero.
+	 */
 	@Override
 	public void ejecutarAccion() {
 		this.agregarDibujablesNuevos();
@@ -206,12 +216,18 @@ public class ControladorNivel implements Accion {
 		return estado;
 	}
 	
+	/**
+	 * Devuelve el nombre del nivel
+	 * @return Un string con el nombre del nivel
+	 */
 	public String getNombre(){
 		return this.nombreNivel;
 	}
 		
 	
-	//carga el nivel actual en el ControladorJuego
+	/**
+	 * carga el nivel actual en el ControladorJuego.
+	 */
 	public void cargar(){
 		controlador.agregarAccion(this);
 		controlador.agregarKeyPressObservador(controladorAlgo42);
@@ -255,7 +271,9 @@ public class ControladorNivel implements Accion {
 		
 	}
 	
-	//quita el nivel actual del ControladorJuego
+	/**
+	 * quita el nivel actual del ControladorJuego.
+	 */
 	public void descargar(){
 		this.controlador.removerTodosDibujables();
 		this.controlador.removerTodosObjetosVivos();
@@ -274,7 +292,10 @@ public class ControladorNivel implements Accion {
 	}
 	
 	
-	//guarda el juego actual en archivo
+	/**
+	 * guarda el juego actual en un archivo.
+	 * @param pathGuardado String con el nombre y la ruta del archivo donde se va a guardar.
+	 */
 	public void guardarJuego(String pathGuardado){
 		try{
 			System.out.print("guardando \n");
@@ -302,7 +323,11 @@ public class ControladorNivel implements Accion {
 	}
 	
 	
-	//carga un juego guardado al ControladorNivel
+	/**
+	 * carga un juego guardado al ControladorNivel.
+	 * @param pathJuegoGuardado String con el nombre y la ruta del archivo a cargar.
+	 * @param unControlador El controlador al que se va a cargar el juego guardado.
+	 */
 	public void cargarJuego(String pathJuegoGuardado, ControladorJuego unControlador){
 		
 		try {
@@ -355,7 +380,9 @@ public class ControladorNivel implements Accion {
 		return nivel;
 	}
 	
-	//metodo auxiliar para cargar los elementos al ControladorNivel
+	/**
+	 * metodo auxiliar para cargar los elementos al ControladorNivel.
+	 */
 	private void completarNivelAPartirDeZonaCombate(){
 		
 		mapaProyectiles = new HashMap<Proyectil, VistaProyectil>();
@@ -418,7 +445,10 @@ public class ControladorNivel implements Accion {
 		
 	}
 	
-	
+	/**
+	 * Metodo auxiliar para agregar las vistas de los elementos del mapa
+	 * luego de que se levanto un archivo guardado.
+	 */
 	private void agregarVistas(){
 		VistaAvion vistaAvion;
 		VistaActualizacion actVista;
