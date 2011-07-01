@@ -15,6 +15,11 @@ public class FlotaEnemiga{
 	protected int cantidadNaves;	
 	protected boolean flotaDestruida;
 	
+	/**
+	 * Contructor de FlotaEnemiga
+	 * 
+	 */
+	
 	public FlotaEnemiga(){
 		this.listaAviones = new ArrayList<NaveVivaEnemiga>();
 		this.puntosBajas = 0;
@@ -23,15 +28,32 @@ public class FlotaEnemiga{
 		this.flotaDestruida = false;
 	}
 	
+	/**
+	 * Agrega a la flota la aeronave pasada como parametro. 
+	 * Agregando al contador de aviones de la flota una aeronave mas.
+	 * @param avion
+	 */
+	
 	public void agregarAvion(NaveVivaEnemiga avionEnemigo){
 		this.listaAviones.add(avionEnemigo);
 		this.cantidadNaves ++;
 	}
 	
+	/**
+	 * Setea la aeronave pasada como guia de la flota
+	 * @param avionGuia es la aeronave que sera la guia de la flota
+	 */
 	
 	public void agregarAvionGuia(NaveVivaEnemiga avionGuia){
 		this.avionGuia = avionGuia;
 	}
+	
+	/**
+	 * El metodo se encarga de agregar los puntos de las aeronaves destruidas
+	 * al contador de puntaje de la flota y las marca como relevadas.
+	 * Si todas las naves de la flota se encuentran destruidas, la flota se marca como
+	 * destruida.
+	 */
 	
 	public void quitarBajas(){
 		/*
@@ -56,6 +78,11 @@ public class FlotaEnemiga{
 		}
 	}
 	
+	/**
+	 * 
+	 * @return true si la flota esta destruida, false si no lo esta.
+	 */
+	
 	public boolean estaDestruida(){
 		return this.flotaDestruida;
 	}
@@ -63,6 +90,11 @@ public class FlotaEnemiga{
 	public List<NaveVivaEnemiga> getListaAviones(){
 		return this.listaAviones;
 	}
+	
+	/**
+	 * Se encarga de revivir todas las aeronaves de la flota, y les
+	 * asigna una nueva posicion de salida de manera aleatoria.
+	 */
 	
 	public void revivirFlota(){
 		/*
@@ -85,12 +117,23 @@ public class FlotaEnemiga{
 		this.agregarAvionGuia(nave);
 	}
 	
+	/**
+	 * Devuelve el puntaje y resetea su contador a cero.
+	 * @return devuelve un entero que indica el puntaje acumulado
+	 * de las aeronaves de la flota que fueron destruidas.
+	 * 
+	 */
+	
 	public int reportarPuntosBajas(){
 		int puntos = this.puntosBajas;
 		this.puntosBajas = 0;
 		return puntos;
 	}
 	
+	/**
+	 * Se encarga de que cada nave de la flota actue. 
+	 *
+	 */
 
 	public void vivir(){
 		
@@ -113,6 +156,15 @@ public class FlotaEnemiga{
 		}
 	}	
 	
+	/**
+	 * Se encarga de comprobar si se produjo una colision entre el objetoColisionable
+	 * pasado como parametro y alguna aeronave de la flota.
+	 * @param objeto
+	 * @return devuelve un ObjetoAtacable de la flota si se prudujo una colision 
+	 * 			con el objeto pasado como parametro, 
+	 * 			si no retorna null.
+	 */
+	
 	public Atacable comprobarColision(ObjetoColisionable objeto){
 		/*
 		 * Chequea si el objetoColisionable pasado como parametro, choca contra alguno
@@ -127,6 +179,16 @@ public class FlotaEnemiga{
 		}
 		return null;
 	}
+	
+	/**
+	 * Persiste la flota en un Element que retorna.
+	 * @param doc es el objeto de tipo Document en el cual estara
+	 * 			el objeto de tipo Element que retorna el metodo.
+	 * @return Retorna un Element perteneciente al Document pasado
+	 * 		como parametro, en el que guardan todos los atributos
+	 * 		del objeto Flota, incluyendo la lista de todos
+	 * 		sus aviones.
+	 */
 	
 	
 	public Element getElement(Document doc) {
@@ -165,6 +227,16 @@ public class FlotaEnemiga{
 
 		return flotaEnemiga;
 	}
+	
+	/**
+	 * Construye una flota a partir del Element y la zona de combate pasada 
+	 * 			como parametro.
+	 * @param element de tipo Element reprensenta a la flota desde la cual se
+	 * 			creara el objeto de tipo Flota que se devulve.
+	 * @param zona es la zona de combate en la cual estara la flota que se retorna.
+	 * @return 	 Retorna un objeto del tipo Flota, con un estado interno cargado
+	 * 				desde el Element pasado como parametro, incluyendo su lista de naves.
+	 */
 
 	public static FlotaEnemiga fromElement(Element element, ZonaCombate zona) {
 		/*

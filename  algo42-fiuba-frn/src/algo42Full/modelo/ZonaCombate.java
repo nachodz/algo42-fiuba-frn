@@ -22,6 +22,11 @@ public class ZonaCombate implements ObjetoVivo{
 	private int contadorRevivirFlotaAliada;
 	private int contadorRevivirFlotaEnemiga;
 	
+	/**
+	 * Constructor ZonaCombate
+	 * @param alto es la dimension vertical de la zona de combate
+	 * @param ancho es la dimension horizontal de la zona de combate
+	 */
 	public ZonaCombate(int alto,int ancho){
 		this.alto = alto; 
 		this.ancho = ancho;
@@ -35,32 +40,83 @@ public class ZonaCombate implements ObjetoVivo{
 		
 	}
 	
+	/**
+	 * Agrega la actualizacion a la zona de combate
+	 * @param actualizacion es el objeto de tipo ActualizacionAlgo42
+	 * que se desea agregar a la lista de actualizaciones de la zona
+	 * de combate
+	 */
+	
 	public void agregarActualizacionAlgo42(ActualizacionAlgo42 actualizacion){         
 		this.listaActualizaciones.add(actualizacion);
 	}
+	
+	/**
+	 * Agrega el avion de tipo Algo42 a la zona de combate
+	 * @param algo42 es el avion de tipo Algo42 para agregar a la zona de combate
+	 */
 	
 	public void agregarAlgo42(Algo42 algo42){
 		this.algo42 = algo42;	
 	}
 	
+	/**
+	 * Agrega la flota a la zona de combate
+	 * @param flota de tipo Flota es la flota a agregar
+	 */
+	
 	public void agregarFlotaAliada(Flota flota){
 		this.flotaAliada = flota;
 	}
+	
+	/**
+	 * Agrega la flotaEnemiga a la zona de combate
+	 * @param flota de tipo FlotaEnemiga es la flota a agregar
+	 */
 	
 	public void agregarFlotaEnemiga(FlotaEnemiga flota){
 		this.flotaEnemiga = flota;
 	}
 	
+	/**
+	 * Agrega el proyectil a la zona de combate
+	 * @param proyectil de tipo Proyectil que se va a agregar 
+	 */
+	
 	public void agregarProyectil(Proyectil proyectil){
 		synchronized (this.listaProyectiles){
 			this.listaProyectiles.add(proyectil);
 		}
-	}	
+	}
+	
+	/**
+	 * Se encarga de que los objetos de la zona de combate vivan con toda su
+	 * implicancia, los proyectiles, flotas, y actualizaciones. Que se lleven
+	 * a cabo las colisiones que puedan producirse y de que los objetos muertos
+	 * sean retirados de la zona de combate.
+	 */
+	
+	@Override
+	public void vivir() {
+		this.combatir();
+		this.quitarObjetosMuertos();		
+	}
+
+	@Override
+	public boolean estaVivo() {
+		return true;
+	}
+	
+	/**
+	 *  Se encarga de que las naves, actualizaciones y proyectiles de la zona
+	 * de combate vivan. Si alguna flota se encuentra destruida, la revive.
+	 */
 
 	public synchronized void combatir(){
 		/*
 		 * Se encarga de que las naves, actualizaciones y proyectiles de la zona
-		 * de combate vivan. Si alguna flota se encuentra destruida, la revive.
+		 * de combate vivan. Si alguna flota se encuentra destruida, la revive
+		 * cuando el contador para revivir flotas alcanze el valor indicado.
 		 */
 		
 		if (this.flotaAliada != null){
@@ -104,10 +160,27 @@ public class ZonaCombate implements ObjetoVivo{
 		}
 	}
 	
+	/**
+	 * Comprueba si el objeto pasado colisiona con el Algo42 
+	 * @param objeto de tipo ObjetoColisionable objeto para comprobar la
+	 * 		colision con el algo42
+	 * @return retorna el Algo42 si hubo colision con el objeto pasado, en
+	 * 			caso contrario retorna null.
+	 */
+	
 	public synchronized Algo42 comprobarColisionAlgo42(ObjetoColisionable objeto){
 		if(this.algo42.huboColision(objeto)) return this.algo42;
 		else return null;
 	}
+	
+	/**
+	 * Comprueba si hubo colision entre el objeto pasado como parametro y 
+	 * alguna aeronave de la flota aliada de la zona.
+	 * @param objeto de tipo ObjetoColisionable con el cual comprobar
+	 * la colision.
+	 * @return retorna una aeronave de la flota con la que hubo colision,
+	 * 			retorna null si no hubo colision con las naves de la flota.
+	 */
 	
 	public Atacable comprobarColisionFlotaAliada(ObjetoColisionable objeto){
 		if(this.flotaAliada != null){
@@ -116,12 +189,29 @@ public class ZonaCombate implements ObjetoVivo{
 		else return null;
 	}
 	
+	/**
+	 * Comprueba si hubo colision entre el objeto pasado como parametro y 
+	 * alguna aeronave de la flota enemiga de la zona.
+	 * @param objeto de tipo ObjetoColisionable con el cual comprobar
+	 * la colision.
+	 * @return retorna una aeronave de la flota enemigacon la que hubo colision,
+	 * 			retorna null si no hubo colision con las naves de la flota.
+	 */
+	
 	public Atacable comprobarColisionFlotaEnemiga(ObjetoColisionable objeto){
 		if(this.flotaEnemiga != null ){
 			return this.flotaEnemiga.comprobarColision(objeto);
 		}
 		else return null;
 	}
+	
+	/**
+	 * 
+	 * @param objeto de tipo ObjetoColisionable para el cual comprobar si
+	 * 		ha salido o no de la zona de combate.
+	 * @return retorna false si algun punto de el objeto colisionable esta
+	 * 				fuera de la zona de combate
+	 */
 	
 	public boolean comprobarSalidaZonaEx(ObjetoColisionable objeto){
 		/*
@@ -139,6 +229,14 @@ public class ZonaCombate implements ObjetoVivo{
 		return true;
 		
 		}
+	
+	/**
+	 * 
+	 * @param objeto de tipo ObjetoColisionable para el cual comprobar si
+	 * 		ha salido o no de la zona de combate.
+	 * @return retorna false si el objeto colisionable esta
+	 * 				fuera de la zona de combate
+	 */
 		
 		public boolean comprobarSalidaZona(ObjetoColisionable objeto){
 			/*
@@ -188,6 +286,34 @@ public class ZonaCombate implements ObjetoVivo{
 		return this.alto;
 	}
 	
+
+	
+	public List<Proyectil> getProyectiles(){
+		return this.listaProyectiles;
+	}
+	
+	public List<ActualizacionAlgo42> getActualizaciones(){
+		return this.listaActualizaciones;
+	}
+	
+	public Algo42 getAlgo42(){
+		return this.algo42;
+	}
+	
+	
+	public FlotaEnemiga getFlotaEnemiga(){
+		return this.flotaEnemiga;
+	}
+	
+	public Flota getFlotaAliada(){
+		return this.flotaAliada;
+	}
+	
+	/**
+	 * 	Elimina las actualizacione y los proyectiles muertos de la zona de combate,
+	 * 		y llama a quitarBajas() de las flotas.
+	 */
+	
 	
 	public void quitarObjetosMuertos(){
 		/*
@@ -212,9 +338,16 @@ public class ZonaCombate implements ObjetoVivo{
 		if(this.flotaEnemiga != null) this.flotaEnemiga.quitarBajas();
 	}
 	
+	/**
+	 * retorna el puntaje de los aviones que fueron destruidos y resetea
+	 * los contadores de puntaje de las flotas a cero.
+	 * @return retorna un entero que es el saldo entre el puntaje de los 
+	 * aviones de la flota aliada y enemiga que fueron destruidos
+	 */
+	
 	public int reportarPuntosBajas(){
 		/*
-		 * Agrega el puntaje de los aviones que fueron destruidos
+		 * retorna el puntaje de los aviones que fueron destruidos
 		 */
 		int puntosEnemigos,puntosAliados;
 		
@@ -227,6 +360,17 @@ public class ZonaCombate implements ObjetoVivo{
 		int puntaje = (puntosEnemigos-puntosAliados);		
 		return puntaje;	
 	}
+	
+	/**
+	 * Persiste a la zona de combate en un objeto de tipo Element
+	 * 	que retorna
+	 * @param doc es el objeto de tipo Document en el cual estara
+	 * 			el objeto de tipo Element que retorna el metodo.
+	 * @return 	 Retorna un Element perteneciente al Document pasado
+	 * 		como parametro, en el que guardan todos los atributos
+	 * 		del objeto ZonaCombate, que incluye sus flotas, listas
+	 * 		de proyectiles y actualizaciones.
+	 */
 	
 	public Element getElement(Document doc) {
 		/*
@@ -292,6 +436,15 @@ public class ZonaCombate implements ObjetoVivo{
 
 		return zonaCombate;
 	}
+	
+	/**
+	 * 	Construye una zona de combate a partir del Element 
+	 * 	 pasado como parametro.
+	 * @param element  de tipo Element reprensenta a la zona de combate
+	 *  desde la cual se creara el objeto de tipo ZonaCombate que se devulve.
+	 * @return Retorna un objeto del tipo ZonaCombate, con un estado interno cargado
+	*		 desde el Element pasado como parametro.
+	 */
 
 	public static ZonaCombate fromElement(Element element) {
 		/*
@@ -371,37 +524,7 @@ public class ZonaCombate implements ObjetoVivo{
 	}
 	
 	
-	@Override
-	public void vivir() {
-		this.combatir();
-		this.quitarObjetosMuertos();		
-	}
 
-	@Override
-	public boolean estaVivo() {
-		return true;
-	}
-	
-	public List<Proyectil> getProyectiles(){
-		return this.listaProyectiles;
-	}
-	
-	public List<ActualizacionAlgo42> getActualizaciones(){
-		return this.listaActualizaciones;
-	}
-	
-	public Algo42 getAlgo42(){
-		return this.algo42;
-	}
-	
-	
-	public FlotaEnemiga getFlotaEnemiga(){
-		return this.flotaEnemiga;
-	}
-	
-	public Flota getFlotaAliada(){
-		return this.flotaAliada;
-	}
 	
 
 }
