@@ -33,19 +33,27 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 	}
 
 	
-		
+	/**
+	 * Se le agregan cohetes si impacta contra una Actualizacion del tipo Cohete.
+	 */
 	public void cargarCohete(){
 		this.cantCohetes++;
 	}
-	
+	/**
+	 * Se le agregan torpedos si impacta contra una Actualizacion del tipo Torpedo.
+	 */
 	public void cargarTorpedo(){
 		this.cantTorpedos++;
 	}
-	
+	/**
+	 * Se le agrega energia si impacta contra una Actualizacion del tipo Energia.
+	 */
 	public void cargarTanqueEnergia(){
 		this.energia++;
 	}
-	
+	/**
+	 * Dispara un ProyectilCohete y lo agrega la zona de combate, sino tiene mas lanza una excepcion.
+	 */
 	public void dispararCohete(){
 		Proyectil pCohete;
 		
@@ -58,6 +66,9 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 			throw new NoTieneCohetesException();
 		}
 	}
+	/**
+	 * Dispara un ProyectilTorpedo y lo agrega la zona de combate, sino tiene mas lanza una excepcion.
+	 */
 	
 	public void dispararTorpedo(){
 		Proyectil pTorpedo;
@@ -71,7 +82,9 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 			throw new NoTieneTorpedosException();
 		}
 	}
-	
+	/**
+	 * Dispara un ProyectilCohete y lo agrega la zona de combate.
+	 */
 	public void dispararLaser(){
 		Proyectil pLaser;
 		
@@ -79,6 +92,9 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 			this.zonaDeCombate.agregarProyectil(pLaser);
 	}
 	
+	/**
+	 * @return true si esta vivo, sino false.
+	 */
 	public boolean estaVivo(){
 		if (muerto) return false;
 		else return true;
@@ -95,7 +111,10 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 	public int getCantEnergia(){
 		return this.energia;
 	}
-	
+	/**
+	 * Le quita energia al Algo42.
+	 * @param cantDanio
+	 */
 	public void recibirDanio(int cantDanio){
 		int tempEnergia;
 		
@@ -161,7 +180,7 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 	
 	
 	public Element getElement(Document doc) {
-		/*
+		/**
 		 * Retorna un Element perteneciente al Document pasado
 		 * como parametro, en el que guardan todos los atributos
 		 * del objeto Algo42.
@@ -171,7 +190,7 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 		Element atributos = doc.createElement("Atributos");
 		algo42.appendChild(atributos);
 		
-		/*
+		/**
 		 * atributos de ObjetoColisionable
 		 */
 		
@@ -187,7 +206,6 @@ public class Algo42 extends ObjetoColisionable implements Atacable,ObjetoVivo{
 		atributos.appendChild(radio);
 		radio.setTextContent(String.valueOf(this.radio));
 		
-		///////////////////////////////////////////////////
 
 		Element energia = doc.createElement("Energia");
 		atributos.appendChild(energia);

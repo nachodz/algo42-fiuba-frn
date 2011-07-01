@@ -12,7 +12,10 @@ public class AvionCivil extends NaveViva{
 		this.puntos = 300;
 	
 	}
-
+	/**
+	 * Se mueve y comprueba sino choco contra el Algo42, si choca
+	 * el Algo42 se muere.
+	 */
 	public void vivir(){
 		
 		Atacable algo42tmp;
@@ -22,13 +25,15 @@ public class AvionCivil extends NaveViva{
 			this.mover();
 			algo42tmp = zonaDeCombate.comprobarColisionAlgo42(this);
 			if (algo42tmp != null){
-				algo42tmp.recibirDanio(20);   //hacer q se muera
+				algo42tmp.recibirDanio(20);   /**hacer q se muera*/
 				this.muerto = true;
 			}
 		}
 	}
 	
-	
+	/**
+	 * Se mueve en linea recta a poca velocidad.
+	 */
 	protected void mover(){
 		
 		this.y += (this.velY);
@@ -38,7 +43,7 @@ public class AvionCivil extends NaveViva{
 	}
 		
 	public Element getElement(Document doc) {
-		/*
+		/**
 		 * Retorna un Element perteneciente al Document pasado
 		 * como parametro, en el que guardan todos los atributos
 		 * del objeto AvionCivil.
@@ -54,7 +59,7 @@ public class AvionCivil extends NaveViva{
 	}
 
 	public static AvionCivil fromElement(Element element, ZonaCombate zona) {
-		/*
+		/**
 		 * Retorna un objeto del tipo AvionCivil, con un estado interno cargado
 		 * desde el Element pasado como parametro.
 		 */

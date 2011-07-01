@@ -29,8 +29,11 @@ public class Helicoptero extends NaveViva{
 	
 	
 	protected void mover(){
-	//La aeronave se mueve de la posicion en la que se encuentra hacia el borde superior de la circunferencia sobre 
-	//la cual realizara su moviento. Una vez alli, comienza a moverse en circulos en sentdo contrario a las agujas del reloj. 
+	/**
+	 * La aeronave se mueve de la posicion en la que se encuentra hacia el borde superior de la circunferencia
+	 * sobre la cual realizara su moviento.
+	 * Una vez alli, comienza a moverse en circulos en sentdo contrario a las agujas del reloj.
+	 */
 	
 		
 		int centroX;
@@ -74,8 +77,9 @@ public class Helicoptero extends NaveViva{
 				
 				if(this.regresando){
 					
-					//calcula la posicion de x de acuerdo al movimiento en y, 
-					//con la formula de una circunferencia plana
+					/**calcula la posicion de x de acuerdo al movimiento en y, 
+					* con la formula de una circunferencia plana
+					*/
 					coordX = (int) (Math.sqrt( (Math.pow(radioGiro1, 2)) - (Math.pow(((this.y - 1) - centroY), 2))) ) + centroX ;
 					
 					
@@ -99,7 +103,10 @@ public class Helicoptero extends NaveViva{
 	}
 
 
-
+	/**
+	 * Se mueve y comprueba sino choco contra el Algo42, si choca
+	 * el Algo42 se muere.
+	 */
 	public void vivir(){
 	
 	Atacable algo42tmp;
@@ -111,7 +118,7 @@ public class Helicoptero extends NaveViva{
 		
 		algo42tmp = zonaDeCombate.comprobarColisionAlgo42(this);
 		if (algo42tmp != null){
-			algo42tmp.recibirDanio(20);   //hacer q se muera
+			algo42tmp.recibirDanio(20);   /**hacer q se muera*/
 			this.muerto = true;
 		}
 		
@@ -122,9 +129,10 @@ public class Helicoptero extends NaveViva{
 
 	public void dirigirHaciaPunto(int x, int y){
 	
-	//El metodo se encarga de dirigir la aeronave hacia un punto pasado como parametro que 
-	//pertene al borde de la circunferencia en la cual debe moverse.
-	//Cuando el avion llega al punto indicado, marca el atributo entroAlCirculo como true.
+	/** El metodo se encarga de dirigir la aeronave hacia un punto pasado como parametro que 
+	 *   pertene al borde de la circunferencia en la cual debe moverse.
+	 *   Cuando el avion llega al punto indicado, marca el atributo entroAlCirculo como true.
+	 */  
 
 	int coordenadaXObjetivo;
 	int coordenadaYObjetivo;
@@ -195,7 +203,7 @@ public class Helicoptero extends NaveViva{
 	}
 	
 	public Element getElement(Document doc) {		
-		/*
+		/**
 		 * Retorna un Element perteneciente al Document pasado
 		 * como parametro, en el que guardan todos los atributos
 		 * del objeto Helicoptero.
@@ -234,7 +242,7 @@ public class Helicoptero extends NaveViva{
 	}
 
 	public static Helicoptero fromElement(Element element, ZonaCombate zona) {
-		/*
+		/**
 		 * Retorna un objeto del tipo Helicoptero, con un estado interno cargado
 		 * desde el Element pasado como parametro.
 		 */

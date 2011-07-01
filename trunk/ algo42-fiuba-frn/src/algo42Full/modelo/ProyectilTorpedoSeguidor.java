@@ -9,8 +9,12 @@ public class ProyectilTorpedoSeguidor extends ProyectilTorpedo {
 		super(zona,enemigo,x,y); 
 		this.danio = 2;
 	}
+	
+	/**
+	 * Se mueve siguiendo al algo42.
+	 */
 	protected void mover(){
-		//se mueve siguiendo al algo42
+		
 		int algoX, algoY;
 		
 		algoX = zonaDeCombate.getAlgo42PosX();

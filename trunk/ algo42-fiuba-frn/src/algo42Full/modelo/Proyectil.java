@@ -33,19 +33,26 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 		this.danio = danio;
 	}
 	
-	
+	/**
+	 * @return true si muerto es false, y false si esta muerto.
+	 * 
+	 */
 	public boolean estaVivo(){
 		if (muerto) return false;
 		else return true;
 	}
-	
+	/**
+	 * @return danio.
+	 * Es el danio que hace el proyectil disparado. 
+	 */
 	public int hacerDanio ()
 	{
 		return danio;
 	}
-	
+	/**
+	 * se mueve en linea recta hacia adelante si es un proyectil enemigo o hacia atras si es un proyectil aliado.
+	 */
 	protected void mover ()
-	//se mueve en linea recta hacia adelante si es un proyectil enemigo o hacia atras si es un proyectil aliado.
 	{		  
 			int tempY;
 			if (this.enemigo) 
@@ -57,7 +64,11 @@ public abstract class Proyectil extends ObjetoColisionable implements ObjetoVivo
 			else
 				 this.y = tempY ;
 	  }
-    
+    /**
+     * Si no esta muerto el proyectil, y es enemigo se fija si choca contra el Algo42, en cambio si es de este ultimo
+     * se fija si choco contra algun avion de la flota enemiga, en los 2 casos devuelve contra que nave choco el proyectil
+     * y le hace el danio que el proyectil tiene asignado, y destruye el proyectil que hizo impacto.
+     */
     public void vivir (){
 	  Atacable objetivo;
 

@@ -10,7 +10,9 @@ public class ProyectilTorpedoAdaptable extends Proyectil{
 		super(zona,enemigo,x,y,7,0,5,4);
 	}
 	
-	
+	/**
+	 * Si el proyectil impacta contra el Algo42, le quita la mitad de la energia.
+	 */
     public void vivir (){
   	  Algo42 objetivo = null;
 

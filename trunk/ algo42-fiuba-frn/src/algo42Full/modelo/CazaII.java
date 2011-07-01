@@ -21,7 +21,7 @@ public class CazaII extends Caza implements Atacable{
 	}
 	
 	public Element getElement(Document doc) {
-		/*
+		/**
 		 * Retorna un Element perteneciente al Document pasado
 		 * como parametro, en el que guardan todos los atributos
 		 * del objeto CazaII.
@@ -45,7 +45,7 @@ public class CazaII extends Caza implements Atacable{
 	}
 
 	public static CazaII fromElement(Element element, ZonaCombate zona) {
-		/*
+		/**
 		 * Retorna un objeto del tipo CazaII, con un estado interno cargado
 		 * desde el Element pasado como parametro.
 		 */

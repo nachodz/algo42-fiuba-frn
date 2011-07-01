@@ -41,18 +41,23 @@ public abstract class NaveViva extends ObjetoColisionable implements Atacable, O
 	}
 	
 	public void revivir(){
-		/*
+		/**
 		 * Restaura las condiciones iniciales de las variables x, y y energia.
 		 */
 		this.x = this.posInicialX;
 		this.y= this.posInicialY;
 		this.energia = energiaOriginal;
 	}
-	
+	/**
+	 * @return puntos.
+	 */
 	public int obtenerPuntos(){
 		
 		return puntos;
 	}
+	/**
+	 * @return relevado.
+	 */
 	
 	public boolean fueRelevado(){
 		return this.relevado;
@@ -97,7 +102,7 @@ public abstract class NaveViva extends ObjetoColisionable implements Atacable, O
 	}
 	
 	public void writeElement(Element unElement, Document unDoc) {
-		/*
+		/**
 		 * Escribe en el Element pasado como parametro perteneciente al Document
 		 * tambien parametro, todas las variables pertenecientes
 		 * al tipo NaveViva
@@ -145,7 +150,7 @@ public abstract class NaveViva extends ObjetoColisionable implements Atacable, O
 	}
 	
 	public static void writeNaveViva(Element element, NaveViva unaNaveViva) {
-		/*
+		/**
 		 * Escribe en el objeto de tipo NaveViva pasado como parametro,
 		 *  los atributos que se encuentran dentro del Element pasado como parametro.
 		 */
