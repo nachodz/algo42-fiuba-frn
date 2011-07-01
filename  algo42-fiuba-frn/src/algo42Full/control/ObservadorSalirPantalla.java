@@ -6,6 +6,7 @@ import ar.uba.fi.algo3.titiritero.ControladorJuego;
 import ar.uba.fi.algo3.titiritero.KeyPressedObservador;
 import ar.uba.fi.algo3.titiritero.MouseClickObservador;
 
+
 public class ObservadorSalirPantalla implements KeyPressedObservador, MouseClickObservador {
 	private ControladorJuego controlador;
 	

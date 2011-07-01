@@ -92,6 +92,9 @@ public class ControladorMenu {
 	}
 	
 
+	/*
+	 * El loop principal del menu.
+	 */
 	public void ejecutar(){
 		boolean salir = false;
 		PantallaGuardar pantallaGuardar = new PantallaGuardar(controlador);
@@ -106,7 +109,7 @@ public class ControladorMenu {
 		controlador.removerDibujable(vistaCargando);
 		// Cargando FIN
 		
-		ControladorNivel nivel = new ControladorNivel("nivel1.xml", controlador);
+		ControladorNivel nivel = new ControladorNivel("niveles/nivel1.xml", controlador);
 		AdministradorNiveles admNiveles = new AdministradorNiveles(nivel, controlador);
 		while (!salir){
 			this.controlador.comenzarJuego();
@@ -114,7 +117,7 @@ public class ControladorMenu {
 			switch (this.accion){
 				case JUEGONUEVO:	descargarMenu();
 									if (!botonGuardarActivado) activarBotonGuardar();
-									admNiveles.cargarNivel("nivel1.xml");
+									admNiveles.cargarNivel("niveles/nivel1.xml");
 									accion = Accion.JUGAR;
 									admNiveles.jugar();
 									if (!admNiveles.sigueJugando()) {
