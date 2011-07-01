@@ -95,20 +95,63 @@ public class CreadorNiveles {
 	
 	public void agregarCazas(int cantidad){
 		
+		int posXSalidaCabeza = 200 + ((int) (Math.random()* (this.anchoZona - 300)));
+		int posYSalidaCabeza = 0;
+		int contadorCaza = 1;
+		
 		for(int i = 0; i < cantidad; i++ ){
 			
-			NaveVivaEnemiga caza = new Caza(this.zona, generarPosXSalida(25), 0);
-			this.flotaEnemiga.agregarAvion(caza);	
+			if(contadorCaza == 1)
+			{
+				NaveVivaEnemiga caza = new Caza(this.zona, posXSalidaCabeza, posYSalidaCabeza  );
+				this.flotaEnemiga.agregarAvion(caza);	
+				contadorCaza ++;
+			}
+			
+			else if( (contadorCaza % 2) == 0){
+				NaveVivaEnemiga caza = new Caza(this.zona, posXSalidaCabeza + (50 * (contadorCaza / 2)), (posYSalidaCabeza - (50 * (contadorCaza / 2))) );
+				this.flotaEnemiga.agregarAvion(caza);	
+				contadorCaza ++;
+			}
+			
+			else if( (contadorCaza % 2) == 1){
+				NaveVivaEnemiga caza = new Caza(this.zona, posXSalidaCabeza - (50 * (contadorCaza / 2)), (posYSalidaCabeza - (50 * (contadorCaza / 2))) );
+				this.flotaEnemiga.agregarAvion(caza);
+				contadorCaza ++;
+			}
+
 
 		}
 	}
 	
 	public void agregarCazasII(int cantidad){
 		
+		
+		int posXSalidaCabeza = 200 + ((int) (Math.random()* (this.anchoZona - 300)));
+		int posYSalidaCabeza = 0;
+		int contadorCaza = 1;
+		
 		for(int i = 0; i < cantidad; i++ ){
 			
-			NaveVivaEnemiga cazaII = new CazaII(this.zona, generarPosXSalida(25), 0);
-			this.flotaEnemiga.agregarAvion(cazaII);	
+			if(contadorCaza == 1)
+			{
+				NaveVivaEnemiga cazaII = new CazaII(this.zona, posXSalidaCabeza, posYSalidaCabeza );
+				this.flotaEnemiga.agregarAvion(cazaII);	
+				contadorCaza ++;
+			}
+			
+			else if( (contadorCaza % 2) == 0){
+				NaveVivaEnemiga cazaII = new CazaII(this.zona, posXSalidaCabeza + (50 * (contadorCaza / 2)), (posYSalidaCabeza - (50 * (contadorCaza / 2))) );
+				this.flotaEnemiga.agregarAvion(cazaII);	
+				contadorCaza ++;
+			}
+			
+			else if( (contadorCaza % 2) == 1){
+				NaveVivaEnemiga cazaII = new CazaII(this.zona, posXSalidaCabeza - (50 * (contadorCaza / 2)), (posYSalidaCabeza - (50 * (contadorCaza / 2))));
+				this.flotaEnemiga.agregarAvion(cazaII);	
+				contadorCaza ++;
+			}
+
 
 		}
 	}

@@ -111,7 +111,7 @@ public class FlotaEnemiga{
 		this.flotaDestruida = false;
 		
 		this.avionGuia.desmarcarComoGuia();
-		int indice = (int) (Math.random()* (this.getListaAviones().size() - 1)+ 1);		
+		int indice = (int) (Math.random()* (this.getListaAviones().size() - 1));		
 		NaveVivaEnemiga nave = this.getListaAviones().get(indice);
 		nave.hacerGuia();
 		this.agregarAvionGuia(nave);
