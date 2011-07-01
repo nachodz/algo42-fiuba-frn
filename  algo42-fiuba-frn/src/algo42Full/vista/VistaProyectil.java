@@ -15,16 +15,18 @@ public class VistaProyectil extends Imagen{
 			this.setNombreArchivoImagen("/media/pCohete.png");
 			return;
 		}
-		if (proyectil instanceof ProyectilTorpedo){
-			this.setNombreArchivoImagen("/media/pTorpedo.png");
-			return;
-		}
+
 		if (proyectil instanceof ProyectilTorpedoAdaptable){
 			this.setNombreArchivoImagen("/media/pAdaptable.png");
 			return;
 		}
 		if (proyectil instanceof ProyectilTorpedoSeguidor){
 			this.setNombreArchivoImagen("/media/pSeguidor.png");
+			return;
+		}
+		
+		if (proyectil instanceof ProyectilTorpedo){
+			this.setNombreArchivoImagen("/media/pTorpedo.png");
 			return;
 		}
 		

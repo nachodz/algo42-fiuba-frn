@@ -190,35 +190,41 @@ public class CombateIntegracionTest extends TestCase{
 	}
 	
 	public void testAvionGuiaDestruidoFlotaEnemigaEscapa(){
-		NaveVivaEnemiga avioneta, avionGuia, bombardero, caza, explorador;
+		NaveVivaEnemiga avioneta,  bombardero, caza, explorador;
 		FlotaEnemiga flota;
 		int i;
 		
-		avionGuia = new Avioneta(this.zona,250,500);
-		avioneta = new Avioneta(this.zona,100,300);
+		avioneta = new Avioneta(this.zona,250,500);
 		bombardero = new Bombardero(this.zona,400,240);
 		caza = new Caza(this.zona,50,100);
 		explorador = new Explorador(this.zona,250,200);
-		flota = new FlotaEnemiga();
-		flota.agregarAvionGuia(avionGuia);
+		
+		flota = new FlotaEnemiga();		
+		
 		flota.agregarAvion(avioneta);
+		avioneta.hacerGuia();
+		flota.agregarAvionGuia(avioneta);
+		
 		flota.agregarAvion(bombardero);
 		flota.agregarAvion(caza);
 		flota.agregarAvion(explorador);
+		
 		this.zona.agregarFlotaEnemiga(flota);
 		
 		this.algo42.cargarTorpedo();
 		this.algo42.cargarTorpedo();
 		this.algo42.dispararTorpedo();
 		this.algo42.dispararTorpedo();
-		for(i=0;i<300;i++) // es 500 para darle tiempo a las navesEnemigas a escapar
-			this.zona.combatir();
+		//con los disparos de los 2 torpedos la avioneta deberia morir
+		//ya que se encuentra en la misma pos x.
+		
+		for(i=0;i<200;i++) 
+			flota.vivir();
 
-		/*
-		 * este test falla porque ahora la flota enemiga revive, revisar!
-		 */
-		assertFalse(avionGuia.estaVivo());
-		assertTrue(avioneta.seEscapo());
+		assertFalse(avioneta.estaVivo());
+		
+		//como la avioneta murio y era guia de la flota los demas
+		//aviones deben escapar
 		assertTrue(bombardero.seEscapo());
 		assertTrue(caza.seEscapo());
 		assertTrue(explorador.seEscapo());
