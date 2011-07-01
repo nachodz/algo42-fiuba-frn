@@ -17,7 +17,6 @@ public class PantallaNivelTerminado {
 	}
 	
 	public void ejecutar(int puntajeTotal, int puntaje){
-		// TODO hacer que se vea el puntaje!!!
 		
 		TextoEstatico textPuntaje = new TextoEstatico(Integer.toString(puntaje));
 		Coordenada cTextPuntaje = new Coordenada(220,420,1);

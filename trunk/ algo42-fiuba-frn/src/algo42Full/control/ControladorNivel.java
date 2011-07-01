@@ -71,6 +71,7 @@ public class ControladorNivel implements Accion {
 				
 	}
 	
+	//carga un nivel al ControladorNivel
 	public void cargarNivel(String pathArchivoNivel){
 		try {
 			estado = EstadoNivel.JUGANDO;
@@ -122,6 +123,9 @@ public class ControladorNivel implements Accion {
 		}
 	}
 	
+	/*  agrega dibujables nuevos que corresponden a los proyectiles y actualizaciones
+	 *  que se generan dentro de la zonaCombate.
+	 */
 	
 	private void agregarDibujablesNuevos(){
 		VistaActualizacion actVista;
@@ -147,31 +151,7 @@ public class ControladorNivel implements Accion {
 		}
 	}
 	
-	///////
-	
-//	private void agregarVistaAviones(){
-//		
-//		VistaAvion vistaAvion;
-//		
-//		
-//		List<NaveViva> listaAviones1 = this.flota.getListaAviones();
-//		List<NaveVivaEnemiga> listaAviones2 = this.flotaEnemiga.getListaAviones();
-//		
-//		
-//		for (NaveViva avion : listaAviones1){
-//			vistaAvion = new VistaAvion(avion);
-//			mapaNaves.put(avion, vistaAvion);
-//			this.controlador.agregarDibujable(vistaAvion);			
-//		}
-//		
-//		for (NaveVivaEnemiga avion : listaAviones2){
-//			vistaAvion = new VistaAvion(avion);
-//			mapaNaves.put(avion, vistaAvion);
-//			this.controlador.agregarDibujable(vistaAvion);			
-//		}
-//
-//	}
-	
+	// quita los dibujables de proyectiles y actualizaciones muertas.
 	private void quitarDibujablesObsoletos(){
 		VistaActualizacion actVista;
 		VistaProyectil proyeVista;
@@ -201,39 +181,24 @@ public class ControladorNivel implements Accion {
 		mapaActualizaciones.clear();
 		mapaActualizaciones = aMap;
 		
-//		Set<NaveViva> setN = mapaNaves.keySet();
-//		HashMap<NaveViva,VistaNave> nMap = new HashMap<NaveViva,VistaNave>();
-//		for( NaveViva nave : setN){
-//			VistaNave naveVista = mapaNaves.get(nave);
-//			if (!nave.estaVivo())
-//				this.controlador.removerDibujable(naveVista);
-//			else
-//				nMap.put(nave, naveVista);
-//		}
-//		mapaNaves.clear();
-//		mapaNaves = nMap;
-		
 	}
 
+	
+	//Accion que se va a ejecutar en el loop de comenzarJuego() del titiritero
 	@Override
 	public void ejecutarAccion() {
 		this.agregarDibujablesNuevos();
-		this.quitarDibujablesObsoletos();
-//		if((this.flotaEnemiga.estaDestruida()) || (this.flota.estaDestruida())){
-//			this.agregarVistaAviones();
-//		}		
+		this.quitarDibujablesObsoletos();	
 		puntaje += this.zona.reportarPuntosBajas();
 		// Cuando se tiene 1000 puntos termina el nivel
 		if  (puntaje> 1000) {
 			this.controlador.detenerJuego();
 			estado = EstadoNivel.TERMINADO;
-			System.out.print("GANE!!!!!");
 		}
 		
 		if (! this.algo42.estaVivo()){
 			this.controlador.detenerJuego();
 			estado = EstadoNivel.ALGO42MUERTO;
-			System.out.print("PERDISTE, SOS MALISIMO");
 		}
 	}	
 	
@@ -246,6 +211,7 @@ public class ControladorNivel implements Accion {
 	}
 		
 	
+	//carga el nivel actual en el ControladorJuego
 	public void cargar(){
 		controlador.agregarAccion(this);
 		controlador.agregarKeyPressObservador(controladorAlgo42);
@@ -289,6 +255,7 @@ public class ControladorNivel implements Accion {
 		
 	}
 	
+	//quita el nivel actual del ControladorJuego
 	public void descargar(){
 		this.controlador.removerTodosDibujables();
 		this.controlador.removerTodosObjetosVivos();
@@ -307,6 +274,7 @@ public class ControladorNivel implements Accion {
 	}
 	
 	
+	//guarda el juego actual en archivo
 	public void guardarJuego(String pathGuardado){
 		try{
 			System.out.print("guardando \n");
@@ -333,6 +301,8 @@ public class ControladorNivel implements Accion {
 		}
 	}
 	
+	
+	//carga un juego guardado al ControladorNivel
 	public void cargarJuego(String pathJuegoGuardado, ControladorJuego unControlador){
 		
 		try {
@@ -385,6 +355,7 @@ public class ControladorNivel implements Accion {
 		return nivel;
 	}
 	
+	//metodo auxiliar para cargar los elementos al ControladorNivel
 	private void completarNivelAPartirDeZonaCombate(){
 		
 		mapaProyectiles = new HashMap<Proyectil, VistaProyectil>();
@@ -406,9 +377,7 @@ public class ControladorNivel implements Accion {
 		this.flota = this.zona.getFlotaAliada();
 		this.flotaEnemiga = this.zona.getFlotaEnemiga();
 		
-		//agregarVistaAviones();
 		agregarVistas();
-		//agregarDibujablesNuevos();
 		
 		Coordenada hud = new Coordenada(670,40,1);
 		Imagen vistaHUD = new Imagen();

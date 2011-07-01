@@ -19,27 +19,31 @@ public class AdministradorNiveles {
 		this.controlador = controlador;
 		this.controladorNivel = controladorNivel;
 		niveles = new ArrayList<String>();
-		niveles.add("nivel1.xml");
-		niveles.add("nivel2.xml");
-		niveles.add("nivel3.xml");
+		niveles.add("niveles/nivel1.xml");
+		niveles.add("niveles/nivel2.xml");
+		niveles.add("niveles/nivel3.xml");
 		puntaje = 0;
 		puntajeTotal = 0;
 		estado = EstadoNivel.JUGANDO;
 		sigueJugando = true;
 	}
 	
+	//carga el administrador con un nivel de archivo
 	public void cargarJuego(String archivoNivel){
 		controladorNivel.cargarJuego(archivoNivel, this.controlador);
 	}
 	
+	//guarda el juego en curso en un archivo
 	public void guardarJuego(String archivoDestino){
 		controladorNivel.guardarJuego(archivoDestino);
 	}
 	
+	//carga el nivel en el ControladorJuego
 	public void cargarNivel(){
 		controladorNivel.cargar();
 	}
 	
+	//quita el nivel del ControladorJuego
 	public void descargarNivel(){
 		controladorNivel.descargar();
 	}
@@ -52,6 +56,7 @@ public class AdministradorNiveles {
 		controladorNivel.setPuntaje(puntaje);
 	}
 	
+	//devuelve el estado del nivel, puede ser JUGANDO, TERMINADO o ALGO42MUERTO
 	public EstadoNivel getEstadoNivel(){
 		return controladorNivel.getEstadoNivel();
 	}
@@ -60,11 +65,12 @@ public class AdministradorNiveles {
 		return sigueJugando;
 	}
 	
+	//carga el administrador con un nivel
 	public void cargarNivel(String archivoNivel){
 		controladorNivel.cargarNivel(archivoNivel);
 	}
 	
-	//el loop principal del nivel
+	//entra al loop principal para jugar el nivel cargado en el administrador
 	public void jugar(){
 		this.sigueJugando = true;
 		boolean irMenu = false;
@@ -85,7 +91,6 @@ public class AdministradorNiveles {
 					pantallaPerder = null;
 					puntaje = 0;
 					this.sigueJugando = false;
-					//deberia avisarle algo al menu
 				}
 				else{
 					int index = niveles.indexOf(controladorNivel.getNombre());
@@ -103,7 +108,6 @@ public class AdministradorNiveles {
 							pantallaGanar.ejecutar();
 							pantallaGanar = null;
 							this.sigueJugando = false;
-							//deberia avisarle algo al menu
 						}
 						puntaje = 0;
 					}
