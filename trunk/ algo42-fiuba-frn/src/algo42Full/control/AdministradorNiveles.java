@@ -33,6 +33,10 @@ public class AdministradorNiveles {
 		niveles.add("niveles/nivel1.xml");
 		niveles.add("niveles/nivel2.xml");
 		niveles.add("niveles/nivel3.xml");
+		niveles.add("niveles/nivel4.xml");
+		niveles.add("niveles/nivel5.xml");
+		niveles.add("niveles/nivel6.xml");
+		niveles.add("niveles/nivel7.xml");
 		puntaje = 0;
 		puntajeTotal = 0;
 		estado = EstadoNivel.JUGANDO;

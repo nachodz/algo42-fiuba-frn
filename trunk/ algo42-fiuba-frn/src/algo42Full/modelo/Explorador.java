@@ -19,7 +19,7 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 		super(unaZonaDeCombate,posX,posY,25,0,3,1);
 
 		this.puntos = 50;
-		this.centroGiroX = 300;
+		this.centroGiroX = 250;
 		this.centroGiroY = 300;
 		this.radioGiro = 120;
 		this.regresando = false;

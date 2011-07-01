@@ -20,7 +20,7 @@ public class Helicoptero extends NaveViva{
 		super(unaZonaDeCombate,posX,posY,25,0,3,1);
 		
 		this.puntos = 200;
-		this.centroGiroX = 300;
+		this.centroGiroX = 350;
 		this.centroGiroY = 300;
 		this.radioGiro = 120;
 		this.regresando = false;

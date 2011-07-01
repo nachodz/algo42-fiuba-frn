@@ -47,7 +47,7 @@ public class Caza extends NaveVivaEnemiga implements Atacable{
 	protected void mover(){
 		
 		this.y = (this.y) + (this.velY);
-		if ((this.zonaDeCombate).comprobarSalidaZona(this)){
+		if (((this.zonaDeCombate).comprobarSalidaZona(this)) && (this.y > 0)){
 			(this.y) = (this.posInicialY);
 		}	
 	}
@@ -67,6 +67,10 @@ public class Caza extends NaveVivaEnemiga implements Atacable{
 			
 			this.energia = energiaTmp;
 		}
+	}
+	
+	public void setPosInicialX(int pos){
+		
 	}
 	
 	/**
