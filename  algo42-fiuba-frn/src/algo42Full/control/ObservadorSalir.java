@@ -5,10 +5,17 @@ import java.awt.event.KeyEvent;
 import ar.uba.fi.algo3.titiritero.ControladorJuego;
 import ar.uba.fi.algo3.titiritero.KeyPressedObservador;
 
+/**
+ * Observador de teclado que se fija si se apreto una tecla especifica
+ * para detener el controladorJuego.
+ */
 public class ObservadorSalir implements KeyPressedObservador {
 	private ControladorJuego controlador;
 	
-	
+	/**
+	 * Constructor
+	 * @param controlador El controladorJuego que se va a querer detener.
+	 */
 	public ObservadorSalir(ControladorJuego controlador){
 		this.controlador = controlador;
 	}

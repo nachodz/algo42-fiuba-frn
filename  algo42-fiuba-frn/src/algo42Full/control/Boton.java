@@ -3,8 +3,8 @@ package algo42Full.control;
 import ar.uba.fi.algo3.titiritero.MouseClickObservador;
 import ar.uba.fi.algo3.titiritero.Posicionable;
 
-/*
- * Clase abstracta que representa el boton, implementa MouseClickObservador.
+/**
+ * Clase abstracta que representa un boton, implementa MouseClickObservador.
  */
 public abstract class Boton implements MouseClickObservador, Posicionable{
 	private int x;
@@ -20,12 +20,13 @@ public abstract class Boton implements MouseClickObservador, Posicionable{
 		this.verticeY = this.y + alto;
 	}
 	
-	/*
-	 * La idea es redefinir apretar() en las clases que heradan. Lo que se hace en apretar()
-	 * es lo que sucede cuando el usuario hace click sobre el boton.
+	/**
+	 * Metodo a redefinir por las clases que heredan de Boton.
+	 * Lo que se hace en apretar() es lo que sucede cuando el usuario
+	 * hace click sobre el boton.
 	 * 
 	 */
-	public void apretar(){}
+	public abstract void apretar();
 	
 	public void MouseClick(int x, int y) {	
 		if ((x>=this.x)&&(x<=verticeX))

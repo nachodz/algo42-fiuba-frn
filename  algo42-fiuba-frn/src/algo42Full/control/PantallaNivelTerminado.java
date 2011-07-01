@@ -7,15 +7,27 @@ import algo42Full.vista.VistaPantallaNivelTerminado;
 import ar.uba.fi.algo3.titiritero.ControladorJuego;
 import ar.uba.fi.algo3.titiritero.vista.TextoEstatico;
 
+/**
+ * Pantalla que se muestra al usuario cuando termino un nivel.
+ */
 public class PantallaNivelTerminado {
 	private ControladorJuego controlador;
 	private ObservadorSalirPantalla observadorSalir;
 	
+	/**
+	 * Constructor
+	 * @param controlador El controladorJuego donde se va dibujar y ejecutar la pantalla.
+	 */
 	public PantallaNivelTerminado(ControladorJuego controlador){
 		this.controlador = controlador; 
 		observadorSalir = new ObservadorSalirPantalla(this.controlador);
 	}
 	
+	/**
+	 * Ejecuta la pantalla de nivel terminado.
+	 * @param puntajeTotal El puntaje total de todo el juego para mostrarlo en la pantalla, un int.
+	 * @param puntaje El puntaje del nivel para mostrarlo en la pantalla, un int.
+	 */
 	public void ejecutar(int puntajeTotal, int puntaje){
 		
 		TextoEstatico textPuntaje = new TextoEstatico(Integer.toString(puntaje));

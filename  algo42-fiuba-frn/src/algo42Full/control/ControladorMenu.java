@@ -10,6 +10,9 @@ import algo42Full.vista.VistaMenuPrincipal;
 import ar.uba.fi.algo3.titiritero.ControladorJuego;
 import ar.uba.fi.algo3.titiritero.vista.Imagen;
 
+/**
+ * El menu principal del programa.
+ */
 public class ControladorMenu {
 	
 	private ControladorJuego controlador;
@@ -20,6 +23,11 @@ public class ControladorMenu {
 	private boolean botonGuardarActivado;
 	private VistaBoton vistaBotonGuardar;
 	
+	/**
+	 * Constructor.
+	 * @param controlador El controladorJuego que va a utilizar el menu para dibujarse e
+	 * 					  interactuar con el usuario.
+	 */
 	public ControladorMenu(ControladorJuego controlador){
 		
 		botonGuardarActivado = false;
@@ -51,6 +59,9 @@ public class ControladorMenu {
 		this.cargarMenu();
 	}
 	
+	/**
+	 * Carga el menu en el ControladorJuego
+	 */
 	public void cargarMenu(){
 		
 		Coordenada coord = new Coordenada(0,0,1);
@@ -68,6 +79,9 @@ public class ControladorMenu {
 
 	}
 	
+	/**
+	 * quita el menu del controladorJuego.
+	 */
 	public void descargarMenu(){
 		
 		this.controlador.removerTodosDibujables();
@@ -81,19 +95,25 @@ public class ControladorMenu {
 	}
 	
 		
+	/**
+	 * activa en el menu el boton para guardar juego en curso.
+	 */
 	private void activarBotonGuardar(){
 		botonGuardarActivado = true;
 		mapBotones.put((Boton)vistaBotonGuardar.getPosicionable(), vistaBotonGuardar);
 	}
 	
+	/**
+	 * desactiva del menu el boton para guardar juego en curso.
+	 */
 	private void desactivarBotonGuardar(){
 		botonGuardarActivado = false;
 		mapBotones.remove((Boton)vistaBotonGuardar.getPosicionable());
 	}
 	
 
-	/*
-	 * El loop principal del menu.
+	/**
+	 * El loop princpial del menu.
 	 */
 	public void ejecutar(){
 		boolean salir = false;
@@ -168,31 +188,36 @@ public class ControladorMenu {
 	
 	
 	/*
-	 * la idea es que el BotonJuegoNuevo llame a este método cuando registra
-	 * un click del mouse en BotonJuegoNuevo.
+	 * Cambia el estado de la accion que se quiere hacer en el menu a JUEGONUEVO.
 	 */
 	public void empezarJuegoNuevo(){
 		//empieza un juegoNuevo
-		System.out.print("CLICK: empezar juego nuevo. \n");
 		this.controlador.detenerJuego();
 		this.accion = Accion.JUEGONUEVO;
 	}
 	
 	
+	/*
+	 * Cambia el estado de la accion que se quiere hacer en el menu a CARGARJUEGO.
+	 */
 	public void continuarJuego(){
 		//continua el juego guardado
-		System.out.print("CLICK: continuar juego guardado. \n");
 		this.controlador.detenerJuego();
 		this.accion = Accion.CARGARJUEGO;
 	}
 	
+	/*
+	 * Cambia el estado de la accion que se quiere hacer en el menu a SALIR.
+	 */
 	public void salir(){
 		this.controlador.detenerJuego();
 		accion = Accion.SALIR;
 	}
 	
+	/*
+	 * Cambia el estado de la accion que se quiere hacer en el menu a GUARDARJUEGO.
+	 */
 	public void guardar(){
-		System.out.print("CLICK: guardar juego. \n");
 		this.controlador.detenerJuego();
 		accion = Accion.GUARDARJUEGO;
 	}
