@@ -23,18 +23,20 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 		this.cantMov = 0;
 	}	
 	
-	
+	/**
+	 * Dispara un torpedo rastreador.
+	 */
 	protected void disparar(boolean seguidor){
 		
 		Proyectil proyectil;
 		int numero;
 		
-		int rand = 1 + (int)(Math.random()* 80); //disminuye la frecuencia de torpedos seguidores
+		int rand = 1 + (int)(Math.random()* 80); /**disminuye la frecuencia de torpedos seguidores*/
 		if (rand<10){
 			proyectil = new ProyectilTorpedoSeguidor((this.zonaDeCombate), true, (this.x), (this.y + 1));
 		}
 		else{
-			numero = 1 + (int)(Math.random()* 2); //genera un numero aleatorio del 1 al 2
+			numero = 1 + (int)(Math.random()* 2); /**genera un numero aleatorio del 1 al 2*/
 			switch(numero){
 				case 1:
 					proyectil = new ProyectilLaser((this.zonaDeCombate), true, (this.x), (this.y + 1));
@@ -57,7 +59,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	
 	
 	protected void morir(){
-		/*
+		/**
 		 * Se encarga de dejar el cohete y torpedo al morir, agregando a la 
 		 * zona de combate estas ActualizacionesAlgo42. Luego marca al
 		 * Bombardero como muerto.
@@ -70,7 +72,9 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 		this.muerto = true;
 		
 	}
-		
+	/**
+	 * Se encarga de mover el Bombardero de en Zig-Zag.
+	 */
 	protected void mover(){
 		this.cantMov++;
 		
@@ -88,7 +92,10 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 		}
 	}
 	
-	
+	/**
+	 * Se le quita energia cuando impacta con un proyectil, si no tiene mas energia se lo marca como muerto.
+	 * @param cantidadDanio.
+	 */
 	public void recibirDanio(int cantidadDanio){
 		int energiaTmp = (this.energia) - cantidadDanio;
 		if(energiaTmp < 1){
@@ -101,7 +108,10 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 			this.energia = energiaTmp;
 		}		
 	}
-	
+	/**
+	 * Si no esta muerto, y no escapo porque mataron a la nave guia, se mueve, comprueba si no choco contra el Algo42
+	 * y dispara.
+	 */
 	public void vivir(){
 		
 
@@ -135,7 +145,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	public Element getElement(Document doc) {
-		/*
+		/**
 		 * Retorna un Element perteneciente al Document pasado
 		 * como parametro, en el que guardan todos los atributos
 		 * del objeto Bombardero.
@@ -169,7 +179,7 @@ public class Bombardero extends NaveVivaEnemiga implements Atacable{
 	}
 
 	public static Bombardero fromElement(Element element, ZonaCombate zona) {
-		/*
+		/**
 		 * Retorna un objeto del tipo Bombardero, con un estado interno cargado
 		 * desde el Element pasado como parametro.
 		 */

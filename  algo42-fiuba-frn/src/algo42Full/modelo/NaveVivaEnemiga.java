@@ -15,12 +15,16 @@ public abstract class NaveVivaEnemiga extends NaveViva{
                 this.escapo = false;
                 this.esGuia = false;
         }        
-                
+        /**
+         * @return escapo, es true si escapo y false sino.
+         */
         public boolean seEscapo(){
                 
                 return (this.escapo);
         }
-        
+        /**
+         * Si se escapo se lo tilda como muerto; sino se escapa. 
+         */
         public void huir(){  
         	
     		if(this.escapo){
@@ -38,25 +42,31 @@ public abstract class NaveVivaEnemiga extends NaveViva{
             }
 
         }
-        
+        /**
+         * @return esGuia, true si lo es, false sino.
+         */
         public boolean esGuia(){
         	return this.esGuia;
         }
-        
+        /**
+         * se lo tilda como guia.
+         */
         public void hacerGuia(){
 
             this.esGuia = true;
             this.energia = 7;
                 
         }
-        
+        /**
+         * se lo destilda como guia.
+         */
         public void desmarcarComoGuia(){
         	this.esGuia = false;
         	
         }
         
     	public void revivir(){
-    		/*
+    		/**
     		 * Restaura las condiciones iniciales de las variables x, y,
     		 * 	energia, velY y escapo.
     		 */
@@ -68,7 +78,7 @@ public abstract class NaveVivaEnemiga extends NaveViva{
     	}
         
     	public void writeElement(Element unElement, Document unDoc) {
-    		/*
+    		/**
     		 * Escribe en el Element pasado como parametro perteneciente al Document
     		 * tambien parametro, todas las variables pertenecientes
     		 * al tipo NaveVivaEnemiga.
@@ -86,7 +96,7 @@ public abstract class NaveVivaEnemiga extends NaveViva{
     	}
     	
     	public static void writeNaveVivaEnemiga(Element element, NaveVivaEnemiga unaNaveVivaEnemiga) {
-    		/*
+    		/**
     		 * Escribe en el Element pasado como parametro perteneciente al Document
     		 * tambien parametro, todas las variables pertenecientes
     		 * al tipo NaveViva

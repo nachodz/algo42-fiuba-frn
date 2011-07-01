@@ -31,7 +31,9 @@ public class ObjetoColisionable  implements Posicionable{
 	public int getRadio(){
 		return this.radio;
 	}
-	
+	/**
+	 * Comprueba si dos objetos chocaron, y devuelve true si fue asi sino false.
+	 */
 	public boolean huboColision(ObjetoColisionable objeto){
 		int tempX,tempY,tempRadio;
 		

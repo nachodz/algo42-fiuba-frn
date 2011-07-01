@@ -32,12 +32,18 @@ public abstract class ActualizacionAlgo42 extends ObjetoColisionable implements 
 			zonaDeCombate = zona;
 	}
 	
-	
+	/**
+	 * @return true si muerto es false, y false si esta muerto.
+	 * 
+	 */
 	public boolean estaVivo(){
 		if (muerto) return false;
 		else return true;
 	}
-	
+	/**
+	 * Si no esta muerto lo mueve en el eje Y.
+	 *  Si se sale de la pantalla, lo asigna como muerto.
+	 */
 	protected void mover(){
 		if (!muerto) {
 			this.y = this.y + velY;

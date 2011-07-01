@@ -29,7 +29,9 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 		(this.zonaDeCombate).agregarProyectil(proyectilLaser);
 	}
 	
-	
+	/**
+	 * Se mueve ida y vuelta en linea recta.
+	 */
 	protected void mover(){        
 		
 		if (((this.zonaDeCombate).comprobarSalidaZona(this)))
@@ -65,7 +67,7 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	}
 	
 	public Element getElement(Document doc) {
-		/*
+		/**
 		 * Retorna un Element perteneciente al Document pasado
 		 * como parametro, en el que guardan todos los atributos
 		 * del objeto Avioneta.
@@ -90,7 +92,7 @@ public class Avioneta extends NaveVivaEnemiga implements Atacable{
 	}
 
 	public static Avioneta fromElement(Element element, ZonaCombate zona) {
-		/*
+		/**
 		 * Retorna un objeto del tipo Avioneta, con un estado interno cargado
 		 * desde el Element pasado como parametro.
 		 */

@@ -12,7 +12,9 @@ public class Torpedo extends ActualizacionAlgo42{
 		super(zona,x,y,2);
 	}
 	
-	
+	/**
+	 * Si no se salio de la pantalla, se mueve; si impacta contra el Algo42, se le cargan al mismo.
+	 */
 	public void vivir (){
 	    Algo42 algo42;
 					

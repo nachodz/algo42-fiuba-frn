@@ -28,8 +28,11 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 	
 	
 	protected void mover(){
-		//La aeronave se mueve de la posicion en la que se encuentra hacia el borde superior de la circunferencia sobre 
-		//la cual realizara su moviento. Una vez alli, comienza a moverse en circulos en sentdo contrario a las agujas del reloj. 
+		/** La aeronave se mueve de la posicion en la que se encuentra hacia el borde superior de la circunferencia
+		 *  sobre la cual realizara su moviento.
+		 *  Una vez alli, comienza a moverse en circulos en sentdo contrario a las agujas del reloj. 
+		 */
+		 
 				
 			int centroX;
 			int centroY;
@@ -73,8 +76,10 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 					
 					if(this.regresando){
 						
-						//calcula la posicion de x de acuerdo al movimiento en y, 
-						//con la formula de una circunferencia plana
+						/** calcula la posicion de x de acuerdo al movimiento en y, 
+						 *  con la formula de una circunferencia plana
+						 */
+						
 						coordX = (int) (Math.sqrt( (Math.pow(radioGiro1, 2)) - (Math.pow(((this.y - 1) - centroY), 2))) ) + centroX ;
 												
 						diferenciaEnX = coordX - centroX;
@@ -111,7 +116,7 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 			
 			algo42tmp = zonaDeCombate.comprobarColisionAlgo42(this);
 			if (algo42tmp != null){
-				algo42tmp.recibirDanio(20);   //hacer q se muera
+				algo42tmp.recibirDanio(20);   /**hacer q se muera*/
 				this.muerto = true;
 			}
 		}
@@ -120,9 +125,10 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 	
 	public void dirigirHaciaPunto(int x, int y){
 		
-		//El metodo se encarga de dirigir la aeronave hacia un punto pasado como parametro que 
-		//pertene al borde de la circunferencia en la cual debe moverse.
-		//Cuando el avion llega al punto indicado, marca el atributo entroAlCirculo como true.
+		/**El metodo se encarga de dirigir la aeronave hacia un punto pasado como parametro que 
+		 * pertene al borde de la circunferencia en la cual debe moverse.
+		 * Cuando el avion llega al punto indicado, marca el atributo entroAlCirculo como true.
+		 */
 
 		int coordenadaXObjetivo;
 		int coordenadaYObjetivo;
@@ -192,7 +198,7 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 	}	
 	
 	public Element getElement(Document doc) {
-		/*
+		/**
 		 * Retorna un Element perteneciente al Document pasado
 		 * como parametro, en el que guardan todos los atributos
 		 * del objeto Explorador.
@@ -229,7 +235,7 @@ public class Explorador extends NaveVivaEnemiga implements Atacable{
 	}
 
 	public static Explorador fromElement(Element element, ZonaCombate zona) {
-		/*
+		/**
 		 * Retorna un objeto del tipo Explorador, con un estado interno cargado
 		 * desde el Element pasado como parametro.
 		 */
